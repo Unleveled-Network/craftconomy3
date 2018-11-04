@@ -1,19 +1,19 @@
 /**
  * This file is part of Craftconomy3.
- *
+ * <p>
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2017, Aztorius <http://github.com/Aztorius/>
- *
+ * <p>
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Lesser General Public License
  * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,36 +26,35 @@ import com.greatmancode.craftconomy3.TestInitializator;
 import com.greatmancode.craftconomy3.account.Account;
 import com.greatmancode.craftconomy3.commands.bank.*;
 import com.greatmancode.tools.commands.PlayerCommandSender;
-import com.greatmancode.tools.events.unittest.UnitTestEventManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class TestBankCommands {
 
     private static final String BANK_ACCOUNT = "testbankaccount39";
-    private UUID testUUIDUser = UUID.randomUUID();
-    private UUID testUUIDUser2 = UUID.randomUUID();
-    
     private static PlayerCommandSender TEST_USER;
     private static PlayerCommandSender TEST_USER2;
+    private UUID testUUIDUser = UUID.randomUUID();
+    private UUID testUUIDUser2 = UUID.randomUUID();
+
     @Before
     public void setUp() {
         new TestInitializator();
         System.out.println("Initialized");
-        TEST_USER = new PlayerCommandSender("testuser39",testUUIDUser);
-        TEST_USER2 = new PlayerCommandSender("testuser40",testUUIDUser2);
+        TEST_USER = new PlayerCommandSender("testuser39", testUUIDUser);
+        TEST_USER2 = new PlayerCommandSender("testuser40", testUUIDUser2);
     }
 
     @After
-    public void close() { Common.getInstance().onDisable();}
-    
+    public void close() {
+        Common.getInstance().onDisable();
+    }
+
     @Test
     public void testBankCreateCommand() {
         BankCreateCommand command = new BankCreateCommand();
@@ -63,9 +62,9 @@ public class TestBankCommands {
         command.execute(TEST_USER, new String[]{BANK_ACCOUNT});
         System.out.println("DONE");
         assertFalse(Common.getInstance().getAccountManager().exist(BANK_ACCOUNT, true));
-        Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(),false).set(200, "default", Common
+        Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false).set(200, "default", Common
                 .getInstance
-                ().getCurrencyManager().getDefaultCurrency().getName(), Cause.USER, "greatman");
+                        ().getCurrencyManager().getDefaultCurrency().getName(), Cause.USER, "greatman");
         command.execute(TEST_USER, new String[]{BANK_ACCOUNT});
         assertTrue(Common.getInstance().getAccountManager().exist(BANK_ACCOUNT, true));
         command.execute(TEST_USER, new String[]{BANK_ACCOUNT});
@@ -103,8 +102,8 @@ public class TestBankCommands {
     public void testBankBalanceCommand() {
         BankBalanceCommand command = new BankBalanceCommand();
         Common.getInstance().getAccountManager().getAccount(BANK_ACCOUNT, true);
-        command.execute(TEST_USER, new String[] {BANK_ACCOUNT});
-        command.execute(TEST_USER, new String[] {"unknown"});
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT});
+        command.execute(TEST_USER, new String[]{"unknown"});
 
     }
 
@@ -139,11 +138,11 @@ public class TestBankCommands {
     @Test
     public void testBankPermCommand() {
         BankPermCommand command = new BankPermCommand();
-        Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(),false).set(200, "default", Common.getInstance
+        Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false).set(200, "default", Common.getInstance
                 ().getCurrencyManager().getDefaultCurrency().getName(), Cause.USER, "greatman");
         new BankCreateCommand().execute(TEST_USER, new String[]{BANK_ACCOUNT});
         Account account = Common.getInstance().getAccountManager().getAccount(BANK_ACCOUNT, true);
-        command.execute(TEST_USER, new String[] {BANK_ACCOUNT, "deposit", TEST_USER2.getName(), "true"});
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "deposit", TEST_USER2.getName(), "true"});
         System.out.println("WOW SUPER");
 
         assertTrue(account.getAccountACL().canDeposit(TEST_USER2.getName()));
@@ -151,21 +150,21 @@ public class TestBankCommands {
         assertFalse(account.getAccountACL().canShow(TEST_USER2.getName()));
         assertFalse(account.getAccountACL().canWithdraw(TEST_USER2.getName()));
         assertFalse(account.getAccountACL().isOwner(TEST_USER2.getName()));
-        command.execute(TEST_USER, new String[] {BANK_ACCOUNT, "deposit", TEST_USER2.getName(), "false"});
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "deposit", TEST_USER2.getName(), "false"});
         assertFalse(account.getAccountACL().canDeposit(TEST_USER2.getName()));
         assertFalse(account.getAccountACL().canAcl(TEST_USER2.getName()));
         assertFalse(account.getAccountACL().canShow(TEST_USER2.getName()));
         assertFalse(account.getAccountACL().canWithdraw(TEST_USER2.getName()));
         assertFalse(account.getAccountACL().isOwner(TEST_USER2.getName()));
 
-        command.execute(TEST_USER, new String[] {BANK_ACCOUNT, "withdraw", TEST_USER2.getName(), "true"});
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "withdraw", TEST_USER2.getName(), "true"});
         assertFalse(account.getAccountACL().canDeposit(TEST_USER2.getName()));
         assertFalse(account.getAccountACL().canAcl(TEST_USER2.getName()));
         assertFalse(account.getAccountACL().canShow(TEST_USER2.getName()));
         assertTrue(account.getAccountACL().canWithdraw(TEST_USER2.getName()));
         assertFalse(account.getAccountACL().isOwner(TEST_USER2.getName()));
 
-        command.execute(TEST_USER, new String[] {BANK_ACCOUNT, "withdraw", TEST_USER2.getName(), "false"});
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "withdraw", TEST_USER2.getName(), "false"});
         assertFalse(account.getAccountACL().canDeposit(TEST_USER2.getName()));
         assertFalse(account.getAccountACL().canAcl(TEST_USER2.getName()));
         assertFalse(account.getAccountACL().canShow(TEST_USER2.getName()));
@@ -173,15 +172,14 @@ public class TestBankCommands {
         assertFalse(account.getAccountACL().isOwner(TEST_USER2.getName()));
 
 
-
-        command.execute(TEST_USER, new String[] {BANK_ACCOUNT, "show", TEST_USER2.getName(), "true"});
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "show", TEST_USER2.getName(), "true"});
         assertFalse(account.getAccountACL().canDeposit(TEST_USER2.getName()));
         assertFalse(account.getAccountACL().canAcl(TEST_USER2.getName()));
         assertTrue(account.getAccountACL().canShow(TEST_USER2.getName()));
         assertFalse(account.getAccountACL().canWithdraw(TEST_USER2.getName()));
         assertFalse(account.getAccountACL().isOwner(TEST_USER2.getName()));
 
-        command.execute(TEST_USER, new String[] {BANK_ACCOUNT, "show", TEST_USER2.getName(), "false"});
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "show", TEST_USER2.getName(), "false"});
         assertFalse(account.getAccountACL().canDeposit(TEST_USER2.getName()));
         assertFalse(account.getAccountACL().canAcl(TEST_USER2.getName()));
         assertFalse(account.getAccountACL().canShow(TEST_USER2.getName()));
@@ -206,7 +204,7 @@ public class TestBankCommands {
     @Test
     public void testBankWithdrawCommand() {
         BankWithdrawCommand command = new BankWithdrawCommand();
-        Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(),false).set(200, "default", Common.getInstance
+        Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false).set(200, "default", Common.getInstance
                 ().getCurrencyManager().getDefaultCurrency().getName(), Cause.USER, "greatman");
         new BankCreateCommand().execute(TEST_USER, new String[]{BANK_ACCOUNT});
         Account account = Common.getInstance().getAccountManager().getAccount(BANK_ACCOUNT, true);
@@ -219,7 +217,7 @@ public class TestBankCommands {
     public void testBankDeleteCommand() {
         new BankCreateCommand().execute(TEST_USER, new String[]{BANK_ACCOUNT});
         BankDeleteCommand command = new BankDeleteCommand();
-        command.execute(TEST_USER, new String[] {BANK_ACCOUNT});
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT});
         assertFalse(Common.getInstance().getAccountManager().exist(BANK_ACCOUNT, true));
     }
 }
