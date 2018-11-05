@@ -1,0 +1,218 @@
+/**
+ * This file is part of Craftconomy3.
+ *
+ * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
+ * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
+ * Copyright (c) 2018, Pavog <http://github.com/pavog/>
+ *
+ * Craftconomy3 is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Craftconomy3 is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package com.greatmancode.tools.utils;
+
+import com.greatmancode.tools.entities.Player;
+import net.milkbowl.vault.economy.AbstractEconomy;
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.economy.EconomyResponse;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+
+import java.util.List;
+
+public abstract class VaultEconomy implements Economy {
+
+    @Deprecated
+    @Override
+    public boolean hasAccount(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean hasAccount(OfflinePlayer offlinePlayer) {
+        return hasAccount(new Player(offlinePlayer.getName(), null, null, offlinePlayer.getUniqueId()));
+    }
+
+    @Deprecated
+    @Override
+    public boolean hasAccount(String playerName, String worldName) {
+
+        return hasAccount(Bukkit.getOfflinePlayer(playerName));
+    }
+
+    @Override
+    public boolean hasAccount(OfflinePlayer offlinePlayer, String world) {
+        return hasAccount(offlinePlayer);
+    }
+
+    public abstract boolean hasAccount(Player player);
+
+    @Deprecated
+    @Override
+    public double getBalance(String playerName) {
+        return getBalance(Bukkit.getOfflinePlayer(playerName));
+    }
+
+    @Override
+    public double getBalance(OfflinePlayer offlinePlayer) {
+        return getBalance(offlinePlayer, null);
+    }
+
+    @Deprecated
+    @Override
+    public double getBalance(String playerName, String world) {
+        return getBalance(Bukkit.getOfflinePlayer(playerName), world);
+    }
+
+    @Override
+    public double getBalance(OfflinePlayer offlinePlayer, String world) {
+        return getBalance(new Player(offlinePlayer.getName(), null, null, offlinePlayer.getUniqueId()), world);
+    }
+
+    public abstract double getBalance(Player player, String world);
+
+    @Deprecated
+    @Override
+    public boolean has(String playerName, double amount) {
+        return has(Bukkit.getOfflinePlayer(playerName), amount);
+    }
+
+    @Override
+    public boolean has(OfflinePlayer offlinePlayer, double amount) {
+        return has(offlinePlayer, null, amount);
+    }
+
+    @Deprecated
+    @Override
+    public boolean has(String playerName, String world, double amount) {
+        return has(Bukkit.getPlayer(playerName), world, amount);
+    }
+
+    @Override
+    public boolean has(OfflinePlayer offlinePlayer, String world, double amount) {
+        return has(new Player(offlinePlayer.getName(), null, null, offlinePlayer.getUniqueId()), world, amount);
+    }
+
+    public abstract boolean has(Player player, String world, double amount);
+
+    @Deprecated
+    @Override
+    public EconomyResponse withdrawPlayer(String playerName, double amount) {
+        return withdrawPlayer(Bukkit.getOfflinePlayer(playerName), amount);
+    }
+
+    @Override
+    public EconomyResponse withdrawPlayer(OfflinePlayer offlinePlayer, double amount) {
+        return withdrawPlayer(offlinePlayer, null, amount);
+    }
+
+    @Deprecated
+    @Override
+    public EconomyResponse withdrawPlayer(String playerName, String world, double amount) {
+        return withdrawPlayer(Bukkit.getOfflinePlayer(playerName), world, amount);
+    }
+
+    @Override
+    public EconomyResponse withdrawPlayer(OfflinePlayer offlinePlayer, String world, double amount) {
+        return withdrawPlayer(new Player(offlinePlayer.getName(), null, null, offlinePlayer.getUniqueId()), world, amount);
+    }
+
+    public abstract EconomyResponse withdrawPlayer(Player p, String world, double amount);
+
+    @Deprecated
+    @Override
+    public EconomyResponse depositPlayer(String playerName, double amount) {
+        return depositPlayer(Bukkit.getOfflinePlayer(playerName), amount);
+    }
+
+    @Override
+    public EconomyResponse depositPlayer(OfflinePlayer offlinePlayer, double amount) {
+        return depositPlayer(offlinePlayer, null, amount);
+    }
+
+    @Deprecated
+    @Override
+    public EconomyResponse depositPlayer(String playerName, String world, double amount) {
+        return depositPlayer(Bukkit.getOfflinePlayer(playerName), world, amount);
+    }
+
+    @Override
+    public EconomyResponse depositPlayer(OfflinePlayer offlinePlayer, String world, double amount) {
+        return depositPlayer(new Player(offlinePlayer.getName(), null, null, offlinePlayer.getUniqueId()), world, amount);
+    }
+
+    public abstract EconomyResponse depositPlayer(Player player, String world, double amount);
+
+    @Deprecated
+    @Override
+    public EconomyResponse createBank(String name, String playerName) {
+        return createBank(name, Bukkit.getOfflinePlayer(playerName));
+    }
+
+    @Override
+    public EconomyResponse createBank(String name, OfflinePlayer offlinePlayer) {
+        return createBank(name, new Player(offlinePlayer.getName(), null, null, offlinePlayer.getUniqueId()));
+    }
+
+    public abstract EconomyResponse createBank(String name, Player player);
+
+    @Deprecated
+    @Override
+    public EconomyResponse isBankOwner(String name, String playerName) {
+        return isBankOwner(name, Bukkit.getOfflinePlayer(playerName));
+    }
+
+    @Override
+    public EconomyResponse isBankOwner(String name, OfflinePlayer offlinePlayer) {
+        return isBankOwner(name, new Player(offlinePlayer.getName(), null, null, offlinePlayer.getUniqueId()));
+    }
+
+    public abstract EconomyResponse isBankOwner(String name, Player player);
+
+    @Deprecated
+    @Override
+    public EconomyResponse isBankMember(String name, String playerName) {
+        return isBankMember(name, Bukkit.getOfflinePlayer(playerName));
+    }
+
+    @Override
+    public EconomyResponse isBankMember(String name, OfflinePlayer offlinePlayer) {
+        return isBankMember(name, new Player(offlinePlayer.getName(), null, null, offlinePlayer.getUniqueId()));
+    }
+
+    public abstract EconomyResponse isBankMember(String name, Player player);
+
+    @Deprecated
+    @Override
+    public boolean createPlayerAccount(String playerName) {
+        return createPlayerAccount(Bukkit.getOfflinePlayer(playerName));
+    }
+
+    @Override
+    public boolean createPlayerAccount(OfflinePlayer offlinePlayer) {
+        return createPlayerAccount(new Player(offlinePlayer.getName(), null, null, offlinePlayer.getUniqueId()));
+    }
+
+    public abstract boolean createPlayerAccount(Player player);
+
+    @Deprecated
+    @Override
+    public boolean createPlayerAccount(String playerName, String world) {
+        return createPlayerAccount(Bukkit.getOfflinePlayer(playerName));
+    }
+    
+    @Deprecated
+    @Override
+    public boolean createPlayerAccount(OfflinePlayer offlinePlayer, String world) {
+        return createPlayerAccount(offlinePlayer);
+    }
+}
