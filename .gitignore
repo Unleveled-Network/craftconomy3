@@ -8,6 +8,7 @@ dependency-reduced-pom.xml
 atlassian-ide-plugin.xml
 .idea
 build
+out
 key.gpg
 .gradle
 /.nb-gradle/
