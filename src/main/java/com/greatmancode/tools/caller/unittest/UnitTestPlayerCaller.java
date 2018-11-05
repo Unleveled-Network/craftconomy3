@@ -39,6 +39,7 @@ public class UnitTestPlayerCaller extends PlayerCaller {
     }
 
     @Override
+    @Deprecated
     public boolean checkPermission(String playerName, String perm) {
         // TODO Auto-generated method stub
         return false;
@@ -50,6 +51,7 @@ public class UnitTestPlayerCaller extends PlayerCaller {
     }
 
     @Override
+    @Deprecated
     public void sendMessage(String playerName, String message) {
         caller.getLogger().info(playerName + ":" + message);
     }
@@ -60,6 +62,7 @@ public class UnitTestPlayerCaller extends PlayerCaller {
     }
 
     @Override
+    @Deprecated
     public String getPlayerWorld(String playerName) {
         return "UnitTestWorld";
     }
@@ -70,6 +73,7 @@ public class UnitTestPlayerCaller extends PlayerCaller {
     }
 
     @Override
+    @Deprecated
     public boolean isOnline(String playerName) {
         return playerName.equals("console");
     }
@@ -116,8 +120,9 @@ public class UnitTestPlayerCaller extends PlayerCaller {
     }
 
     @Override
+    @Deprecated
     public List<String> getOnlinePlayers() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         list.add("UnitTestPlayer");
         return list;
     }

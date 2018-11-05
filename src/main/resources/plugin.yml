@@ -18,7 +18,7 @@
 # along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
 #
 name: Craftconomy3
-main: com.greatmancode.craftconomy3.tools.interfaces.BukkitLoader
+main: com.greatmancode.tools.interfaces.BukkitLoader
 version: ${version}
 api-version: ${bukkitVersion}
 authors: [Greatman, Aztorius, Narimm]

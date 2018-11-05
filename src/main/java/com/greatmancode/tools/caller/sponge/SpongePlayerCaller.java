@@ -43,6 +43,7 @@ public class SpongePlayerCaller extends PlayerCaller {
     }
 
     @Override
+    @Deprecated
     public boolean checkPermission(String playerName, String perm) {
         if (playerName.equals("console")) {
             return true;
@@ -57,6 +58,7 @@ public class SpongePlayerCaller extends PlayerCaller {
     }
 
     @Override
+    @Deprecated
     public void sendMessage(String playerName, String message) {
         if (playerName.equals("console")) {
             caller.getLogger().info(message);
@@ -71,6 +73,7 @@ public class SpongePlayerCaller extends PlayerCaller {
     }
 
     @Override
+    @Deprecated
     public String getPlayerWorld(String playerName) {
         return loader.getGame().getServer().getPlayer(playerName).get().getWorld().getName();
     }
@@ -81,6 +84,7 @@ public class SpongePlayerCaller extends PlayerCaller {
     }
 
     @Override
+    @Deprecated
     public boolean isOnline(String playerName) {
         return loader.getGame().getServer().getPlayer(playerName).isPresent();
     }
@@ -91,6 +95,7 @@ public class SpongePlayerCaller extends PlayerCaller {
     }
 
     @Override
+    @Deprecated
     public List<String> getOnlinePlayers() {
         List<String> playerList = new ArrayList<>();
         for (Player p : loader.getGame().getServer().getOnlinePlayers()) {
@@ -105,6 +110,7 @@ public class SpongePlayerCaller extends PlayerCaller {
     }
 
     @Override
+    @Deprecated
     public boolean isOp(String playerName) {
         return false;
     }
