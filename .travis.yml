@@ -6,10 +6,10 @@ services: mysql
 before_install:
 #- 'if [[ $TRAVIS_PULL_REQUEST == false ]] && [[ $TRAVIS_REPO_SLUG == pavog/craftconomy3 ]] && [[ $TRAVIS_BRANCH == master ]]; then openssl aes-256-cbc -k "$opensslkey" -in key.gpg.enc -out key.gpg -d; fi'
 - mysql -e 'create database craftconomy;'
-- git clone https://github.com/AddstarMC/GreatmancodeTools.git
-- cd GreatmancodeTools
-- ./gradlew install
-- cd ..
+#- git clone https://github.com/AddstarMC/GreatmancodeTools.git
+#- cd GreatmancodeTools
+#- ./gradlew install
+#- cd ..
 script:
 - ./gradlew -Dmysql=true && ./gradlew
 after_success:
