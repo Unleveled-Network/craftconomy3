@@ -54,7 +54,7 @@ public class SpongePlayerCaller extends PlayerCaller {
 
     @Override
     public boolean checkPermission(UUID uuid, String perm) {
-        return loader.getGame().getServiceManager().provide(PermissionService.class).get().getUserSubjects().get(uuid.toString()).hasPermission(perm);
+        return loader.getGame().getServiceManager().provide(PermissionService.class).get().getUserSubjects().getSubject(uuid.toString()).get().hasPermission(perm);
     }
 
     @Override
