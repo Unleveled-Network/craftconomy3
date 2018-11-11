@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.greatmancode.tools.events.playerEvent;
+package com.greatmancode.tools.events.playerevent;
 
 import com.greatmancode.tools.events.Event;
 import lombok.Data;

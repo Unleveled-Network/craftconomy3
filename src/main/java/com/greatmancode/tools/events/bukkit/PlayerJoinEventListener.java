@@ -30,8 +30,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class PlayerJoinEventListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        com.greatmancode.tools.events.playerEvent.PlayerJoinEvent pEvent = new com.greatmancode.tools.events
-                .playerEvent.PlayerJoinEvent(new Player(event.getPlayer().getName(), event.getPlayer().getDisplayName
+        com.greatmancode.tools.events.playerevent.PlayerJoinEvent pEvent = new com.greatmancode.tools.events
+                .playerevent.PlayerJoinEvent(new Player(event.getPlayer().getName(), event.getPlayer().getDisplayName
                 (), event.getPlayer().getWorld().getName(), event.getPlayer().getUniqueId()));
         EventManager.getInstance().callEvent(pEvent);
     }

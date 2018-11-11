@@ -21,8 +21,7 @@
 package com.greatmancode.tools.events.sponge;
 
 import com.greatmancode.tools.events.interfaces.ServerEventManager;
-import com.greatmancode.tools.events.playerEvent.PlayerJoinEvent;
-import com.greatmancode.tools.interfaces.BukkitLoader;
+import com.greatmancode.tools.events.playerevent.PlayerJoinEvent;
 import com.greatmancode.tools.interfaces.SpongeLoader;
 import com.greatmancode.tools.interfaces.caller.ServerCaller;
 
@@ -33,7 +32,7 @@ public class SpongeEventManager implements ServerEventManager {
     private Map<String, Object> map = new HashMap<>();
 
     public SpongeEventManager() {
-        map.put(PlayerJoinEvent.class.getName(), new com.greatmancode.tools.events.sponge.PlayerJoinEventListener());
+        map.put(PlayerJoinEvent.class.getName(), new PlayerJoinEventListener());
     }
 
     @Override
