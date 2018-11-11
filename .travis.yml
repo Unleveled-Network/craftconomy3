@@ -11,7 +11,8 @@ before_install:
 #- ./gradlew install
 #- cd ..
 script:
-- ./gradlew -Dmysql=true && ./gradlew
+#- ./gradlew -Dmysql=true && ./gradlew
+- mvn install
 after_success:
 #- 'if [[ $TRAVIS_PULL_REQUEST == false ]] && [[ $TRAVIS_REPO_SLUG == pavog/craftconomy3 ]] && [[ $TRAVIS_BRANCH == master ]]; then ./gradlew uploadArchives; fi'
 #env:
