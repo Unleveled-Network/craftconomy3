@@ -123,6 +123,7 @@
             <groupId>be.maximvdw</groupId>
             <artifactId>MVdWPlaceholderAPI</artifactId>
             <version>1.0.2-SNAPSHOT</version>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.bukkit</groupId>
@@ -238,9 +239,10 @@
                             </relocations>
                             <artifactSet>
                                 <excludes>
-                                    <exclude>be.maximvdw.placeholderapi:*</exclude>
+                                    <exclude>be.maximvdw:MVdWPlaceholderAPI</exclude>
                                     <exclude>org.projectlombok:lombok</exclude>
                                     <exclude>org.json.simple:*</exclude>
+                                    <exclude>com.googlecode.json-simple:json-simple</exclude>
                                     <exclude>com.google.guava:guava</exclude>
                                     <exlude>org.bukkit:*</exlude>
                                     <exclude>org.spongepowered:*</exclude>
