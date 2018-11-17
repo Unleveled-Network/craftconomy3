@@ -43,6 +43,9 @@ public class NewSetupCurrencyCommand extends CommandExecutor {
     @Override
     public void execute(CommandSender sender, String[] args) {
 
+        // TODO: Check if the user has really given 2 args
+        // And display a helpful message if not
+
         try {
             INTERNALSTEP step = INTERNALSTEP.valueOf(args[0].toUpperCase());
 
