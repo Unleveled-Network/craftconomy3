@@ -7,10 +7,10 @@ services:
     - "25565:25565"
     volumes:
     - "mcdata:/data"
-    - "./build/libs:/plugins"
+    - "./target:/plugins"
     environment:
       TYPE: SPIGOT
-      VERSION: 1.11.2
+      VERSION: 1.13.2
       EULA: "TRUE"
       MAX_MEMORY: 4G
       MAX_PLAYERS: 100
