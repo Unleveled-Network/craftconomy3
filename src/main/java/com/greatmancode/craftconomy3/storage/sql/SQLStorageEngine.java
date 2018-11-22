@@ -548,15 +548,20 @@ public abstract class SQLStorageEngine extends StorageEngine {
             if (set.next()) {
                 statement.close();
                 statement = connection.prepareStatement(exchangeTable.updateEntry);
-                statement.setString(1, currency.getName());
-                statement.setString(2, otherCurrency.getName());
-                statement.setDouble(3, amount);
+                statement.setDouble(1, amount);
+                // From currency
+                statement.setString(2, currency.getName());
+                // To currency
+                statement.setString(3, otherCurrency.getName());
                 statement.executeUpdate();
             } else {
                 statement.close();
                 statement = connection.prepareStatement(exchangeTable.insertEntry);
+                // From currency
                 statement.setString(1, currency.getName());
+                // To currency
                 statement.setString(2, otherCurrency.getName());
+                // Amount
                 statement.setDouble(3, amount);
                 statement.executeUpdate();
             }
