@@ -170,13 +170,13 @@ public class Currency {
     }
 
     /**
-     * Set the exchange rate between 2 currency
+     * Set the exchange rate between 2 currencies
      *
      * @param otherCurrency The other currency
      * @param amount        THe exchange rate.
      */
     public void setExchangeRate(Currency otherCurrency, double amount) {
-        Common.getInstance().getStorageHandler().getStorageEngine().setExchangeRate(this, otherCurrency, amount);
+        Common.getInstance().getStorageHandler().getStorageEngine().setExchangeRate(otherCurrency, this, amount);
     }
 
     /**
