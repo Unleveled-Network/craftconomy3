@@ -143,9 +143,9 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version> 1.13.2-R0.1-SNAPSHOT</version>
+            <groupId>org.spongepowered</groupId>
+            <artifactId>spongeapi</artifactId>
+            <version>7.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
