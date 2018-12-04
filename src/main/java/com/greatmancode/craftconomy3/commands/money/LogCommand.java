@@ -41,7 +41,10 @@ class LogCommandThread implements Runnable {
 
         @Override
         public void run() {
-            Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getUuid(), ret);
+            if(sender.getUuid() != null)
+                Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getUuid(), ret);
+            else
+                Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getName(), ret);
         }
     }
 
@@ -65,7 +68,7 @@ class LogCommandThread implements Runnable {
             }
             ret += "\n";
         }
-        Common.getInstance().getServerCaller().getSchedulerCaller().delay(new LogCommandThreadEnd(sender, ret), 0, false);
+        Common.getInstance().getServerCaller().getSchedulerCaller().delay(new LogCommandThreadEnd(sender, ret), 0, true);
     }
 }
 
@@ -80,7 +83,11 @@ public class LogCommand extends CommandExecutor {
                     page = 1;
                 }
             } catch (NumberFormatException e) {
-                Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getUuid(), Common.getInstance().getLanguageManager().getString("invalid_page"));
+                if(sender.getUuid() != null) {
+                    Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getUuid(), Common.getInstance().getLanguageManager().getString("invalid_page"));
+                }else{
+                    Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getName(), Common.getInstance().getLanguageManager().getString("invalid_page"));
+                }
                 return;
             }
         }
@@ -89,6 +96,10 @@ public class LogCommand extends CommandExecutor {
             if (Common.getInstance().getAccountManager().exist(args[1], false)) {
                 user = Common.getInstance().getAccountManager().getAccount(args[1], false);
             }
+        }
+        if(user == null){
+            Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getName(), Common.getInstance().getLanguageManager().getString("account_null"));
+            return;
         }
         Common.getInstance().getServerCaller().getSchedulerCaller().delay(new LogCommandThread(sender, page, user),
                 0, false);
