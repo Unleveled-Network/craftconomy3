@@ -1,25 +1,25 @@
 /**
- * This file is part of Craftconomy3.
+ * This file is part of GreatmancodeTools.
  *
- * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
- * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
- * Copyright (c) 2018, Pavog <http://github.com/pavog/>
+ * Copyright (c) 2013-2016, Greatman <http://github.com/greatman/>
  *
- * Craftconomy3 is free software: you can redistribute it and/or modify
+ * GreatmancodeTools is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Craftconomy3 is distributed in the hope that it will be useful,
+ * GreatmancodeTools is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ * along with GreatmancodeTools.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.greatmancode.tools.caller.bukkit;
 
+import com.greatmancode.tools.commands.CommandSender;
+import com.greatmancode.tools.commands.PlayerCommandSender;
 import com.greatmancode.tools.interfaces.BukkitLoader;
 import com.greatmancode.tools.interfaces.caller.PlayerCaller;
 import com.greatmancode.tools.interfaces.caller.ServerCaller;
@@ -42,11 +42,6 @@ public class BukkitPlayerCaller extends PlayerCaller {
 
     }
 
-    private OfflinePlayer getOfflinePlayer(UUID uuid){
-        return ((BukkitLoader) getCaller().getLoader()).getServer().getOfflinePlayer(uuid);
-
-    }
-    
     @Deprecated
     @Override
     public boolean checkPermission(String playerName, String perm) {
@@ -77,12 +72,49 @@ public class BukkitPlayerCaller extends PlayerCaller {
     
     @Deprecated
     @Override
+    public void sendMessage(String playerName, String message, String commandName) {
+        if (commandName == null) {
+            sendMessage(playerName, message);
+        } else {
+            if (playerName == null) {
+                sendConsoleMessage(message);
+            }
+        }
+    }
+    
+    @Deprecated
+    @Override
     public void sendMessage(String playerName, String message) {
         Player p = ((BukkitLoader) getCaller().getLoader()).getServer().getPlayerExact(playerName);
         if (p != null) {
             p.sendMessage(getCaller().addColor(getCaller().getCommandPrefix() + message));
         } else {
+            sendConsoleMessage(message);
+       }
+    }
+
+    @Override
+    public void sendMessage(CommandSender sender, String message,String command) {
+        if (sender.getServerSender() != null && sender.getServerSender() instanceof org.bukkit.command.CommandSender) {
+            ((org.bukkit.command.CommandSender) sender.getServerSender()).sendMessage(getCaller().addColor(getCaller().getCommandPrefix() + message));
+        } else {
+            sendMessage(sender.getUuid(), message);
+        }
+    }
+
+    private void sendConsoleMessage(String message) {
             ((BukkitLoader) getCaller().getLoader()).getServer().getConsoleSender().sendMessage(getCaller().addColor(getCaller().getCommandPrefix() + message));
+    }
+
+    
+    @Override
+    public void sendMessage(UUID uuid, String message, String commandName) {
+        if (commandName == null) {
+            sendMessage(uuid, message);
+        } else {
+            if (uuid == null) {
+                sendConsoleMessage(message);
+            }
         }
     }
 
@@ -92,7 +124,7 @@ public class BukkitPlayerCaller extends PlayerCaller {
         if (p != null) {
             p.sendMessage(getCaller().addColor(getCaller().getCommandPrefix() + message));
         } else {
-            ((BukkitLoader) getCaller().getLoader()).getServer().getConsoleSender().sendMessage(getCaller().addColor(getCaller().getCommandPrefix() + message));
+            sendConsoleMessage(message);
         }
     }
     
@@ -121,9 +153,8 @@ public class BukkitPlayerCaller extends PlayerCaller {
     }
     
     @Override
-    @Deprecated
     public List<String> getOnlinePlayers() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         for (Player p : ((BukkitLoader) getCaller().getLoader()).getServer().getOnlinePlayers()) {
             list.add(p.getName());
         }
@@ -156,9 +187,8 @@ public class BukkitPlayerCaller extends PlayerCaller {
     public boolean isOP(UUID uuid) {
         return ((BukkitLoader) getCaller().getLoader()).getServer().getOfflinePlayer(uuid).isOp();
     }
-
-    @Override
     @Deprecated
+    @Override
     public UUID getUUID(String playerName) {
         OfflinePlayer offline = Bukkit.getOfflinePlayer(playerName);
         UUID uuid = offline.getUniqueId();
@@ -179,19 +209,20 @@ public class BukkitPlayerCaller extends PlayerCaller {
     public com.greatmancode.tools.entities.Player getPlayer(UUID uuid) {
         Player player = ((BukkitLoader) getCaller().getLoader()).getServer().getPlayer(uuid);
         if (player == null)return null;
+        CommandSender sender = new PlayerCommandSender<>(player.getDisplayName(),player.getUniqueId(),player);
         return new com.greatmancode.tools.entities.Player(player.getName(),
                 player.getDisplayName(),player.getWorld().getName(),
-                player.getUniqueId());
+                player.getUniqueId(),sender);
     }
     
     @Override
-    @Deprecated
     public com.greatmancode.tools.entities.Player getOnlinePlayer(String name) {
         Player player = ((BukkitLoader) getCaller().getLoader()).getServer().getPlayerExact(name);
         if( player != null && player.isOnline()){
+            CommandSender sender = new PlayerCommandSender<>(player.getDisplayName(),player.getUniqueId(),player);
             return new com.greatmancode.tools.entities.Player(player.getName(),
                     player.getDisplayName(),player.getWorld().getName(),
-                    player.getUniqueId());
+                    player.getUniqueId(),sender);
         }
         return null;
     }
@@ -201,9 +232,10 @@ public class BukkitPlayerCaller extends PlayerCaller {
         Player player = ((BukkitLoader) getCaller().getLoader()).getServer().getPlayer(uuid);
         if (player == null)return null;
         if(player.isOnline()) {
+            CommandSender sender = new PlayerCommandSender<>(player.getDisplayName(),player.getUniqueId(),player);
             return new com.greatmancode.tools.entities.Player(player.getName(),
                     player.getDisplayName(), player.getWorld().getName(),
-                    player.getUniqueId());
+                    player.getUniqueId(),sender);
         }
         return null;
     }

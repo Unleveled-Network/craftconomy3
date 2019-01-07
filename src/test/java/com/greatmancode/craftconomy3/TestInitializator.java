@@ -117,8 +117,7 @@ public class TestInitializator {
         PreparedStatement statement = null;
         try {
             connection = db.getConnection();
-            statement = connection.prepareStatement("DROP DATABASE IF EXISTS " +Common.g vetInstance().getMainConfig().getString("System.Database.Db",""));
-            statement = connection.prepareStatement("DROP DATABASE IF EXISTS " +Common.getInstance().getMainConfig().getString("System.Database.Db",""));
+            statement = connection.prepareStatement("DROP DATABASE IF EXISTS " + Common.getInstance().getMainConfig().getString("System.Database.Db",""));
             statement.executeUpdate();
             statement.close();
             statement = connection.prepareStatement("CREATE DATABASE " + Common.getInstance().getMainConfig().getString("System.Database.Db",""));

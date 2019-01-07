@@ -32,7 +32,7 @@ public class SpongeEventManager implements ServerEventManager {
     private Map<String, Object> map = new HashMap<>();
 
     public SpongeEventManager() {
-        map.put(PlayerJoinEvent.class.getName(), new PlayerJoinEventListener());
+        map.put(PlayerJoinEvent.class.getName(), new com.greatmancode.tools.events.sponge.PlayerJoinEventListener());
     }
 
     @Override

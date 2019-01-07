@@ -37,7 +37,6 @@ import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.source.ConsoleSource;
-import org.spongepowered.api.text.LiteralText;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColor;
 import org.spongepowered.api.text.format.TextColors;
@@ -208,9 +207,11 @@ public class SpongeServerCaller extends ServerCaller {
                 }
                 CommandSender sender = null;
                 if (source instanceof ConsoleSource) {
-                    sender = new ConsoleCommandSender();
-                }else if(source instanceof Player){
-                    sender = new PlayerCommandSender(((Player) source).getDisplayName(),((Player) source).getUuid());
+                    ConsoleSource consoleSource = (ConsoleSource) source;
+                    sender = new ConsoleCommandSender<>(source.getName(), consoleSource);
+                } else if (source instanceof Player) {
+                    Player playerSource = (Player) source;
+                    sender = new PlayerCommandSender<>(playerSource.getDisplayName(), playerSource.getUuid(), playerSource);
                 }
                 if(sender != null) {
                     subCommand.execute(subCommandValue, sender, newArgs);

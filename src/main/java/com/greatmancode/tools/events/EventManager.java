@@ -1,33 +1,30 @@
 /**
- * This file is part of Craftconomy3.
+ * This file is part of GreatmancodeTools.
  *
- * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
- * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
- * Copyright (c) 2018, Pavog <http://github.com/pavog/>
+ * Copyright (c) 2013-2016, Greatman <http://github.com/greatman/>
  *
- * Craftconomy3 is free software: you can redistribute it and/or modify
+ * GreatmancodeTools is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Craftconomy3 is distributed in the hope that it will be useful,
+ * GreatmancodeTools is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ * along with GreatmancodeTools.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.greatmancode.tools.events;
 
+import com.greatmancode.tools.caller.bukkit.BukkitPlayerCaller;
 import com.greatmancode.tools.caller.bukkit.BukkitServerCaller;
-import com.greatmancode.tools.caller.sponge.SpongeServerCaller;
 import com.greatmancode.tools.caller.unittest.UnitTestServerCaller;
 import com.greatmancode.tools.events.bukkit.BukkitEventManager;
 import com.greatmancode.tools.events.interfaces.EventHandler;
 import com.greatmancode.tools.events.interfaces.Listener;
 import com.greatmancode.tools.events.interfaces.ServerEventManager;
-import com.greatmancode.tools.events.sponge.SpongeEventManager;
 import com.greatmancode.tools.events.unittest.UnitTestEventManager;
 import com.greatmancode.tools.interfaces.Common;
 import com.greatmancode.tools.interfaces.caller.ServerCaller;
@@ -37,7 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EventManager {
-    private Map<String, ListenerRegistration> eventList = new HashMap<String, ListenerRegistration>();
+    private Map<String, ListenerRegistration> eventList = new HashMap<>();
     private static EventManager instance;
     private ServerEventManager eventManager;
     private ServerCaller serverCaller;
@@ -47,11 +44,9 @@ public class EventManager {
         this.serverCaller = serverCaller;
 
         if (serverCaller instanceof BukkitServerCaller) {
-            eventManager = new BukkitEventManager();
+            eventManager = new BukkitEventManager((BukkitPlayerCaller) serverCaller.getPlayerCaller());
         } else if (serverCaller instanceof UnitTestServerCaller) {
             eventManager = new UnitTestEventManager();
-        } else if (serverCaller instanceof SpongeServerCaller) {
-            eventManager = new SpongeEventManager();
         }
     }
 

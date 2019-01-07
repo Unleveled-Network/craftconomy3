@@ -1,23 +1,22 @@
 /**
- * This file is part of Craftconomy3.
+ * This file is part of GreatmancodeTools.
  *
- * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
- * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
- * Copyright (c) 2018, Pavog <http://github.com/pavog/>
+ * Copyright (c) 2013-2016, Greatman <http://github.com/greatman/>
  *
- * Craftconomy3 is free software: you can redistribute it and/or modify
+ * GreatmancodeTools is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Craftconomy3 is distributed in the hope that it will be useful,
+ * GreatmancodeTools is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ * along with GreatmancodeTools.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.greatmancode.tools.configuration.bukkit;
 
 import com.greatmancode.tools.configuration.Config;
@@ -28,9 +27,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This class handles YAML files with the Bukkit imports.
@@ -49,28 +46,28 @@ public class BukkitConfig extends Config {
     }
 
     @Override
-    public int getInt(String path) {
-        return configFile.getInt(path);
+    public int getInt(String path,int def) {
+        return configFile.getInt(path,def);
     }
 
     @Override
-    public long getLong(String path) {
-        return configFile.getLong(path);
+    public long getLong(String path,long def) {
+        return configFile.getLong(path,def);
     }
 
     @Override
-    public double getDouble(String path) {
-        return configFile.getDouble(path);
+    public double getDouble(String path, double def) {
+        return configFile.getDouble(path,def);
     }
 
     @Override
-    public String getString(String path) {
-        return configFile.getString(path);
+    public String getString(String path, String def) {
+        return configFile.getString(path,def);
     }
 
     @Override
-    public boolean getBoolean(String path) {
-        return configFile.getBoolean(path);
+    public boolean getBoolean(String path, boolean def) {
+        return configFile.getBoolean(path,def);
     }
 
     @Override
@@ -89,19 +86,36 @@ public class BukkitConfig extends Config {
     }
 
     @Override
-    public Map<String, String> getStringMap(String path) {
-        Map<String, String> values = new HashMap<String, String>();
+    public Map<String, String> getStringMap(String path,Map<String, String> def) {
+        Map<String, String> values = new HashMap<>();
         ConfigurationSection configurationSection = configFile.getConfigurationSection(path);
         if (configurationSection != null) {
             for (Map.Entry<String, Object> entry : configurationSection.getValues(false).entrySet()) {
                 values.put(entry.getKey(), (String) entry.getValue());
             }
+            return values;
+        }else{
+            return def;
         }
-        return values;
     }
 
     @Override
-    public List<String> getStringList(String path) {
-        return configFile.getStringList(path);
+    public List<String> getStringList(String path, List<String> def) {
+        List<?> list = configFile.getList(path);
+        if (list == null) {
+            return def;
+        }
+        List<String> result = new ArrayList<>();
+    
+        for (Object object : list) {
+            if ((object instanceof String) || (isPrimitiveWrapper(object))) {
+                result.add(String.valueOf(object));
+            }
+        }
+        return result;
+    }
+    
+    protected boolean isPrimitiveWrapper(Object input) {
+        return input instanceof Integer || input instanceof Boolean || input instanceof Character || input instanceof Byte || input instanceof Short || input instanceof Double || input instanceof Long || input instanceof Float;
     }
 }

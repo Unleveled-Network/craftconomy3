@@ -25,12 +25,20 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class BlockCommandSender implements CommandSender {
+public class BlockCommandSender<T> implements CommandSender {
 
     private final String name = "block";
     private final UUID uuid = null;
+
+    private T sender;
+
     @Override
     public String toString() {
-        return name;
+        return this.name;
+    }
+
+    @Override
+    public Object getServerSender() {
+        return this.sender;
     }
 }

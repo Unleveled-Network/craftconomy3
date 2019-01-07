@@ -1,27 +1,27 @@
 /**
- * This file is part of Craftconomy3.
+ * This file is part of GreatmancodeTools.
  *
- * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
- * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
- * Copyright (c) 2018, Pavog <http://github.com/pavog/>
+ * Copyright (c) 2013-2016, Narimm <http://github.com/narimm/>
  *
- * Craftconomy3 is free software: you can redistribute it and/or modify
+ * GreatmancodeTools is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Craftconomy3 is distributed in the hope that it will be useful,
+ * GreatmancodeTools is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ * along with GreatmancodeTools.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.greatmancode.tools.commands;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NonNull;
 
 import java.util.UUID;
 
@@ -31,13 +31,22 @@ import java.util.UUID;
  */
 
 @Data
-@RequiredArgsConstructor
-public class PlayerCommandSender implements CommandSender {
+@AllArgsConstructor
+public class PlayerCommandSender<T> implements CommandSender<T> {
+    
+    @NonNull
     private final String name;
+    @NonNull
     private final UUID uuid;
 
+    private T sender;
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public T getServerSender() {
+        return sender;
     }
 }

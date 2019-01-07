@@ -1,22 +1,20 @@
 /**
- * This file is part of Craftconomy3.
- * <p>
- * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
- * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
- * Copyright (c) 2018, Pavog <http://github.com/pavog/>
- * <p>
- * Craftconomy3 is free software: you can redistribute it and/or modify
+ * This file is part of GreatmancodeTools.
+ *
+ * Copyright (c) 2013-2016, Greatman <http://github.com/greatman/>
+ *
+ * GreatmancodeTools is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * <p>
- * Craftconomy3 is distributed in the hope that it will be useful,
+ *
+ * GreatmancodeTools is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * <p>
+ *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ * along with GreatmancodeTools.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.greatmancode.tools.commands.bukkit;
 
@@ -27,9 +25,10 @@ import com.greatmancode.tools.commands.interfaces.CommandReceiver;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
+
 public class BukkitCommandReceiver implements CommandReceiver, CommandExecutor {
     private CommandHandler commandHandler;
-
+    
     public BukkitCommandReceiver(CommandHandler commandHandler) {
         this.commandHandler = commandHandler;
     }
@@ -50,24 +49,32 @@ public class BukkitCommandReceiver implements CommandReceiver, CommandExecutor {
                 subCommandValue = args[0];
                 System.arraycopy(args, 1, newArgs, 0, args.length - 1);
             }
-            com.greatmancode.tools.commands.CommandSender sender;
-            // Fetch command sender from bukkit
-            if (commandSender instanceof ConsoleCommandSender) {
-                // Command sent from console
-                sender = new com.greatmancode.tools.commands.ConsoleCommandSender();
-            } else if (commandSender instanceof Player) {
-                // Command sent from a player
-                sender = new PlayerCommandSender(commandSender.getName(), ((Player) commandSender).getUniqueId());
-            } else if (commandSender instanceof BlockCommandSender) {
-                // Command sent from commandblock
-                sender = new com.greatmancode.tools.commands.BlockCommandSender();
-            } else {
-                // Something else, we don't know yet
-                sender = (com.greatmancode.tools.commands.CommandSender) commandSender;
+            com.greatmancode.tools.commands.CommandSender sender = null;
+            if (commandSender instanceof ConsoleCommandSender){
+                sender = new com.greatmancode.tools.commands.ConsoleCommandSender<>(commandSender.getName(),commandSender);
+            }else if(commandSender instanceof Player){
+                Player  player = (Player) commandSender;
+                sender = new PlayerCommandSender<>(player.getName(),player.getUniqueId(),player);
             }
-            subCommand.execute(subCommandValue, sender, newArgs);
-            return true;
+            
+            if(sender != null) {
+                subCommand.execute(subCommandValue, sender, newArgs);
+                return true;
+            } else {
+                try{
+                    throw  new CommandException("Null Sender in command :" + subCommand.getName());
+                }catch (CommandException e){
+                    e.printStackTrace();
+                }
+                return false;
+            }
         }
-        return false;
+        try{
+            throw  new CommandException("Sub Command was null :" + command.getName());
+        }catch (CommandException e){
+            e.printStackTrace();
+        }        return false;
     }
+
+
 }
