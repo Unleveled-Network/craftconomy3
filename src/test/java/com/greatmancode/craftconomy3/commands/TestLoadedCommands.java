@@ -28,26 +28,27 @@ import org.junit.Before;
 import org.junit.Test;
 import org.reflections.Reflections;
 
+import java.lang.reflect.InvocationTargetException;
+
 import static org.junit.Assert.fail;
 
 public class TestLoadedCommands {
-    @Before
-    public void setUp() {
-        new TestInitializator();
-    }
-
+	@Before
+	public void setUp() {
+		new TestInitializator();
+	}
     @After
     public void close() {
         Common.getInstance().onDisable();
     }
 
     @Test
-    public void testCommands() {
+	public void testCommands() throws NoSuchMethodException {
 
-        Reflections reflections = new Reflections("com.greatmancode.craftconomy3.commands");
-        for (Class<? extends CommandExecutor> clazz : reflections.getSubTypesOf(CommandExecutor.class)) {
+		Reflections reflections = new Reflections("com.greatmancode.craftconomy3.commands");
+        for (Class<? extends CommandExecutor> clazz : reflections.getSubTypesOf(AbstractCommand.class)) {
             try {
-                CommandExecutor instance = clazz.newInstance();
+                CommandExecutor instance = clazz.getConstructor(String.class).newInstance("test");
                 if (instance.help() == null) {
                     fail("Help is null for: " + clazz.getName());
                 }
@@ -68,10 +69,9 @@ public class TestLoadedCommands {
                 if (!instance.playerOnly() && instance.playerOnly()) {
                     fail("Fail playerOnly. Should never get this..");
                 }
-            } catch (InstantiationException e) {
-                fail(e.getMessage());
-            } catch (IllegalAccessException e) {
-                fail(e.getMessage());
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                System.out.println(clazz.getName() + e.getMessage());
+                fail("Failed Access Exception");
             }
         }
     }

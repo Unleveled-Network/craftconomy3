@@ -22,6 +22,7 @@ package com.greatmancode.craftconomy3.commands;
 
 import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.DisplayFormat;
+import com.greatmancode.craftconomy3.TestCommandSender;
 import com.greatmancode.craftconomy3.TestInitializator;
 import com.greatmancode.craftconomy3.commands.config.ConfigBankPriceCommand;
 import com.greatmancode.craftconomy3.commands.config.ConfigFormatCommand;
@@ -56,8 +57,8 @@ public class TestConfigCommands {
 
     @Test
     public void testBankPriceCommand() {
-        ConfigBankPriceCommand command = new ConfigBankPriceCommand();
-        command.execute(TEST_USER, new String[]{"200"});
+        ConfigBankPriceCommand command = new ConfigBankPriceCommand("price");
+        command.execute(TEST_USER, new String[] {"200"});
         assertEquals(200, Common.getInstance().getBankPrice(), 0);
         command.execute(TEST_USER, new String[]{"-10"});
         assertEquals(200, Common.getInstance().getBankPrice(), 0);
@@ -69,8 +70,8 @@ public class TestConfigCommands {
 
     @Test
     public void testFormatCommand() {
-        ConfigFormatCommand command = new ConfigFormatCommand();
-        command.execute(TEST_USER, new String[]{"long"});
+        ConfigFormatCommand command = new ConfigFormatCommand("format");
+        command.execute(TEST_USER, new String[] {"long"});
         assertEquals(DisplayFormat.LONG, Common.getInstance().getDisplayFormat());
         command.execute(TEST_USER, new String[]{"sign"});
         assertEquals(DisplayFormat.SIGN, Common.getInstance().getDisplayFormat());
@@ -86,7 +87,7 @@ public class TestConfigCommands {
 
     @Test
     public void testHoldingsCommand() {
-        ConfigHoldingsCommand command = new ConfigHoldingsCommand();
+        ConfigHoldingsCommand command = new ConfigHoldingsCommand(null);
 
         command.execute(TEST_USER, new String[]{"200"});
         assertEquals(200, Common.getInstance().getDefaultHoldings(), 0);
@@ -108,8 +109,9 @@ public class TestConfigCommands {
         Common.getInstance().getAccountManager().getAccount(TEST_ACCOUNT, false);
         assertEquals(0, Common.getInstance().getAccountManager().getAccount(TEST_ACCOUNT, false).getBalance("default", Common.getInstance().getCurrencyManager().getDefaultCurrency().getName()), 0);
     }
-
-    private PlayerCommandSender createTestUser(String name) {
-        return new PlayerCommandSender(name, UUID.randomUUID());
+    
+    private PlayerCommandSender createTestUser(String name){
+        UUID test = UUID.randomUUID();
+        return new PlayerCommandSender<>(name,test ,new TestCommandSender(test,name));
     }
 }

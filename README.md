@@ -16,25 +16,19 @@ PLEASE NOTE THIS BUILD USES A CUSTOMISED AND INCLUDED VERSION OF Greatmans Tools
 
 ## Current Development Version : 3.4.1-SNAPSHOT
 
-- Bukkit/Spigot 1.8, 1.9, 1.10, 1.11, 1.12 supported
-- Sponge 1.10, 1.11 experimental
+- Bukkit/Spigot 1.8, 1.9, 1.10, 1.11, 1.12 , 1,13 supported
 
 ## Build
 
 Craftconomy3 use Java 1.8.
 
-JAR files will be in build/libs
+JAR files will be in target
 
 ### Maven
 
 use `clean install` as the default target.
 you will find the jars in target
 
-### Gradle
-
-```
-./gradlew
-```
 
 ## License
 Craftconomy is under the LGPLv3, see LICENSE file.

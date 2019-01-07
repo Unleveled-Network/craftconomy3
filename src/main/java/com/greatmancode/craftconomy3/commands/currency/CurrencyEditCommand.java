@@ -21,10 +21,15 @@
 package com.greatmancode.craftconomy3.commands.currency;
 
 import com.greatmancode.craftconomy3.Common;
+import com.greatmancode.craftconomy3.commands.AbstractCommand;
 import com.greatmancode.tools.commands.CommandSender;
 import com.greatmancode.tools.commands.interfaces.CommandExecutor;
 
-public class CurrencyEditCommand extends CommandExecutor {
+public class CurrencyEditCommand extends AbstractCommand {
+    public CurrencyEditCommand(String name) {
+        super(name);
+    }
+    
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (Common.getInstance().getCurrencyManager().getCurrency(args[1]) != null) {
@@ -40,15 +45,15 @@ public class CurrencyEditCommand extends CommandExecutor {
                 } else if ("sign".equalsIgnoreCase(args[0])) {
                     Common.getInstance().getCurrencyManager().getCurrency(args[1]).setSign(args[2]);
                 } else {
-                    Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getUuid(), Common.getInstance().getLanguageManager().getString("invalid_type"));
+                    sendMessage(sender, Common.getInstance().getLanguageManager().getString("invalid_type"));
                     return;
                 }
-                Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getUuid(), Common.getInstance().getLanguageManager().getString("currency_modified"));
+                sendMessage(sender, Common.getInstance().getLanguageManager().getString("currency_modified"));
             } else {
-                Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getUuid(), Common.getInstance().getLanguageManager().getString("currency_empty_value"));
+                sendMessage(sender, Common.getInstance().getLanguageManager().getString("currency_empty_value"));
             }
         } else {
-            Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getUuid(), Common.getInstance().getLanguageManager().getString("currency_not_exist"));
+            sendMessage(sender, Common.getInstance().getLanguageManager().getString("currency_not_exist"));
         }
     }
 

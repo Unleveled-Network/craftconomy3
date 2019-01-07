@@ -33,14 +33,12 @@ public class StorageHandler {
     private final StorageEngine engine;
 
     public StorageHandler() {
-        switch (Common.getInstance().getMainConfig().getString("System.Database.Type")) {
+        switch (Common.getInstance().getMainConfig().getString("System.Database.Type","h2")) {
             case "h2":
                 engine = new H2Engine();
-                Common.getInstance().addMetricsGraph("Database Engine", "h2");
                 break;
             case "mysql":
                 engine = new MySQLEngine();
-                Common.getInstance().addMetricsGraph("Database Engine", "MySQL");
                 break;
             case "sqlite":
                 engine = new SQLiteEngine();

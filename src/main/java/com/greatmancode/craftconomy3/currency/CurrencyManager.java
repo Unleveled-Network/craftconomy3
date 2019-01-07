@@ -48,7 +48,6 @@ public class CurrencyManager {
                 defaultBankCurrency = currencyEntry.getValue();
             }
         }
-        Common.getInstance().addMetricsGraph("NumberCurrency", currencyList.size() + "");
     }
 
     /**
@@ -92,8 +91,7 @@ public class CurrencyManager {
      */
     public Currency addCurrency(String name, String plural, String minor, String minorPlural, String sign, boolean save) {
         if (getCurrency(name) != null) {
-            // TODO: Currency already exists
-            return null;
+            return getCurrency(name);
         }
         else {
             return addCurrency(name, plural, minor, minorPlural, sign, save, false);

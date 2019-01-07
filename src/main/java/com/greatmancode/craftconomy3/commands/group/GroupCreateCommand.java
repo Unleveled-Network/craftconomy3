@@ -21,17 +21,22 @@
 package com.greatmancode.craftconomy3.commands.group;
 
 import com.greatmancode.craftconomy3.Common;
+import com.greatmancode.craftconomy3.commands.AbstractCommand;
 import com.greatmancode.tools.commands.CommandSender;
 import com.greatmancode.tools.commands.interfaces.CommandExecutor;
 
-public class GroupCreateCommand extends CommandExecutor {
+public class GroupCreateCommand extends AbstractCommand {
+    public GroupCreateCommand(String name) {
+        super(name);
+    }
+    
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (!Common.getInstance().getWorldGroupManager().worldGroupExist(args[0])) {
             Common.getInstance().getWorldGroupManager().addWorldGroup(args[0]);
-            Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getUuid(), Common.getInstance().getLanguageManager().getString("group_created"));
+            sendMessage(sender, Common.getInstance().getLanguageManager().getString("group_created"));
         } else {
-            Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getUuid(), Common.getInstance().getLanguageManager().getString("group_already_exist"));
+            sendMessage(sender, Common.getInstance().getLanguageManager().getString("group_already_exist"));
         }
     }
 

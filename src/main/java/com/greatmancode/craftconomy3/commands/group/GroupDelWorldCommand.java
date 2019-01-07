@@ -21,17 +21,22 @@
 package com.greatmancode.craftconomy3.commands.group;
 
 import com.greatmancode.craftconomy3.Common;
+import com.greatmancode.craftconomy3.commands.AbstractCommand;
 import com.greatmancode.tools.commands.CommandSender;
 import com.greatmancode.tools.commands.interfaces.CommandExecutor;
 
-public class GroupDelWorldCommand extends CommandExecutor {
+public class GroupDelWorldCommand extends AbstractCommand {
+    public GroupDelWorldCommand(String name) {
+        super(name);
+    }
+    
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (!"default".equals(Common.getInstance().getWorldGroupManager().getWorldGroupName(args[0]))) {
             Common.getInstance().getWorldGroupManager().removeWorldFromGroup(args[0]);
-            Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getUuid(), Common.getInstance().getLanguageManager().getString("world_removed_from_group"));
+            sendMessage(sender, Common.getInstance().getLanguageManager().getString("world_removed_from_group"));
         } else {
-            Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getUuid(), Common.getInstance().getLanguageManager().getString("world_not_in_group"));
+            sendMessage(sender, Common.getInstance().getLanguageManager().getString("world_not_in_group"));
         }
     }
 

@@ -21,6 +21,7 @@
 package com.greatmancode.craftconomy3.commands.money;
 
 import com.greatmancode.craftconomy3.Common;
+import com.greatmancode.craftconomy3.commands.AbstractCommand;
 import com.greatmancode.craftconomy3.currency.Currency;
 import com.greatmancode.craftconomy3.groups.WorldGroupsManager;
 import com.greatmancode.tools.commands.CommandSender;
@@ -42,7 +43,7 @@ class TopCommandThread implements Runnable {
 
         @Override
         public void run() {
-            Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getUuid(), ret);
+            Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender, ret,"top");
         }
     }
 
@@ -71,7 +72,11 @@ class TopCommandThread implements Runnable {
     }
 }
 
-public class TopCommand extends CommandExecutor {
+public class TopCommand extends AbstractCommand {
+    public TopCommand(String name) {
+        super(name);
+    }
+
     @Override
     public void execute(CommandSender sender, String[] args) {
         int page = 1;
@@ -82,7 +87,7 @@ public class TopCommand extends CommandExecutor {
             if (Common.getInstance().getCurrencyManager().getCurrency(args[0]) != null) {
                 currency = Common.getInstance().getCurrencyManager().getCurrency(args[0]);
             } else {
-                Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getUuid(), Common.getInstance().getLanguageManager().getString("currency_not_exist"));
+                sendMessage(sender, Common.getInstance().getLanguageManager().getString("currency_not_exist"));
                 return;
             }
         }
@@ -94,7 +99,7 @@ public class TopCommand extends CommandExecutor {
                     page = 1;
                 }
             } catch (NumberFormatException e) {
-                Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getUuid(), Common.getInstance()
+                sendMessage(sender, Common.getInstance()
                         .getLanguageManager().getString("invalid_page"));
                 return;
             }
