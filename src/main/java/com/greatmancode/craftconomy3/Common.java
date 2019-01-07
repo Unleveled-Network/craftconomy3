@@ -20,7 +20,6 @@
  */
 package com.greatmancode.craftconomy3;
 
-import au.com.addstar.dripreporter.DripReporterApi;
 import com.greatmancode.craftconomy3.account.Account;
 import com.greatmancode.craftconomy3.account.AccountManager;
 import com.greatmancode.craftconomy3.commands.bank.*;
@@ -47,7 +46,6 @@ import com.greatmancode.tools.configuration.Config;
 import com.greatmancode.tools.configuration.ConfigurationManager;
 import com.greatmancode.tools.interfaces.caller.ServerCaller;
 import com.greatmancode.tools.language.LanguageManager;
-import com.greatmancode.tools.utils.DripReporterLoader;
 import com.greatmancode.tools.utils.FeatherBoard;
 import com.greatmancode.tools.utils.Tools;
 import org.json.simple.parser.ParseException;
@@ -131,11 +129,6 @@ public class Common implements com.greatmancode.tools.interfaces.Common {
                     sendConsoleMessage(Level.WARNING, getLanguageManager().getString("loaded_setup_mode"));
                 }
             } else {
-                if(getMainConfig().getBoolean("System.Database.useMetrics",false)){
-                    if(DripReporterLoader.hookDripReporterApi(serverCaller.getLoader())){
-                        sendConsoleMessage(Level.INFO,getLanguageManager().getString("metric_enabled"));
-                    };
-                }
                 commandManager.setCurrentLevel(1);
                 initialiseDatabase();
                 updateDatabase();
