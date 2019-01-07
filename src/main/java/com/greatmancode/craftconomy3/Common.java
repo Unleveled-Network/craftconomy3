@@ -179,30 +179,8 @@ public class Common implements com.greatmancode.tools.interfaces.Common {
      * Reload the plugin.
      */
     public void reloadPlugin() {
-        sendConsoleMessage(Level.INFO, "Starting up!");
-        sendConsoleMessage(Level.INFO, "Loading the Configuration");
-        config = new ConfigurationManager(serverCaller);
-        mainConfig = config.loadFile(serverCaller.getDataFolder(), "config.yml");
-        if (!mainConfig.has("System.Setup")) {
-            initializeConfig();
-        }
-        if (!getMainConfig().has("System.Database.Prefix")) {
-            getMainConfig().setValue("System.Database.Prefix", "cc3_");
-        }
-
-        languageManager = new LanguageManager(serverCaller, serverCaller.getDataFolder(), "lang.yml");
-        loadLanguage();
-        serverCaller.setCommandPrefix(languageManager.getString("command_prefix"));
-        commandManager.setCurrentLevel(1);
-        initialiseDatabase();
-        updateDatabase();
-        initializeCurrency();
-        sendConsoleMessage(Level.INFO, getLanguageManager().getString("loading_default_settings"));
-        loadDefaultSettings();
-        sendConsoleMessage(Level.INFO, getLanguageManager().getString("default_settings_loaded"));
-        startUp();
-        sendConsoleMessage(Level.INFO, getLanguageManager().getString("ready"));
-
+        sendConsoleMessage(Level.INFO, "Reloading...");
+        this.onEnable(this.serverCaller, this.log);
     }
 
     /**
