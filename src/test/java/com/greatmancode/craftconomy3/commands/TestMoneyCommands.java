@@ -60,8 +60,12 @@ public class TestMoneyCommands {
     public void testBalanceCommand() {
         Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
         BalanceCommand command = new BalanceCommand(null);
+        // User exists
         command.execute(TEST_USER,new String[]{TEST_USER.getName()});
+        // User does not exist
         command.execute(TEST_USER, new String[]{"unknown"});
+        // No user given
+        command.execute(TEST_USER, new String[]{});
     }
 
     @Test
@@ -76,25 +80,38 @@ public class TestMoneyCommands {
     public void testDeleteCommand() {
         Common.getInstance().getAccountManager().getAccount("testaccount", false);
         DeleteCommand command = new DeleteCommand(null);
+        // Account exists
         command.execute(TEST_USER, new String[] {"testaccount"});
+        // Account should no longer exist
         assertFalse(Common.getInstance().getAccountManager().exist("testaccount", false));
+        // Check again with an account that never existed
+        command.execute(TEST_USER, new String[] {"testaccountwithaverylongname"});
     }
 
     @Test
     public void testGiveCommand() {
         Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
-        double initialValue = Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false).getBalance("default", Common.getInstance().getCurrencyManager().getDefaultCurrency().getName());
+        String defaultCurrencyName = Common.getInstance().getCurrencyManager().getDefaultCurrency().getName();
+        double initialValue = Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false).getBalance("UnitTestWorld", defaultCurrencyName);
         GiveCommand command = new GiveCommand(null);
         command.execute(TEST_USER, new String[]{TEST_USER.getName(), "200"});
-        assertEquals(initialValue + 200, Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false).getBalance("default", Common.getInstance().getCurrencyManager().getDefaultCurrency().getName()), 0);
+        assertEquals(initialValue + 200, Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false).getBalance("UnitTestWorld", defaultCurrencyName), 0);
         command.execute(TEST_USER, new String[]{TEST_USER.getName(), "di3"});
-        assertEquals(initialValue + 200, Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false).getBalance("default", Common.getInstance().getCurrencyManager().getDefaultCurrency().getName()), 0);
+        assertEquals(initialValue + 200, Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false).getBalance("UnitTestWorld", defaultCurrencyName), 0);
         command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "200"});
-        assertEquals(initialValue + 200, Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false).getBalance("default", Common.getInstance().getCurrencyManager().getDefaultCurrency().getName()), 0);
-        command.execute(TEST_USER, new String[]{TEST_USER.getName(), "200", "Dollar"});
-        assertEquals(initialValue + 400, Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false).getBalance("default", Common.getInstance().getCurrencyManager().getDefaultCurrency().getName()), 0);
+        assertEquals(initialValue + 200, Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false).getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        // Currency exists
+        command.execute(TEST_USER, new String[]{TEST_USER.getName(), "200", defaultCurrencyName});
+        assertEquals(initialValue + 400, Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false).getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        // Currency does not exist
         command.execute(TEST_USER, new String[]{TEST_USER.getName(), "200", "fake"});
-        assertEquals(initialValue + 400, Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false).getBalance("default", Common.getInstance().getCurrencyManager().getDefaultCurrency().getName()), 0);
+        assertEquals(initialValue + 400, Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false).getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        // World exists
+        command.execute(TEST_USER, new String[]{TEST_USER.getName(), "200", defaultCurrencyName, "UnitTestWorld"});
+        assertEquals(initialValue + 600, Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false).getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        // World does not exist
+        command.execute(TEST_USER, new String[]{TEST_USER.getName(), "200", defaultCurrencyName, "MyCustomWorldWithALongName"});
+        assertEquals(initialValue + 600, Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false).getBalance("UnitTestWorld", defaultCurrencyName), 0);
     }
     
     private PlayerCommandSender createTestUser(String name){

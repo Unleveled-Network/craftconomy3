@@ -75,6 +75,8 @@ public class TestSetupCommands {
         command.execute(TEST_USER, new String[]{"minor", "teston"});
         command.execute(TEST_USER, new String[]{"minorplural", "testoni"});
         command.execute(TEST_USER, new String[]{"sign", "T"});
+        // Invalid step. Should send "{{DARK_RED}}Invalid sub-step! Please write a valid one.".
+        command.execute(TEST_USER, new String[]{"test", "invalid"});
     }
 
     @Test
