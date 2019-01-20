@@ -22,6 +22,7 @@ main: com.greatmancode.tools.interfaces.BukkitLoader
 version: ${version}
 api-version: 1.13
 authors: [Greatman, Aztorius, Narimm]
+loadbefore: [Vault]
 softdepends: [MVdWPlaceholderAPI, Vault]
 commands:
     money:
