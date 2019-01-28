@@ -19,13 +19,10 @@
 package com.greatmancode.tools.utils;
 
 import com.greatmancode.tools.entities.Player;
-import net.milkbowl.vault.economy.AbstractEconomy;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-
-import java.util.List;
 
 public abstract class VaultEconomy implements Economy {
 

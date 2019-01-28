@@ -163,6 +163,6 @@ public class BukkitServerCaller extends ServerCaller {
 
     @Override
     public void setVaultEconomyHook(VaultEconomy instance, com.greatmancode.tools.utils.ServicePriority priority) {
-        Bukkit.getServicesManager().register(Economy.class, instance, (Plugin) getLoader(), ServicePriority.valueOf(priority.name().toUpperCase()));
+        Bukkit.getServicesManager().register(Economy.class, instance, (Plugin) getLoader(), ServicePriority.valueOf(priority.name()));
     }
 }
