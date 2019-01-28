@@ -14,7 +14,7 @@ Fell free to contribute with pull requests to improve Craftconomy.
 PLEASE NOTE THIS BUILD USES A CUSTOMISED AND INCLUDED VERSION OF Greatmans Tools found [here](https://github.com/pavog/craftconomy3/tree/master/src/main/java/com/greatmancode/tools)
 
 
-## Current Development Version : 3.5.0-SNAPSHOT (Release candidate)
+## Current Development Version : 3.5.1-SNAPSHOT
 
 - Bukkit/Spigot 1.8, 1.9, 1.10, 1.11, 1.12, 1.13 supported
 - Experimental support for Sponge
