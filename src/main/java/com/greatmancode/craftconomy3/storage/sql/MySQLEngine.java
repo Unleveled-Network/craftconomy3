@@ -34,20 +34,28 @@ public class MySQLEngine extends SQLStorageEngine {
 
     public MySQLEngine() {
         HikariConfig config = new HikariConfig();
-        config.setMaximumPoolSize(Common.getInstance().getMainConfig().getInt("System.Database.Poolsize",20));
+        config.setMaximumPoolSize(Common.getInstance().getMainConfig().getInt("System.Database.Poolsize", 20));
         config.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
-        config.addDataSourceProperty("serverName", Common.getInstance().getMainConfig().getString("System.Database.Address","localhost"));
-        config.addDataSourceProperty("port", Common.getInstance().getMainConfig().getString("System.Database.Port","3306"));
-        config.addDataSourceProperty("databaseName", Common.getInstance().getMainConfig().getString("System.Database.Db","Craftconomy"));
-        config.addDataSourceProperty("user", Common.getInstance().getMainConfig().getString("System.Database.Username","root"));
-        config.addDataSourceProperty("password", Common.getInstance().getMainConfig().getString("System.Database.Password",""));
+        config.addDataSourceProperty("serverName", Common.getInstance().getMainConfig().getString("System.Database.Address", "localhost"));
+        config.addDataSourceProperty("port", Common.getInstance().getMainConfig().getString("System.Database.Port", "3306"));
+        config.addDataSourceProperty("databaseName", Common.getInstance().getMainConfig().getString("System.Database.Db", "Craftconomy"));
+        config.addDataSourceProperty("user", Common.getInstance().getMainConfig().getString("System.Database.Username", "root"));
+        config.addDataSourceProperty("password", Common.getInstance().getMainConfig().getString("System.Database.Password", ""));
         config.addDataSourceProperty("autoDeserialize", true);
-        String useSSL = Common.getInstance().getMainConfig().getString("System.Database.useSSL","false");
-        if(useSSL == null)useSSL = "false";
-        config.addDataSourceProperty("useSSL",Boolean.valueOf(useSSL));
+        String useSSL = Common.getInstance().getMainConfig().getString("System.Database.useSSL", "false");
+        if (useSSL == null) useSSL = "false";
+        config.addDataSourceProperty("useSSL", Boolean.valueOf(useSSL));
         config.setConnectionTimeout(5000);
         db = new HikariDataSource(config);
-        this.tablePrefix = Common.getInstance().getMainConfig().getString("System.Database.Prefix","cc3_");
+        try {
+            if (!db.getConnection().isValid(0)) {
+                throw new Exception("Invalid connection");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        this.tablePrefix = Common.getInstance().getMainConfig().getString("System.Database.Prefix", "cc3_");
         accessTable = new AccessTable(tablePrefix);
         accountTable = new AccountTable(tablePrefix);
         balanceTable = new BalanceTable(tablePrefix);

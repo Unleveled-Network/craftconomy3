@@ -59,6 +59,17 @@ public class SQLiteEngine extends StorageEngine {
         db = new HikariDataSource(config);
         configTable = new ConfigTable(tablePrefix);
     }
+
+    @Override
+    public boolean isConnected() {
+        try {
+            return this.db.isRunning() && this.db.getConnection().isValid(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     @Override
     public void disable() {
 

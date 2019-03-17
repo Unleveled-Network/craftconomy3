@@ -57,6 +57,15 @@ public abstract class SQLStorageEngine extends StorageEngine {
     protected WorldGroupTable worldGroupTable;
     private Connection commitConnection;
 
+    @Override
+    public boolean isConnected() {
+        try {
+            return this.db.isRunning() && this.db.getConnection().isValid(0);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     @Override
     public void disable() {

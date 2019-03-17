@@ -147,7 +147,10 @@ public class NewSetupDatabaseCommand extends AbstractCommand {
         if (VALUES.size() == 6) {
             Common.getInstance().initialiseDatabase();
             done(sender);
-            //TODO: A catch
+            if (!Common.getInstance().getStorageHandler().getStorageEngine().isConnected()) {
+                // TODO Send error & try again message
+                VALUES.clear();
+            }
         }
     }
 

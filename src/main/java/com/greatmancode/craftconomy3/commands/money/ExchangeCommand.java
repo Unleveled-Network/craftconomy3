@@ -51,6 +51,8 @@ public class ExchangeCommand extends AbstractCommand {
                         account.withdraw(amount, Common.getInstance().getServerCaller().getPlayerCaller().getPlayerWorld(sender.getUuid()), currency1.getName(), Cause.EXCHANGE, currency2.getName());
                         account.deposit(value, Common.getInstance().getServerCaller().getPlayerCaller().getPlayerWorld(sender.getUuid()), currency2.getName(), Cause.EXCHANGE, currency1.getName());
                         sendMessage(sender, Common.getInstance().getLanguageManager().parse("exchange_done", amount, currency1.getName(), value, currency2.getName()));
+                    } else {
+                        // TODO Display message: You don't have enough money (currency 1 here) to exchange.
                     }
                 } catch (NoExchangeRate noExchangeRate) {
                     sendMessage(sender, Common.getInstance().getLanguageManager().parse("no_exchange_rate", currency1.getName(), currency2.getName()));

@@ -41,6 +41,13 @@ import java.util.UUID;
 public abstract class StorageEngine {
 
     /**
+     * Checks whether the storage engine is connected to any database.
+     *
+     * @return true if connected, false if not.
+     */
+    public abstract boolean isConnected();
+
+    /**
      * Disable the storage engine.
      */
     public abstract void disable();
