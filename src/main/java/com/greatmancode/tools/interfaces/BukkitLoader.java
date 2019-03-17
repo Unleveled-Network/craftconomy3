@@ -45,6 +45,10 @@ public class BukkitLoader extends JavaPlugin implements Loader {
         BukkitConfig bukkitConfig = new BukkitConfig(readerLoader, bukkitCaller);
         String mainClass = bukkitConfig.getString("main-class","");
         try {
+            if(mainClass == null) {
+                getLogger().severe("Could not read the main class from loader.yml!");
+                this.getServer().getPluginManager().disablePlugin(this);
+            }
             Class<?> clazz = Class.forName(mainClass);
             if (Common.class.isAssignableFrom(clazz)) {
                 common = (Common) clazz.newInstance();
