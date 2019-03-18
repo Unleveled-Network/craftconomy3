@@ -1,20 +1,20 @@
 /**
  * This file is part of Craftconomy3.
- *
+ * <p>
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
  * Copyright (c) 2018, Pavog <http://github.com/pavog/>
- *
+ * <p>
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Lesser General Public License
  * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -105,11 +105,11 @@ public class TestInitializator {
         HikariConfig config = new HikariConfig();
         config.setMaximumPoolSize(10);
         config.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
-        config.addDataSourceProperty("serverName", Common.getInstance().getMainConfig().getString("System.Database.Address",""));
-        config.addDataSourceProperty("port", Common.getInstance().getMainConfig().getString("System.Database.Port","0"));
-        config.addDataSourceProperty("databaseName", Common.getInstance().getMainConfig().getString("System.Database.Db",""));
-        config.addDataSourceProperty("user", Common.getInstance().getMainConfig().getString("System.Database.Username",""));
-        config.addDataSourceProperty("password", Common.getInstance().getMainConfig().getString("System.Database.Password",""));
+        config.addDataSourceProperty("serverName", Common.getInstance().getMainConfig().getString("System.Database.Address", ""));
+        config.addDataSourceProperty("port", Common.getInstance().getMainConfig().getString("System.Database.Port", "0"));
+        config.addDataSourceProperty("databaseName", Common.getInstance().getMainConfig().getString("System.Database.Db", ""));
+        config.addDataSourceProperty("user", Common.getInstance().getMainConfig().getString("System.Database.Username", ""));
+        config.addDataSourceProperty("password", Common.getInstance().getMainConfig().getString("System.Database.Password", ""));
         config.addDataSourceProperty("autoDeserialize", true);
         config.setConnectionTimeout(5000);
         HikariDataSource db = new HikariDataSource(config);
@@ -117,10 +117,10 @@ public class TestInitializator {
         PreparedStatement statement = null;
         try {
             connection = db.getConnection();
-            statement = connection.prepareStatement("DROP DATABASE IF EXISTS " + Common.getInstance().getMainConfig().getString("System.Database.Db",""));
+            statement = connection.prepareStatement("DROP DATABASE IF EXISTS " + Common.getInstance().getMainConfig().getString("System.Database.Db", ""));
             statement.executeUpdate();
             statement.close();
-            statement = connection.prepareStatement("CREATE DATABASE " + Common.getInstance().getMainConfig().getString("System.Database.Db",""));
+            statement = connection.prepareStatement("CREATE DATABASE " + Common.getInstance().getMainConfig().getString("System.Database.Db", ""));
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

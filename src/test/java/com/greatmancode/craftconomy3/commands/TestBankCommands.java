@@ -1,20 +1,20 @@
 /**
  * This file is part of Craftconomy3.
- *
+ * <p>
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
  * Copyright (c) 2018, Pavog <http://github.com/pavog/>
- *
+ * <p>
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Lesser General Public License
  * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,6 +26,7 @@ import com.greatmancode.craftconomy3.TestCommandSender;
 import com.greatmancode.craftconomy3.TestInitializator;
 import com.greatmancode.craftconomy3.account.Account;
 import com.greatmancode.craftconomy3.commands.bank.*;
+import com.greatmancode.craftconomy3.currency.Currency;
 import com.greatmancode.tools.commands.PlayerCommandSender;
 import org.junit.After;
 import org.junit.Before;
@@ -47,8 +48,8 @@ public class TestBankCommands {
     public void setUp() {
         new TestInitializator();
         System.out.println("Initialized");
-        TEST_USER = new PlayerCommandSender<>("testuser39",testUUIDUser,new TestCommandSender(testUUIDUser,"testuser39"));
-        TEST_USER2 = new PlayerCommandSender<>("testuser40",testUUIDUser2,new TestCommandSender(testUUIDUser2,"testuser40"));
+        TEST_USER = new PlayerCommandSender<>("testuser39", testUUIDUser, new TestCommandSender(testUUIDUser, "testuser39"));
+        TEST_USER2 = new PlayerCommandSender<>("testuser40", testUUIDUser2, new TestCommandSender(testUUIDUser2, "testuser40"));
     }
 
     @After
@@ -120,9 +121,15 @@ public class TestBankCommands {
     public void testBankBalanceCommand() {
         BankBalanceCommand command = new BankBalanceCommand("balance");
         Common.getInstance().getAccountManager().getAccount(BANK_ACCOUNT, true);
+
+        // Test own balance
         command.execute(TEST_USER, new String[]{BANK_ACCOUNT});
+
+        // Test unknown player's balance
         command.execute(TEST_USER, new String[]{"unknown"});
 
+        // Test others balance
+        command.execute(TEST_USER2, new String[]{TEST_USER.getName()});
     }
 
     @Test
@@ -151,12 +158,15 @@ public class TestBankCommands {
         Account bank = Common.getInstance().getAccountManager().getAccount(BANK_LIST_ACC, true);
         bank.getAccountACL().set(BANK_LIST_USER, true, true, true, true, true);
         assertEquals(Common.getInstance().getStorageHandler().getStorageEngine().getBankAccountList(BANK_LIST_USER).length, 1);
+
+        BankListCommand command = new BankListCommand("list");
+        command.execute(TEST_USER, new String[]{});
     }
 
     @Test
     public void testBankPermCommand() {
         BankPermCommand command = new BankPermCommand("permission");
-        Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(),false).set(200, "default", Common.getInstance
+        Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false).set(200, "default", Common.getInstance
                 ().getCurrencyManager().getDefaultCurrency().getName(), Cause.USER, "greatman");
         new BankCreateCommand("create").execute(TEST_USER, new String[]{BANK_ACCOUNT});
         Account account = Common.getInstance().getAccountManager().getAccount(BANK_ACCOUNT, true);
@@ -222,7 +232,7 @@ public class TestBankCommands {
     @Test
     public void testBankWithdrawCommand() {
         BankWithdrawCommand command = new BankWithdrawCommand("withdraw");
-        Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(),false).set(200, "default", Common.getInstance
+        Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false).set(200, "default", Common.getInstance
                 ().getCurrencyManager().getDefaultCurrency().getName(), Cause.USER, "greatman");
         new BankCreateCommand("create").execute(TEST_USER, new String[]{BANK_ACCOUNT});
         Account account = Common.getInstance().getAccountManager().getAccount(BANK_ACCOUNT, true);
@@ -233,9 +243,16 @@ public class TestBankCommands {
 
     @Test
     public void testBankDeleteCommand() {
+        // Create test bank account
+        Currency currency = Common.getInstance().getCurrencyManager().getDefaultCurrency();
+        Account account = Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
+        account.set(Common.getInstance().getBankPrice(), "UnitTestWorld", currency.getName(), Cause.PLUGIN, "Unittest");
         new BankCreateCommand("create").execute(TEST_USER, new String[]{BANK_ACCOUNT});
+        assertTrue(Common.getInstance().getAccountManager().exist(BANK_ACCOUNT, true));
+
+        // Delete the account
         BankDeleteCommand command = new BankDeleteCommand("delete");
-        command.execute(TEST_USER, new String[] {BANK_ACCOUNT});
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT});
         assertFalse(Common.getInstance().getAccountManager().exist(BANK_ACCOUNT, true));
     }
 }
