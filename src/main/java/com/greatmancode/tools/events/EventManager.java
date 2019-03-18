@@ -83,7 +83,7 @@ public class EventManager {
                     if (parameters.length == 1) {
                         for (Class<?> parameter : parameters) {
                             if (Event.class.isAssignableFrom(parameter)) {
-                                eventManager.eventRegistered(((Class<Event>) parameter).getName(), serverCaller);
+                                eventManager.eventRegistered(parameter.getName(), serverCaller);
                                 if (eventList.containsKey(parameter.getName())) {
                                     eventList.get(parameter.getName()).addListener(listener, method);
                                 } else {

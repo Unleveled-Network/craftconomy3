@@ -58,7 +58,7 @@ public class UnitTestServerCaller extends ServerCaller {
 
     @Override
     public boolean worldExist(String worldName) {
-        return worldName.equalsIgnoreCase(this.worldName) || worldName.equalsIgnoreCase(worldName2);
+        return worldName.equalsIgnoreCase(UnitTestServerCaller.worldName) || worldName.equalsIgnoreCase(worldName2);
     }
 
     @Override

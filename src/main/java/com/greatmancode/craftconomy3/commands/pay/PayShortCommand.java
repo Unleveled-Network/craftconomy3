@@ -30,13 +30,12 @@ import lombok.Getter;
 import java.util.*;
 
 public class PayShortCommand extends SubCommand {
-    private Map<String, Command> commandList = new HashMap<String, Command>();
+    private Map<String, Command> commandList = new HashMap<>();
     private CommandHandler commandHandler;
     private SubCommand parent;
     @Getter
     private String name;
     private int level;
-    private String subCommandList;
 
     public PayShortCommand(String name, CommandHandler commandHandler, SubCommand parent, int level){
       super(name, commandHandler, parent, level);

@@ -91,7 +91,7 @@ public class OldFormatConverter {
         ResultSet set = statement.executeQuery();
         JSONArray array = new JSONArray();
         while (set.next()) {
-            HashMap<String,Object> entry_map = new HashMap<String,Object>();
+            HashMap<String,Object> entry_map = new HashMap<>();
             entry_map.put("id", set.getInt("id"));
             entry_map.put("name", set.getString("name"));
             entry_map.put("plural", set.getString("plural"));

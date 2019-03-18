@@ -43,7 +43,7 @@ public class Tools {
         try {
             Integer.parseInt(number);
             result = true;
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ignored) {
         }
         return result;
     }
@@ -59,7 +59,7 @@ public class Tools {
         try {
             Long.parseLong(number);
             result = true;
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException ignored) {
         }
         return result;
     }
@@ -76,7 +76,7 @@ public class Tools {
             try {
                 Double.parseDouble(number);
                 result = true;
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException ignored) {
             }
         }
         return result;
@@ -123,14 +123,14 @@ public class Tools {
     public static void closeJDBCConnection(Connection connection) {
         try {
             if (connection != null) connection.close();
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
         }
     }
 
     public static void closeJDBCStatement(PreparedStatement statement) {
         try {
             if (statement != null) statement.close();
-        } catch (SQLException e) {
+        } catch (SQLException ignored) {
 
         }
     }

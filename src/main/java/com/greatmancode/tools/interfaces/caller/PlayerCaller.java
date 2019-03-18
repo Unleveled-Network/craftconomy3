@@ -174,8 +174,8 @@ public abstract class PlayerCaller {
     /**
      * Return the player name for a specific uuid
      *
-     * @param uuid
-     * @return
+     * @param uuid UUID of the player
+     * @return The players name
      */
     public abstract String getPlayerName(UUID uuid);
     
@@ -189,13 +189,13 @@ public abstract class PlayerCaller {
     /**
      *
      * @param name name of online player to check
-     * @return
+     * @return The player
      */
     public abstract Player getOnlinePlayer(String name);
     
     /**
      * @param uuid uuid of online player to check
-     * @return
+     * @return The player
      */
     public abstract Player getOnlinePlayer(UUID uuid);
     

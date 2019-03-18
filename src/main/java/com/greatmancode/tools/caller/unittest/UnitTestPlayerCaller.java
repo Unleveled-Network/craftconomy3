@@ -38,11 +38,6 @@ public class UnitTestPlayerCaller extends PlayerCaller {
     }
 
     @Override
-    public ServerCaller getCaller() {
-        return super.getCaller();
-    }
-
-    @Override
     public boolean checkPermission(String playerName, String perm) {
         // TODO Auto-generated method stub
         return false;
