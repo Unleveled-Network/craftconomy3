@@ -26,7 +26,6 @@ import com.greatmancode.craftconomy3.account.Account;
 import com.greatmancode.craftconomy3.commands.AbstractCommand;
 import com.greatmancode.craftconomy3.currency.Currency;
 import com.greatmancode.tools.commands.CommandSender;
-import com.greatmancode.tools.commands.interfaces.CommandExecutor;
 import com.greatmancode.tools.utils.Tools;
 
 public class BankTakeCommand extends AbstractCommand {

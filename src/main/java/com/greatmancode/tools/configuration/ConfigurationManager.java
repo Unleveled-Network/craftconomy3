@@ -18,8 +18,6 @@
  */
 package com.greatmancode.tools.configuration;
 
-import com.greatmancode.tools.caller.bukkit.BukkitServerCaller;
-import com.greatmancode.tools.caller.unittest.UnitTestServerCaller;
 import com.greatmancode.tools.configuration.bukkit.BukkitConfig;
 import com.greatmancode.tools.interfaces.caller.ServerCaller;
 

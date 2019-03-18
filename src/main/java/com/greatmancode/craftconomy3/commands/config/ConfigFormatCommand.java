@@ -24,7 +24,6 @@ import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.DisplayFormat;
 import com.greatmancode.craftconomy3.commands.AbstractCommand;
 import com.greatmancode.tools.commands.CommandSender;
-import com.greatmancode.tools.commands.interfaces.CommandExecutor;
 
 public class ConfigFormatCommand extends AbstractCommand {
     public ConfigFormatCommand(String name) {

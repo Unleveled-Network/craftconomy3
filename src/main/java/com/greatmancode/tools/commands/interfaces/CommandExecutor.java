@@ -19,7 +19,6 @@
 package com.greatmancode.tools.commands.interfaces;
 
 import com.greatmancode.tools.commands.CommandSender;
-import com.greatmancode.tools.interfaces.Common;
 
 import lombok.Getter;
 

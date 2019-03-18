@@ -4,7 +4,6 @@ import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.currency.Currency;
 import com.greatmancode.tools.commands.CommandSender;
 import com.greatmancode.tools.commands.interfaces.CommandExecutor;
-import org.bukkit.World;
 
 /**
  * Created for use for the Add5tar MC Minecraft server

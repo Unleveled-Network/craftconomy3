@@ -19,8 +19,6 @@
 package com.greatmancode.tools.utils;
 
 import be.maximvdw.placeholderapi.PlaceholderAPI;
-import be.maximvdw.placeholderapi.PlaceholderReplaceEvent;
-import be.maximvdw.placeholderapi.PlaceholderReplacer;
 import com.greatmancode.tools.interfaces.BukkitLoader;
 import com.greatmancode.tools.interfaces.Loader;
 import lombok.AllArgsConstructor;

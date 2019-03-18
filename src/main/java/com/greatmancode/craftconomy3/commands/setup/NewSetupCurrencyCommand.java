@@ -25,7 +25,6 @@ import com.greatmancode.craftconomy3.NewSetupWizard;
 import com.greatmancode.craftconomy3.commands.AbstractCommand;
 import com.greatmancode.craftconomy3.currency.Currency;
 import com.greatmancode.tools.commands.CommandSender;
-import com.greatmancode.tools.commands.interfaces.CommandExecutor;
 
 import java.util.HashMap;
 import java.util.Map;

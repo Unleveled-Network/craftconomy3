@@ -20,11 +20,9 @@
  */
 package com.greatmancode.craftconomy3.commands.setup;
 
-import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.NewSetupWizard;
 import com.greatmancode.craftconomy3.commands.AbstractCommand;
 import com.greatmancode.tools.commands.CommandSender;
-import com.greatmancode.tools.commands.interfaces.CommandExecutor;
 
 public class NewSetupMainCommand extends AbstractCommand {
     public NewSetupMainCommand(String name) {

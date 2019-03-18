@@ -24,7 +24,6 @@ import com.greatmancode.craftconomy3.Cause;
 import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.LogInfo;
 import com.greatmancode.craftconomy3.currency.Currency;
-import com.greatmancode.craftconomy3.storage.sql.tables.BalanceTable;
 import com.greatmancode.tools.events.event.EconomyChangeEvent;
 
 import java.util.List;
@@ -205,7 +204,6 @@ public class Account {
      * @return The new balance. If the account has infinite money. Double.MAX_VALUE is returned.
      */
     public double withdraw(double amount, String world, String currencyName, Cause cause, String causeReason) {
-        BalanceTable balanceTable;
         double result = getBalance(world,currencyName) - format(amount);
         if (!Common.getInstance().getWorldGroupManager().worldGroupExist(world)) {
             world = Common.getInstance().getWorldGroupManager().getWorldGroupName(world);

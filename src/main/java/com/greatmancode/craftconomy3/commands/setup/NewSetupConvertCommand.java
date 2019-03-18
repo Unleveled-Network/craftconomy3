@@ -26,7 +26,6 @@ import com.greatmancode.craftconomy3.commands.AbstractCommand;
 import com.greatmancode.craftconomy3.converter.Converter;
 import com.greatmancode.craftconomy3.converter.ConverterList;
 import com.greatmancode.tools.commands.CommandSender;
-import com.greatmancode.tools.commands.interfaces.CommandExecutor;
 
 import java.util.Iterator;
 import java.util.List;

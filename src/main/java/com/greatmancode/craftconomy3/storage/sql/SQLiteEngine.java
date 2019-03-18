@@ -34,7 +34,6 @@ import com.greatmancode.craftconomy3.currency.Currency;
 import com.greatmancode.craftconomy3.groups.WorldGroup;
 import com.greatmancode.craftconomy3.storage.StorageEngine;
 import com.greatmancode.craftconomy3.storage.sql.tables.ConfigTable;
-import com.greatmancode.craftconomy3.utils.NoExchangeRate;
 import com.greatmancode.tools.utils.Tools;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

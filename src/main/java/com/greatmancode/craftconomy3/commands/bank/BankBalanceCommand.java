@@ -26,7 +26,6 @@ import com.greatmancode.craftconomy3.account.Balance;
 import com.greatmancode.craftconomy3.commands.AbstractCommand;
 import com.greatmancode.tools.commands.CommandSender;
 import com.greatmancode.tools.commands.PlayerCommandSender;
-import com.greatmancode.tools.commands.interfaces.CommandExecutor;
 
 import java.util.UUID;
 
