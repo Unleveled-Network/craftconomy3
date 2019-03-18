@@ -27,6 +27,7 @@ import com.greatmancode.craftconomy3.TestInitializator;
 import com.greatmancode.craftconomy3.account.Account;
 import com.greatmancode.craftconomy3.commands.bank.*;
 import com.greatmancode.craftconomy3.currency.Currency;
+import com.greatmancode.tools.caller.unittest.UnitTestPlayerCaller;
 import com.greatmancode.tools.commands.PlayerCommandSender;
 import org.junit.After;
 import org.junit.Before;
@@ -128,8 +129,26 @@ public class TestBankCommands {
         // Test unknown player's balance
         command.execute(TEST_USER, new String[]{"unknown"});
 
-        // Test others balance
-        command.execute(TEST_USER2, new String[]{TEST_USER.getName()});
+        // Test other (empty) account balance
+        final String otherTestAccountName = "othertestbankaccount";
+        Account otherAccount = Common.getInstance().getAccountManager().getAccount(otherTestAccountName, true);
+        otherAccount.getAccountACL().set(TEST_USER2.getName(), true, true, true, true, true);
+        otherAccount.getAccountACL().set(TEST_USER.getName(), true, true, true, true, false);
+        command.execute(TEST_USER, new String[]{otherTestAccountName});
+
+        // Test other account with balance
+        final String defaultBankCurrencyName = Common.getInstance().getCurrencyManager().getDefaultBankCurrency().getName();
+        otherAccount.set(100, "unittestworld", defaultBankCurrencyName, Cause.UNKNOWN, "unittest");
+        command.execute(TEST_USER, new String[]{otherTestAccountName});
+
+        // Test the other account without ACL but with permissions
+        otherAccount.getAccountACL().set(TEST_USER.getName(), false, false, false, false, false);
+        if (Common.getInstance().getServerCaller().getPlayerCaller() instanceof UnitTestPlayerCaller) {
+            UnitTestPlayerCaller unitTestPlayerCaller = (UnitTestPlayerCaller) Common.getInstance().getServerCaller().getPlayerCaller();
+            unitTestPlayerCaller.addPermission(TEST_USER.getUuid(), "craftconomy.bank.balance.others");
+
+            command.execute(TEST_USER, new String[]{otherTestAccountName});
+        }
     }
 
     @Test
@@ -246,7 +265,7 @@ public class TestBankCommands {
         // Create test bank account
         Currency currency = Common.getInstance().getCurrencyManager().getDefaultCurrency();
         Account account = Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
-        account.set(Common.getInstance().getBankPrice(), "UnitTestWorld", currency.getName(), Cause.PLUGIN, "Unittest");
+        account.set(Common.getInstance().getBankPrice(), "UnitTestWorld", currency.getName(), Cause.UNKNOWN, "Unittest");
         new BankCreateCommand("create").execute(TEST_USER, new String[]{BANK_ACCOUNT});
         assertTrue(Common.getInstance().getAccountManager().exist(BANK_ACCOUNT, true));
 
@@ -254,5 +273,22 @@ public class TestBankCommands {
         BankDeleteCommand command = new BankDeleteCommand("delete");
         command.execute(TEST_USER, new String[]{BANK_ACCOUNT});
         assertFalse(Common.getInstance().getAccountManager().exist(BANK_ACCOUNT, true));
+
+
+        // Create other test bank account
+        Account testAccount2 = Common.getInstance().getAccountManager().getAccount(TEST_USER2.getName(), false);
+        testAccount2.set(Common.getInstance().getBankPrice(), "UnitTestWorld", currency.getName(), Cause.UNKNOWN, "Unittest");
+        final String testBankAccountName2 = "othertestbankaccount";
+        new BankCreateCommand("create").execute(TEST_USER2, new String[]{testBankAccountName2});
+        assertTrue(Common.getInstance().getAccountManager().exist(testBankAccountName2, true));
+
+        // Test access to other account without ACL but with permissions
+        if (Common.getInstance().getServerCaller().getPlayerCaller() instanceof UnitTestPlayerCaller) {
+            UnitTestPlayerCaller unitTestPlayerCaller = (UnitTestPlayerCaller) Common.getInstance().getServerCaller().getPlayerCaller();
+            unitTestPlayerCaller.addPermission(TEST_USER.getUuid(), "craftconomy.bank.delete.admin");
+
+            command.execute(TEST_USER, new String[]{testBankAccountName2});
+            assertFalse(Common.getInstance().getAccountManager().exist(testBankAccountName2, true));
+        }
     }
 }
