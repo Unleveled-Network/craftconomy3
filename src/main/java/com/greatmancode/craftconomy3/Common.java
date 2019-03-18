@@ -329,7 +329,7 @@ public class Common implements com.greatmancode.tools.interfaces.Common {
                 if (Long.parseLong(coin) > 1) {
                     subName = currency.getMinorPlural();
                 }
-                string.append(amount).append(" ").append(name).append(" ").append(Long.toString(Long.parseLong(coin))).append(" ").append(subName);
+                string.append(amount).append(" ").append(name).append(" ").append(Long.parseLong(coin)).append(" ").append(subName);
             } else if (format == DisplayFormat.SMALL) {
                 string.append(amount).append(".").append(coin).append(" ").append(name);
             } else if (format == DisplayFormat.SIGN) {
@@ -411,7 +411,6 @@ public class Common implements com.greatmancode.tools.interfaces.Common {
     public void startUp() {
         sendConsoleMessage(Level.INFO, getLanguageManager().getString("loading_account_manager"));
         accountManager = new AccountManager();
-        //addMetricsGraph("Multiworld", getConfigurationManager().isMultiWorld());
         sendConsoleMessage(Level.INFO, getLanguageManager().getString("account_manager_loaded"));
         eventManager = new EventManager();
         initializeWorldGroup();
@@ -903,11 +902,7 @@ public class Common implements com.greatmancode.tools.interfaces.Common {
                     getMainConfig().setValue("Database.dbVersion", 1);
                     sendConsoleMessage(Level.INFO, "Updated to Revision 1!");
 
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ParseException e) {
+                } catch (SQLException | ParseException | IOException e) {
                     e.printStackTrace();
                 }
             } else {
@@ -921,9 +916,7 @@ public class Common implements com.greatmancode.tools.interfaces.Common {
                     getMainConfig().setValue("Database.dbVersion", 1);
                     sendConsoleMessage(Level.INFO, "Updated to Revision 1!");
 
-                }  catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ParseException e) {
+                }  catch (IOException | ParseException e) {
                     e.printStackTrace();
                 }
         }
