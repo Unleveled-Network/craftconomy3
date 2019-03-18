@@ -172,7 +172,7 @@ public class SpongeServerCaller extends ServerCaller {
 
     @Override
     public boolean worldExist(String worldName) {
-        return ((SpongeLoader)loader).getGame().getServer().getWorld(worldName) != null;
+        return ((SpongeLoader) loader).getGame().getServer().getWorld(worldName).isPresent();
     }
 
     @Override

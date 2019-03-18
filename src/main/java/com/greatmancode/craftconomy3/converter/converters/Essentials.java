@@ -58,7 +58,7 @@ public class Essentials extends Converter {
             }
         });
         List<User> userList = new ArrayList<>();
-        Common.getInstance().getLogger().info("Amount of accounts found:" + accounts.length);
+        Common.getInstance().getLogger().info("Amount of accounts found:" + (accounts != null ? accounts.length : 0));
         int i = 0;
         String line;
         for (File account : accounts) {
@@ -99,8 +99,6 @@ public class Essentials extends Converter {
                 }
                 i++;
                 reader.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
