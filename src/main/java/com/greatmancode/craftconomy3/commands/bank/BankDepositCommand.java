@@ -27,7 +27,6 @@ import com.greatmancode.craftconomy3.commands.AbstractCommand;
 import com.greatmancode.craftconomy3.currency.Currency;
 import com.greatmancode.tools.commands.CommandSender;
 import com.greatmancode.tools.commands.PlayerCommandSender;
-import com.greatmancode.tools.entities.Player;
 import com.greatmancode.tools.utils.Tools;
 
 public class BankDepositCommand extends AbstractCommand {
@@ -39,7 +38,7 @@ public class BankDepositCommand extends AbstractCommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if(sender instanceof PlayerCommandSender) {
-            PlayerCommandSender player = (Player) sender;
+            PlayerCommandSender player = (PlayerCommandSender) sender;
             if (Common.getInstance().getAccountManager().exist(args[0], true)) {
                 Account bankAccount = Common.getInstance().getAccountManager().getAccount(args[0], true);
                 if (bankAccount.getAccountACL().canDeposit(player.getName()) ||

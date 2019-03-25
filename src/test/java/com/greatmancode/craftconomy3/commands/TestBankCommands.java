@@ -153,7 +153,47 @@ public class TestBankCommands {
 
     @Test
     public void testBankDepositCommand() {
-        // TODO
+        // Create test bank account
+        Currency currency = Common.getInstance().getCurrencyManager().getDefaultCurrency();
+        Account account = Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
+        account.set(Common.getInstance().getBankPrice(), "UnitTestWorld", currency.getName(), Cause.UNKNOWN, "Unittest");
+        new BankCreateCommand("create").execute(TEST_USER, new String[]{BANK_ACCOUNT});
+        assertEquals(0, account.getBalance("UnitTestWorld", currency.getName()), 0);
+
+        assertTrue(Common.getInstance().getAccountManager().exist(BANK_ACCOUNT, true));
+        Account bankAccount = Common.getInstance().getAccountManager().getAccount(BANK_ACCOUNT, true);
+
+        // Give some money for deposit tests
+        account.set(1000, "UnitTestWorld", currency.getName(), Cause.UNKNOWN, "Unittest");
+
+        // Test command
+        BankDepositCommand command = new BankDepositCommand("deposit");
+
+        double accountBalanceBeforeDeposit = account.getBalance("UnitTestWorld", currency.getName());
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "100", currency.getName()});
+        assertEquals(100, bankAccount.getBalance("UnitTestWorld", currency.getName()), 0);
+        double accountBalanceAfterDeposit = account.getBalance("UnitTestWorld", currency.getName());
+        assertEquals(accountBalanceBeforeDeposit, accountBalanceAfterDeposit, 100);
+
+        // Test without name of the currency
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "100"});
+        assertEquals(200, bankAccount.getBalance("UnitTestWorld", currency.getName()), 0);
+
+        // Test with unkown account
+        command.execute(TEST_USER, new String[]{"unknownaccount", "100"});
+        assertEquals(200, bankAccount.getBalance("UnitTestWorld", currency.getName()), 0);
+        // Test without permission
+        bankAccount.getAccountACL().set(TEST_USER.getName(), false, false, false, false, false);
+        command.execute(TEST_USER, new String[]{"unknownaccount", "100"});
+        bankAccount.getAccountACL().set(TEST_USER.getName(), true, true, true, true, true);
+        assertEquals(200, bankAccount.getBalance("UnitTestWorld", currency.getName()), 0);
+        // Test with invalid amount
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "abc"});
+        assertEquals(200, bankAccount.getBalance("UnitTestWorld", currency.getName()), 0);
+        // Test without enough money
+        account.set(0, "UnitTestWorld", currency.getName(), Cause.UNKNOWN, "Unittest");
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "100"});
+        assertEquals(200, bankAccount.getBalance("UnitTestWorld", currency.getName()), 0);
     }
 
     @Test
@@ -268,9 +308,16 @@ public class TestBankCommands {
         account.set(Common.getInstance().getBankPrice(), "UnitTestWorld", currency.getName(), Cause.UNKNOWN, "Unittest");
         new BankCreateCommand("create").execute(TEST_USER, new String[]{BANK_ACCOUNT});
         assertTrue(Common.getInstance().getAccountManager().exist(BANK_ACCOUNT, true));
+        Account bankAccount = Common.getInstance().getAccountManager().getAccount(BANK_ACCOUNT, true);
+        bankAccount.set(100, "UnitTestWorld", currency.getName(), Cause.UNKNOWN, "Unittest");
 
         // Delete the account
         BankDeleteCommand command = new BankDeleteCommand("delete");
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT});
+        assertFalse(Common.getInstance().getAccountManager().exist(BANK_ACCOUNT, true));
+
+        // Try to delete account that does not exist
+        assertFalse(Common.getInstance().getAccountManager().exist(BANK_ACCOUNT, true));
         command.execute(TEST_USER, new String[]{BANK_ACCOUNT});
         assertFalse(Common.getInstance().getAccountManager().exist(BANK_ACCOUNT, true));
 
@@ -281,6 +328,12 @@ public class TestBankCommands {
         final String testBankAccountName2 = "othertestbankaccount";
         new BankCreateCommand("create").execute(TEST_USER2, new String[]{testBankAccountName2});
         assertTrue(Common.getInstance().getAccountManager().exist(testBankAccountName2, true));
+
+        // Test access to other account without ACL and without permissions
+        if (Common.getInstance().getServerCaller().getPlayerCaller() instanceof UnitTestPlayerCaller) {
+            command.execute(TEST_USER, new String[]{testBankAccountName2});
+            assertTrue(Common.getInstance().getAccountManager().exist(testBankAccountName2, true));
+        }
 
         // Test access to other account without ACL but with permissions
         if (Common.getInstance().getServerCaller().getPlayerCaller() instanceof UnitTestPlayerCaller) {

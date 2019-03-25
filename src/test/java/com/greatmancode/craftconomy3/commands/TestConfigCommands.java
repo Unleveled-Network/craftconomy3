@@ -25,6 +25,7 @@ import com.greatmancode.craftconomy3.DisplayFormat;
 import com.greatmancode.craftconomy3.TestCommandSender;
 import com.greatmancode.craftconomy3.TestInitializator;
 import com.greatmancode.craftconomy3.commands.config.ConfigBankPriceCommand;
+import com.greatmancode.craftconomy3.commands.config.ConfigClearLogCommand;
 import com.greatmancode.craftconomy3.commands.config.ConfigFormatCommand;
 import com.greatmancode.craftconomy3.commands.config.ConfigHoldingsCommand;
 import com.greatmancode.tools.commands.PlayerCommandSender;
@@ -53,6 +54,15 @@ public class TestConfigCommands {
     @After
     public void close() {
         Common.getInstance().onDisable();
+    }
+
+    @Test
+    public void testClearLogCommand() {
+        ConfigClearLogCommand command = new ConfigClearLogCommand("clearlog");
+        command.execute(TEST_USER, new String[] {"1"});
+
+        // Test with invalid argument
+        command.execute(TEST_USER, new String[] {"a"});
     }
 
     @Test
