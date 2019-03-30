@@ -105,17 +105,30 @@ public class TestBankCommands {
     public void testBankTakeCommand() {
         BankTakeCommand command = new BankTakeCommand("take");
         Common.getInstance().getAccountManager().getAccount(BANK_ACCOUNT, true);
+        String defaultCurrencyName = Common.getInstance().getCurrencyManager().getDefaultCurrency().getName();
+        Account bankAccount = Common.getInstance().getAccountManager().getAccount(BANK_ACCOUNT, true);
+        final double initialValue = 10000;
+        bankAccount.set(initialValue, "UnitTestWorld", defaultCurrencyName, Cause.UNKNOWN, "Unittest");
+        // Account exists
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "wow"});
+        assertEquals(initialValue, bankAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
         command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "100"});
-        assertEquals(0, Common.getInstance().getAccountManager().getAccount(BANK_ACCOUNT, true).getBalance(Account
-                .getWorldGroupOfPlayerCurrentlyIn(TEST_USER.getUuid()), Common.getInstance().getCurrencyManager()
-                .getDefaultCurrency().getName()), 0);
-        Common.getInstance().getAccountManager().getAccount(BANK_ACCOUNT, true).deposit(200, Account
-                .getWorldGroupOfPlayerCurrentlyIn(TEST_USER.getUuid()), Common.getInstance().getCurrencyManager()
-                .getDefaultCurrency().getName(), Cause.UNKNOWN, "unittest");
-        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "100"});
-        assertEquals(100, Common.getInstance().getAccountManager().getAccount(BANK_ACCOUNT, true).getBalance(Account
-                .getWorldGroupOfPlayerCurrentlyIn(TEST_USER.getUuid()), Common.getInstance().getCurrencyManager()
-                .getDefaultCurrency().getName()), 0);
+        assertEquals(initialValue - 100, bankAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        // Account does not exist
+        command.execute(TEST_USER, new String[]{"doesnotexist", "100"});
+        assertEquals(initialValue - 100, bankAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        // Currency exists
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "100", defaultCurrencyName});
+        assertEquals(initialValue - 200, bankAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        // Currency does not exist
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "100", "fake"});
+        assertEquals(initialValue - 200, bankAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        // World exists
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "100", defaultCurrencyName, "UnitTestWorld"});
+        assertEquals(initialValue - 300, bankAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        // World does not exist
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "100", defaultCurrencyName, "MyCustomWorldWithALongName"});
+        assertEquals(initialValue - 300, bankAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
     }
 
     @Test

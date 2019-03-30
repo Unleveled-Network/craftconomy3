@@ -20,9 +20,11 @@
  */
 package com.greatmancode.craftconomy3.commands;
 
+import com.greatmancode.craftconomy3.Cause;
 import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.TestCommandSender;
 import com.greatmancode.craftconomy3.TestInitializator;
+import com.greatmancode.craftconomy3.account.Account;
 import com.greatmancode.craftconomy3.commands.money.*;
 import com.greatmancode.tools.commands.PlayerCommandSender;
 import org.junit.After;
@@ -112,18 +114,59 @@ public class TestMoneyCommands {
     }
 
     @Test
-    public void testInfiniteCommand() {
-        // TODO Test if this worked (with accountmanager)
+    public void testTakeCommand() {
+        Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
+        String defaultCurrencyName = Common.getInstance().getCurrencyManager().getDefaultCurrency().getName();
+        Account testAccount = Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
+        double initialValue = testAccount.getBalance("UnitTestWorld", defaultCurrencyName);
+        TakeCommand command = new TakeCommand("take");
+        command.execute(TEST_USER, new String[]{TEST_USER.getName(), "200"});
+        assertEquals(initialValue - 200, testAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        command.execute(TEST_USER, new String[]{TEST_USER.getName(), "di3"});
+        assertEquals(initialValue - 200, testAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "200"});
+        assertEquals(initialValue - 200, testAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        // Currency exists
+        command.execute(TEST_USER, new String[]{TEST_USER.getName(), "200", defaultCurrencyName});
+        assertEquals(initialValue - 400, testAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        // Currency does not exist
+        command.execute(TEST_USER, new String[]{TEST_USER.getName(), "200", "fake"});
+        assertEquals(initialValue - 400, testAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        // World exists
+        command.execute(TEST_USER, new String[]{TEST_USER.getName(), "200", defaultCurrencyName, "UnitTestWorld"});
+        assertEquals(initialValue - 600, testAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        // World does not exist
+        command.execute(TEST_USER, new String[]{TEST_USER.getName(), "200", defaultCurrencyName, "MyCustomWorldWithALongName"});
+        assertEquals(initialValue - 600, testAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+    }
 
+    @Test
+    public void testInfiniteCommand() {
         InfiniteCommand command = new InfiniteCommand("infinite");
+        String defaultCurrencyName = Common.getInstance().getCurrencyManager().getDefaultCurrency().getName();
 
         // Test with unknown user
         command.execute(TEST_USER, new String[]{"unknown"});
 
+        // Create test account
+        Account testAccount = Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
+        testAccount.set(10000, "UnitTestWorld", defaultCurrencyName, Cause.UNKNOWN, "Unittest");
+
         // Turn on for user
         command.execute(TEST_USER, new String[]{TEST_USER.getName()});
+        assertTrue(testAccount.hasInfiniteMoney());
+        final double balanceBeforeWithInfiniteMoney = testAccount.getBalance("UnitTestWorld", defaultCurrencyName);
+        TakeCommand takeCommandWithInfiniteMoney = new TakeCommand("take");
+        takeCommandWithInfiniteMoney.execute(TEST_USER2, new String[]{TEST_USER.getName(), "100", defaultCurrencyName, "TestUnitWorld"});
+        assertEquals(testAccount.getBalance("UnitTestWorld", defaultCurrencyName), balanceBeforeWithInfiniteMoney, 0);
+
         // Turn off for user
         command.execute(TEST_USER, new String[]{TEST_USER.getName()});
+        assertFalse(testAccount.hasInfiniteMoney());
+        final double balanceBeforeWithoutInfiniteMoney = testAccount.getBalance("UnitTestWorld", defaultCurrencyName);
+        TakeCommand takeCommandWithoutInfiniteMoney = new TakeCommand("take");
+        takeCommandWithoutInfiniteMoney.execute(TEST_USER2, new String[]{TEST_USER.getName(), "100", defaultCurrencyName, "TestUnitWorld"});
+        assertEquals(testAccount.getBalance("UnitTestWorld", defaultCurrencyName), balanceBeforeWithoutInfiniteMoney, 100);
     }
 
     @Test
@@ -145,6 +188,15 @@ public class TestMoneyCommands {
         command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "100"});
         // Test with other user and default currency
         command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "100", defaultCurrencyName});
+    }
+
+    @Test
+    public void testAllCommand() {
+        Account testAccount1 = Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
+        Account testAccount2 = Common.getInstance().getAccountManager().getAccount(TEST_USER2.getName(), false);
+
+        AllCommand command = new AllCommand("all");
+        command.execute(TEST_USER, new String[]{});
     }
 
     private PlayerCommandSender createTestUser(String name) {
