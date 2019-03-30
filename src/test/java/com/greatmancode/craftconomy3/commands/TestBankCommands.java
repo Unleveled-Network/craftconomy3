@@ -117,6 +117,9 @@ public class TestBankCommands {
         // Account does not exist
         command.execute(TEST_USER, new String[]{"doesnotexist", "100"});
         assertEquals(initialValue - 100, bankAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        // Try to take more money than the account has
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "999999"});
+        assertEquals(initialValue - 100, bankAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
         // Currency exists
         command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "100", defaultCurrencyName});
         assertEquals(initialValue - 200, bankAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);

@@ -118,13 +118,17 @@ public class TestMoneyCommands {
         Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
         String defaultCurrencyName = Common.getInstance().getCurrencyManager().getDefaultCurrency().getName();
         Account testAccount = Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
-        double initialValue = testAccount.getBalance("UnitTestWorld", defaultCurrencyName);
+        final double initialValue = 10000;
+        testAccount.set(initialValue, "UnitTestWorld", defaultCurrencyName, Cause.UNKNOWN, "Unittest");
         TakeCommand command = new TakeCommand("take");
         command.execute(TEST_USER, new String[]{TEST_USER.getName(), "200"});
         assertEquals(initialValue - 200, testAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
         command.execute(TEST_USER, new String[]{TEST_USER.getName(), "di3"});
         assertEquals(initialValue - 200, testAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
         command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "200"});
+        assertEquals(initialValue - 200, testAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        // Try to take more money than the account has
+        command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "999999"});
         assertEquals(initialValue - 200, testAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
         // Currency exists
         command.execute(TEST_USER, new String[]{TEST_USER.getName(), "200", defaultCurrencyName});
