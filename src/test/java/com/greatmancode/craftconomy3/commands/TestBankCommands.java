@@ -262,7 +262,7 @@ public class TestBankCommands {
                 BANK_LIST_ACC = "banklistacc";
         Account bank = Common.getInstance().getAccountManager().getAccount(BANK_LIST_ACC, true);
         bank.getAccountACL().set(BANK_LIST_USER, true, true, true, true, true);
-        assertEquals(Common.getInstance().getStorageHandler().getStorageEngine().getBankAccountList(BANK_LIST_USER).length, 1);
+        assertEquals(1, Common.getInstance().getStorageHandler().getStorageEngine().getBankAccountList(BANK_LIST_USER).length);
 
         BankListCommand command = new BankListCommand("list");
         command.execute(TEST_USER, new String[]{});

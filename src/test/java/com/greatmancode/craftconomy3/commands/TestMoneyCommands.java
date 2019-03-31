@@ -171,7 +171,7 @@ public class TestMoneyCommands {
         final double balanceBeforeWithInfiniteMoney = testAccount.getBalance("UnitTestWorld", defaultCurrencyName);
         TakeCommand takeCommandWithInfiniteMoney = new TakeCommand("take");
         takeCommandWithInfiniteMoney.execute(TEST_USER2, new String[]{TEST_USER.getName(), "100", defaultCurrencyName, "TestUnitWorld"});
-        assertEquals(testAccount.getBalance("UnitTestWorld", defaultCurrencyName), balanceBeforeWithInfiniteMoney, 0);
+        assertEquals(balanceBeforeWithInfiniteMoney, testAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
 
         // Turn off for user
         command.execute(TEST_USER, new String[]{TEST_USER.getName()});
@@ -179,7 +179,7 @@ public class TestMoneyCommands {
         final double balanceBeforeWithoutInfiniteMoney = testAccount.getBalance("UnitTestWorld", defaultCurrencyName);
         TakeCommand takeCommandWithoutInfiniteMoney = new TakeCommand("take");
         takeCommandWithoutInfiniteMoney.execute(TEST_USER2, new String[]{TEST_USER.getName(), "100", defaultCurrencyName, "TestUnitWorld"});
-        assertEquals(testAccount.getBalance("UnitTestWorld", defaultCurrencyName), balanceBeforeWithoutInfiniteMoney, 100);
+        assertEquals(balanceBeforeWithoutInfiniteMoney, testAccount.getBalance("UnitTestWorld", defaultCurrencyName), 100);
     }
 
     @Test
@@ -195,31 +195,31 @@ public class TestMoneyCommands {
 
         // Test with own account name
         command.execute(TEST_USER, new String[]{TEST_USER.getName(), "100"});
-        assertEquals(testAccount1.getBalance("UnitTestWorld", defaultCurrencyName), 100, 0);
+        assertEquals(100, testAccount1.getBalance("UnitTestWorld", defaultCurrencyName), 0);
         // Test with other account name
         command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "100"});
-        assertEquals(testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 100, 0);
+        assertEquals(100, testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 0);
         // Test with invalid account name
         command.execute(TEST_USER, new String[]{"unknownAccount", "200"});
-        assertEquals(testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 100, 0);
+        assertEquals(100, testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 0);
 
         // Test with invalid amount
         command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "abc"});
-        assertEquals(testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 100, 0);
+        assertEquals(100, testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 0);
 
         // Test with currency name
         command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "300", defaultCurrencyName});
-        assertEquals(testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 300, 0);
+        assertEquals(300, testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 0);
         // Test with invalid currency name
         command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "400", "unknowncurrency"});
-        assertEquals(testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 300, 0);
+        assertEquals(300, testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 0);
 
         // Test with world name
         command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "500", defaultCurrencyName, "UnitTestWorld"});
-        assertEquals(testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 500, 0);
+        assertEquals(500, testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 0);
         // Test with invalid world name
         command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "600", defaultCurrencyName, "invalidworld"});
-        assertEquals(testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 500, 0);
+        assertEquals(500, testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 0);
     }
 
     @Test
@@ -257,6 +257,49 @@ public class TestMoneyCommands {
         command.execute(TEST_USER, new String[]{defaultCurrencyName, "1", WorldGroupsManager.DEFAULT_GROUP_NAME});
         // Test with page number and invalid world name
         command.execute(TEST_USER, new String[]{defaultCurrencyName, "abc", "unknownworldgroup"});
+    }
+
+
+    @Test
+    public void testPayCommand() {
+        PayCommand command = new PayCommand("pay");
+        String defaultCurrencyName = Common.getInstance().getCurrencyManager().getDefaultCurrency().getName();
+
+        Account testAccount1 = Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
+        Account testAccount2 = Common.getInstance().getAccountManager().getAccount(TEST_USER2.getName(), false);
+        double initialValue = 1000;
+        testAccount1.set(initialValue, "UnitTestWorld", defaultCurrencyName, Cause.UNKNOWN, "Unittest");
+        testAccount2.set(initialValue, "UnitTestWorld", defaultCurrencyName, Cause.UNKNOWN, "Unittest");
+
+        // Test with own account name
+        command.execute(TEST_USER, new String[]{TEST_USER.getName(), "100"});
+        assertEquals(initialValue, testAccount1.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        // Test with invalid account name
+        command.execute(TEST_USER, new String[]{"unknownAccount", "200"});
+        assertEquals(initialValue, testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        // Test with other account name
+        command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "100"});
+        assertEquals(initialValue - 100, testAccount1.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        assertEquals(initialValue + 100, testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+
+        // Test with invalid amount
+        command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "abc"});
+        assertEquals(initialValue - 100, testAccount1.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        assertEquals(initialValue + 100, testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+
+        // Test with currency name
+        command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "300", defaultCurrencyName});
+        assertEquals(initialValue - 400, testAccount1.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        assertEquals(initialValue + 400, testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        // Test with invalid currency name
+        command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "400", "unknowncurrency"});
+        assertEquals(initialValue - 400, testAccount1.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        assertEquals(initialValue + 400, testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+
+        // Test with too high amount
+        command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "5000", defaultCurrencyName, "UnitTestWorld"});
+        assertEquals(initialValue - 400, testAccount1.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        assertEquals(initialValue + 400, testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 0);
     }
 
     private PlayerCommandSender createTestUser(String name) {
