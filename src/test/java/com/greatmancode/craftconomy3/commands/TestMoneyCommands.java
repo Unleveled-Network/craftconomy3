@@ -26,6 +26,7 @@ import com.greatmancode.craftconomy3.TestCommandSender;
 import com.greatmancode.craftconomy3.TestInitializator;
 import com.greatmancode.craftconomy3.account.Account;
 import com.greatmancode.craftconomy3.commands.money.*;
+import com.greatmancode.craftconomy3.groups.WorldGroupsManager;
 import com.greatmancode.tools.commands.PlayerCommandSender;
 import org.junit.After;
 import org.junit.Before;
@@ -53,6 +54,13 @@ public class TestMoneyCommands {
     @After
     public void close() {
         Common.getInstance().onDisable();
+    }
+
+    @Test
+    public void testMainCommand() {
+        Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
+        MainCommand command = new MainCommand("money");
+        command.execute(TEST_USER, new String[]{});
     }
 
     @Test
@@ -128,6 +136,7 @@ public class TestMoneyCommands {
         command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "200"});
         assertEquals(initialValue - 200, testAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
         // Try to take more money than the account has
+        // TODO: Maybe 999999 is too big or there is something wrong with the permissions
         command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "999999"});
         assertEquals(initialValue - 200, testAccount.getBalance("UnitTestWorld", defaultCurrencyName), 0);
         // Currency exists
@@ -175,32 +184,79 @@ public class TestMoneyCommands {
 
     @Test
     public void testSetCommand() {
-        // TODO Test if this worked (with accountmanager)
-
         SetCommand command = new SetCommand("set");
         String defaultCurrencyName = Common.getInstance().getCurrencyManager().getDefaultCurrency().getName();
 
-        // Test without amount
-        command.execute(TEST_USER, new String[]{TEST_USER.getName()});
+        Account testAccount1 = Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
+        Account testAccount2 = Common.getInstance().getAccountManager().getAccount(TEST_USER2.getName(), false);
+        double initialValue = 1000;
+        testAccount1.set(initialValue, "UnitTestWorld", defaultCurrencyName, Cause.UNKNOWN, "Unittest");
+        testAccount2.set(initialValue, "UnitTestWorld", defaultCurrencyName, Cause.UNKNOWN, "Unittest");
 
-        // Test with own user
+        // Test with own account name
         command.execute(TEST_USER, new String[]{TEST_USER.getName(), "100"});
-        // Test with own user and default currency
-        command.execute(TEST_USER, new String[]{TEST_USER.getName(), "100", defaultCurrencyName});
-
-        // Test with other user
+        assertEquals(testAccount1.getBalance("UnitTestWorld", defaultCurrencyName), 100, 0);
+        // Test with other account name
         command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "100"});
-        // Test with other user and default currency
-        command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "100", defaultCurrencyName});
+        assertEquals(testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 100, 0);
+        // Test with invalid account name
+        command.execute(TEST_USER, new String[]{"unknownAccount", "200"});
+        assertEquals(testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 100, 0);
+
+        // Test with invalid amount
+        command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "abc"});
+        assertEquals(testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 100, 0);
+
+        // Test with currency name
+        command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "300", defaultCurrencyName});
+        assertEquals(testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 300, 0);
+        // Test with invalid currency name
+        command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "400", "unknowncurrency"});
+        assertEquals(testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 300, 0);
+
+        // Test with world name
+        command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "500", defaultCurrencyName, "UnitTestWorld"});
+        assertEquals(testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 500, 0);
+        // Test with invalid world name
+        command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "600", defaultCurrencyName, "invalidworld"});
+        assertEquals(testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 500, 0);
     }
 
     @Test
     public void testAllCommand() {
-        Account testAccount1 = Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
-        Account testAccount2 = Common.getInstance().getAccountManager().getAccount(TEST_USER2.getName(), false);
+        // Create test accounts
+        Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
+        Common.getInstance().getAccountManager().getAccount(TEST_USER2.getName(), false);
 
         AllCommand command = new AllCommand("all");
         command.execute(TEST_USER, new String[]{});
+    }
+
+    @Test
+    public void testTopCommand() {
+        // Create test accounts
+        Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
+        Common.getInstance().getAccountManager().getAccount(TEST_USER2.getName(), false);
+
+        String defaultCurrencyName = Common.getInstance().getCurrencyManager().getDefaultCurrency().getName();
+
+        TopCommand command = new TopCommand("top");
+        // Test without currency
+        command.execute(TEST_USER, new String[]{});
+        // Test with default currency
+        command.execute(TEST_USER, new String[]{defaultCurrencyName});
+        // Test with invalid currency
+        command.execute(TEST_USER, new String[]{"unkowncurrency"});
+
+        // Test with page number
+        command.execute(TEST_USER, new String[]{defaultCurrencyName, "1"});
+        // Test with invalid page number
+        command.execute(TEST_USER, new String[]{defaultCurrencyName, "abc"});
+
+        // Test with page number and world name
+        command.execute(TEST_USER, new String[]{defaultCurrencyName, "1", WorldGroupsManager.DEFAULT_GROUP_NAME});
+        // Test with page number and invalid world name
+        command.execute(TEST_USER, new String[]{defaultCurrencyName, "abc", "unknownworldgroup"});
     }
 
     private PlayerCommandSender createTestUser(String name) {
