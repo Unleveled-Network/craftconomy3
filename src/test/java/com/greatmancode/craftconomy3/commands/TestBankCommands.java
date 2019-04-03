@@ -200,7 +200,7 @@ public class TestBankCommands {
         assertEquals(200, bankAccount.getBalance("UnitTestWorld", currency.getName()), 0);
         // Test without permission
         bankAccount.getAccountACL().set(TEST_USER.getName(), false, false, false, false, false);
-        command.execute(TEST_USER, new String[]{"unknownaccount", "100"});
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "100"});
         bankAccount.getAccountACL().set(TEST_USER.getName(), true, true, true, true, true);
         assertEquals(200, bankAccount.getBalance("UnitTestWorld", currency.getName()), 0);
         // Test with invalid amount
@@ -283,7 +283,7 @@ public class TestBankCommands {
         // Test unknown ACL flag
         command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "unknownflag", TEST_USER2.getName(), "true"});
 
-        
+
         // Test changing ACLs:
 
         // TEST_USER2 does not have any ACL as default
@@ -411,14 +411,81 @@ public class TestBankCommands {
 
     @Test
     public void testBankWithdrawCommand() {
-        BankWithdrawCommand command = new BankWithdrawCommand("withdraw");
-        Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false).set(200, "default", Common.getInstance
-                ().getCurrencyManager().getDefaultCurrency().getName(), Cause.USER, "greatman");
+        // Create test bank account
+        Currency currency = Common.getInstance().getCurrencyManager().getDefaultCurrency();
+        Account account = Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
+        account.set(Common.getInstance().getBankPrice(), "UnitTestWorld", currency.getName(), Cause.UNKNOWN, "Unittest");
         new BankCreateCommand("create").execute(TEST_USER, new String[]{BANK_ACCOUNT});
-        Account account = Common.getInstance().getAccountManager().getAccount(BANK_ACCOUNT, true);
-        account.set(200, "default", Common.getInstance().getCurrencyManager().getDefaultCurrency().getName(), Cause.UNKNOWN, null);
-        account.withdraw(20, "default", Common.getInstance().getCurrencyManager().getDefaultCurrency().getName(), Cause.UNKNOWN, null);
-        assertEquals(180, account.getBalance("default", Common.getInstance().getCurrencyManager().getDefaultCurrency().getName()), 0);
+        assertTrue(Common.getInstance().getAccountManager().exist(BANK_ACCOUNT, true));
+        Account bankAccount = Common.getInstance().getAccountManager().getAccount(BANK_ACCOUNT, true);
+
+        // Give some money for withdraw tests
+        final double initialBalance = 1000;
+        bankAccount.set(initialBalance, "UnitTestWorld", currency.getName(), Cause.UNKNOWN, "Unittest");
+
+        // Test command
+        BankWithdrawCommand command = new BankWithdrawCommand("withdraw");
+
+        double accountBalanceBeforeWithdraw = account.getBalance("UnitTestWorld", currency.getName());
+        double bankAccountBalanceBeforeWithdraw = bankAccount.getBalance("UnitTestWorld", currency.getName());
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "100", currency.getName()});
+        assertEquals(initialBalance - 100, bankAccount.getBalance("UnitTestWorld", currency.getName()), 0);
+        double accountBalanceAfterWithdraw = account.getBalance("UnitTestWorld", currency.getName());
+        double bankAccountBalanceAfterWithdraw = bankAccount.getBalance("UnitTestWorld", currency.getName());
+        assertEquals(accountBalanceBeforeWithdraw + 100, accountBalanceAfterWithdraw, 0);
+        assertEquals(bankAccountBalanceBeforeWithdraw - 100, bankAccountBalanceAfterWithdraw, 0);
+
+        // Test without name of the currency
+        bankAccount.set(initialBalance, "UnitTestWorld", currency.getName(), Cause.UNKNOWN, "Unittest");
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "200"});
+        assertEquals(initialBalance - 200, bankAccount.getBalance("UnitTestWorld", currency.getName()), 0);
+
+        // Test with unkown account
+        bankAccount.set(initialBalance, "UnitTestWorld", currency.getName(), Cause.UNKNOWN, "Unittest");
+        command.execute(TEST_USER, new String[]{"unknownaccount", "100"});
+        assertEquals(initialBalance, bankAccount.getBalance("UnitTestWorld", currency.getName()), 0);
+        // Test without permission
+        bankAccount.getAccountACL().set(TEST_USER.getName(), false, false, false, false, false);
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "100"});
+        bankAccount.getAccountACL().set(TEST_USER.getName(), true, true, true, true, true);
+        assertEquals(initialBalance, bankAccount.getBalance("UnitTestWorld", currency.getName()), 0);
+        // Test with invalid amount
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "abc"});
+        assertEquals(initialBalance, bankAccount.getBalance("UnitTestWorld", currency.getName()), 0);
+        // Test without enough money
+        account.set(0, "UnitTestWorld", currency.getName(), Cause.UNKNOWN, "Unittest");
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "10000"});
+        assertEquals(initialBalance, bankAccount.getBalance("UnitTestWorld", currency.getName()), 0);
+
+
+        // Create other test bank account
+        Account testAccount2 = Common.getInstance().getAccountManager().getAccount(TEST_USER2.getName(), false);
+        testAccount2.set(Common.getInstance().getBankPrice(), "UnitTestWorld", currency.getName(), Cause.UNKNOWN, "Unittest");
+        final String testBankAccountName2 = "othertestbankaccount";
+        new BankCreateCommand("create").execute(TEST_USER2, new String[]{testBankAccountName2});
+        assertTrue(Common.getInstance().getAccountManager().exist(testBankAccountName2, true));
+        Account testBankAccount2 = Common.getInstance().getAccountManager().getAccount(testBankAccountName2, true);
+        testBankAccount2.set(initialBalance, "UnitTestWorld", currency.getName(), Cause.UNKNOWN, "Unittest");
+
+
+        // Test access to other account without ACL and without permissions
+        if (Common.getInstance().getServerCaller().getPlayerCaller() instanceof UnitTestPlayerCaller) {
+            account.set(100, "UnitTestWorld", currency.getName(), Cause.UNKNOWN, "Unittest");
+            command.execute(TEST_USER, new String[]{testBankAccountName2, "100"});
+            assertEquals(initialBalance, testBankAccount2.getBalance("UnitTestWorld", currency.getName()), 0);
+            assertEquals(100, account.getBalance("UnitTestWorld", currency.getName()), 0);
+        }
+
+        // Test access to other account without ACL but with permissions
+        if (Common.getInstance().getServerCaller().getPlayerCaller() instanceof UnitTestPlayerCaller) {
+            account.set(100, "UnitTestWorld", currency.getName(), Cause.UNKNOWN, "Unittest");
+            UnitTestPlayerCaller unitTestPlayerCaller = (UnitTestPlayerCaller) Common.getInstance().getServerCaller().getPlayerCaller();
+            unitTestPlayerCaller.addPermission(TEST_USER.getUuid(), "craftconomy.bank.withdraw.others");
+
+            command.execute(TEST_USER, new String[]{testBankAccountName2, "100"});
+            assertEquals(initialBalance - 100, testBankAccount2.getBalance("UnitTestWorld", currency.getName()), 0);
+            assertEquals(200, account.getBalance("UnitTestWorld", currency.getName()), 0);
+        }
     }
 
     @Test
