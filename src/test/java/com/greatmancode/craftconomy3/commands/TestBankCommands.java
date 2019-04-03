@@ -270,54 +270,115 @@ public class TestBankCommands {
 
     @Test
     public void testBankPermCommand() {
+        Currency defaultCurrency = Common.getInstance().getCurrencyManager().getDefaultCurrency();
         BankPermCommand command = new BankPermCommand("permission");
-        Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false).set(200, "default", Common.getInstance
-                ().getCurrencyManager().getDefaultCurrency().getName(), Cause.USER, "greatman");
+        Account testAccount = Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
+        testAccount.set(200, "default", defaultCurrency.getName(), Cause.UNKNOWN, "Unittest");
         new BankCreateCommand("create").execute(TEST_USER, new String[]{BANK_ACCOUNT});
-        Account account = Common.getInstance().getAccountManager().getAccount(BANK_ACCOUNT, true);
+        Account bankAccount = Common.getInstance().getAccountManager().getAccount(BANK_ACCOUNT, true);
+
+        // Test unknown account
+        command.execute(TEST_USER, new String[]{"unknownaccount", "deposit", TEST_USER2.getName(), "true"});
+
+        // Test unknown ACL flag
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "unknownflag", TEST_USER2.getName(), "true"});
+
+        
+        // Test changing ACLs:
+
+        // TEST_USER2 does not have any ACL as default
+        assertFalse(bankAccount.getAccountACL().canDeposit(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canAcl(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canShow(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canWithdraw(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().isOwner(TEST_USER2.getName()));
+
+        // TEST_USER2 can deposit because he has the ACL for it
         command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "deposit", TEST_USER2.getName(), "true"});
-        System.out.println("WOW SUPER");
-
-        assertTrue(account.getAccountACL().canDeposit(TEST_USER2.getName()));
-        assertFalse(account.getAccountACL().canAcl(TEST_USER2.getName()));
-        assertFalse(account.getAccountACL().canShow(TEST_USER2.getName()));
-        assertFalse(account.getAccountACL().canWithdraw(TEST_USER2.getName()));
-        assertFalse(account.getAccountACL().isOwner(TEST_USER2.getName()));
+        assertTrue(bankAccount.getAccountACL().canDeposit(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canAcl(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canShow(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canWithdraw(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().isOwner(TEST_USER2.getName()));
+        // TEST_USER2 can't deposit
         command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "deposit", TEST_USER2.getName(), "false"});
-        assertFalse(account.getAccountACL().canDeposit(TEST_USER2.getName()));
-        assertFalse(account.getAccountACL().canAcl(TEST_USER2.getName()));
-        assertFalse(account.getAccountACL().canShow(TEST_USER2.getName()));
-        assertFalse(account.getAccountACL().canWithdraw(TEST_USER2.getName()));
-        assertFalse(account.getAccountACL().isOwner(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canDeposit(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canAcl(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canShow(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canWithdraw(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().isOwner(TEST_USER2.getName()));
 
+        // TEST_USER2 can withdraw because he has the ACL for it
         command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "withdraw", TEST_USER2.getName(), "true"});
-        assertFalse(account.getAccountACL().canDeposit(TEST_USER2.getName()));
-        assertFalse(account.getAccountACL().canAcl(TEST_USER2.getName()));
-        assertFalse(account.getAccountACL().canShow(TEST_USER2.getName()));
-        assertTrue(account.getAccountACL().canWithdraw(TEST_USER2.getName()));
-        assertFalse(account.getAccountACL().isOwner(TEST_USER2.getName()));
-
+        assertFalse(bankAccount.getAccountACL().canDeposit(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canAcl(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canShow(TEST_USER2.getName()));
+        assertTrue(bankAccount.getAccountACL().canWithdraw(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().isOwner(TEST_USER2.getName()));
+        // TEST_USER2 can't withdraw
         command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "withdraw", TEST_USER2.getName(), "false"});
-        assertFalse(account.getAccountACL().canDeposit(TEST_USER2.getName()));
-        assertFalse(account.getAccountACL().canAcl(TEST_USER2.getName()));
-        assertFalse(account.getAccountACL().canShow(TEST_USER2.getName()));
-        assertFalse(account.getAccountACL().canWithdraw(TEST_USER2.getName()));
-        assertFalse(account.getAccountACL().isOwner(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canDeposit(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canAcl(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canShow(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canWithdraw(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().isOwner(TEST_USER2.getName()));
 
-
+        // TEST_USER2 can see the balance because he has the ACL for it
         command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "show", TEST_USER2.getName(), "true"});
-        assertFalse(account.getAccountACL().canDeposit(TEST_USER2.getName()));
-        assertFalse(account.getAccountACL().canAcl(TEST_USER2.getName()));
-        assertTrue(account.getAccountACL().canShow(TEST_USER2.getName()));
-        assertFalse(account.getAccountACL().canWithdraw(TEST_USER2.getName()));
-        assertFalse(account.getAccountACL().isOwner(TEST_USER2.getName()));
-
+        assertFalse(bankAccount.getAccountACL().canDeposit(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canAcl(TEST_USER2.getName()));
+        assertTrue(bankAccount.getAccountACL().canShow(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canWithdraw(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().isOwner(TEST_USER2.getName()));
+        // TEST_USER2 can't see the balance
         command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "show", TEST_USER2.getName(), "false"});
-        assertFalse(account.getAccountACL().canDeposit(TEST_USER2.getName()));
-        assertFalse(account.getAccountACL().canAcl(TEST_USER2.getName()));
-        assertFalse(account.getAccountACL().canShow(TEST_USER2.getName()));
-        assertFalse(account.getAccountACL().canWithdraw(TEST_USER2.getName()));
-        assertFalse(account.getAccountACL().isOwner(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canDeposit(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canAcl(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canShow(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canWithdraw(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().isOwner(TEST_USER2.getName()));
+
+        // TEST_USER2 can manage the ACL because he has the ACL for it
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "acl", TEST_USER2.getName(), "true"});
+        assertFalse(bankAccount.getAccountACL().canDeposit(TEST_USER2.getName()));
+        assertTrue(bankAccount.getAccountACL().canAcl(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canShow(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canWithdraw(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().isOwner(TEST_USER2.getName()));
+        // TEST_USER2 can't manage the ACL
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "acl", TEST_USER2.getName(), "false"});
+        assertFalse(bankAccount.getAccountACL().canDeposit(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canAcl(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canShow(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().canWithdraw(TEST_USER2.getName()));
+        assertFalse(bankAccount.getAccountACL().isOwner(TEST_USER2.getName()));
+
+
+        // Test access to other account's ACL without ACL and without permissions
+        if (Common.getInstance().getServerCaller().getPlayerCaller() instanceof UnitTestPlayerCaller) {
+            // This will fail, because TEST_USER2 does not have the permission or ACL to change the account's ACL
+            command.execute(TEST_USER2, new String[]{BANK_ACCOUNT, "show", TEST_USER.getName(), "false"});
+            // Assert that TEST_USER still has all ACLs
+            assertTrue(bankAccount.getAccountACL().canDeposit(TEST_USER.getName()));
+            assertTrue(bankAccount.getAccountACL().canAcl(TEST_USER.getName()));
+            assertTrue(bankAccount.getAccountACL().canShow(TEST_USER.getName()));
+            assertTrue(bankAccount.getAccountACL().canWithdraw(TEST_USER.getName()));
+            assertTrue(bankAccount.getAccountACL().isOwner(TEST_USER.getName()));
+        }
+
+        // Test access to other account's ACL without ACL but with permissions
+        if (Common.getInstance().getServerCaller().getPlayerCaller() instanceof UnitTestPlayerCaller) {
+            UnitTestPlayerCaller unitTestPlayerCaller = (UnitTestPlayerCaller) Common.getInstance().getServerCaller().getPlayerCaller();
+            unitTestPlayerCaller.addPermission(TEST_USER2.getUuid(), "craftconomy.bank.perm.others");
+            command.execute(TEST_USER2, new String[]{BANK_ACCOUNT, "show", TEST_USER.getName(), "false"});
+            // Assert that TEST_USER still has all ACLs
+            assertFalse(bankAccount.getAccountACL().canShow(TEST_USER.getName()));
+            assertTrue(bankAccount.getAccountACL().canDeposit(TEST_USER.getName()));
+            assertTrue(bankAccount.getAccountACL().canAcl(TEST_USER.getName()));
+            assertTrue(bankAccount.getAccountACL().canWithdraw(TEST_USER.getName()));
+            assertTrue(bankAccount.getAccountACL().isOwner(TEST_USER.getName()));
+        }
+
     }
 
     @Test
