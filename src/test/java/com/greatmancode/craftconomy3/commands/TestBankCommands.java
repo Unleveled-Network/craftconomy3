@@ -435,6 +435,10 @@ public class TestBankCommands {
         assertEquals(accountBalanceBeforeWithdraw + 100, accountBalanceAfterWithdraw, 0);
         assertEquals(bankAccountBalanceBeforeWithdraw - 100, bankAccountBalanceAfterWithdraw, 0);
 
+        // Test with unknown currency
+        bankAccount.set(initialBalance, "UnitTestWorld", currency.getName(), Cause.UNKNOWN, "Unittest");
+        command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "100", "unknowncurrency"});
+        assertEquals(initialBalance, bankAccount.getBalance("UnitTestWorld", currency.getName()), 0);
         // Test without name of the currency
         bankAccount.set(initialBalance, "UnitTestWorld", currency.getName(), Cause.UNKNOWN, "Unittest");
         command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "200"});
