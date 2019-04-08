@@ -23,9 +23,8 @@ package com.greatmancode.craftconomy3.commands;
 import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.TestCommandSender;
 import com.greatmancode.craftconomy3.TestInitializator;
-import com.greatmancode.craftconomy3.commands.currency.CurrencyAddCommand;
-import com.greatmancode.craftconomy3.commands.currency.CurrencyDefaultCommand;
-import com.greatmancode.craftconomy3.commands.currency.CurrencyDeleteCommand;
+import com.greatmancode.craftconomy3.commands.currency.*;
+import com.greatmancode.craftconomy3.currency.Currency;
 import com.greatmancode.tools.commands.PlayerCommandSender;
 import org.junit.After;
 import org.junit.Before;
@@ -54,12 +53,20 @@ public class TestCurrencyCommands {
     public void testAddCommand() {
         CurrencyAddCommand command = new CurrencyAddCommand("add");
         // Add a currency
-        command.execute(TEST_USER, new String[]{"Dollar", "Dollars", "Cent", "Cent", "$"});
-        assertNotNull(Common.getInstance().getCurrencyManager().getCurrency("Dollar"));
+        command.execute(TEST_USER, new String[]{"Pound", "Pounds", "Penny", "Pence", "£"});
+        assertNotNull(Common.getInstance().getCurrencyManager().getCurrency("Pound"));
+
+        // Check for correct values
+        Currency pound = Common.getInstance().getCurrencyManager().getCurrency("Pound");
+        assertEquals("Pound", pound.getName());
+        assertEquals("Pounds", pound.getPlural());
+        assertEquals("Penny", pound.getMinor());
+        assertEquals("Pence", pound.getMinorPlural());
+        assertEquals("£", pound.getSign());
 
         // Try to add the same currency again
         final int currencyCountBefore = Common.getInstance().getCurrencyManager().getCurrencyNames().size();
-        command.execute(TEST_USER, new String[]{"Dollar", "Dollars", "Cent", "Cent", "$"});
+        command.execute(TEST_USER, new String[]{"Pound", "Pounds", "Penny", "Pence", "£"});
         final int currencyCountAfter = Common.getInstance().getCurrencyManager().getCurrencyNames().size();
         assertEquals(currencyCountBefore, currencyCountAfter);
 
@@ -107,6 +114,83 @@ public class TestCurrencyCommands {
         // Test with unknown currency
         command.execute(TEST_USER, new String[]{"unknown"});
         assertEquals(newDefaultCurrency, Common.getInstance().getCurrencyManager().getDefaultCurrency().getName());
+    }
+
+    @Test
+    public void testEditCommand() {
+        CurrencyEditCommand command = new CurrencyEditCommand("edit");
+
+        // Add a new currency
+        Common.getInstance().getCurrencyManager().addCurrency("Yen", "Yen", "Sen", "Sen", "¥", false);
+
+        // Try with unknown currency
+        command.execute(TEST_USER, new String[]{"name", "unknown", "test"});
+        command.execute(TEST_USER, new String[]{"nameplural", "unknown", "test"});
+        command.execute(TEST_USER, new String[]{"minor", "unknown", "test"});
+        command.execute(TEST_USER, new String[]{"minorplural", "unknown", "test"});
+        command.execute(TEST_USER, new String[]{"sign", "unknown", "test"});
+
+        // Try with unknown key
+        command.execute(TEST_USER, new String[]{"unknown", "Yen", "test"});
+
+        // Try without value
+        command.execute(TEST_USER, new String[]{"name", "Yen", ""});
+        command.execute(TEST_USER, new String[]{"nameplural", "Yen", ""});
+        command.execute(TEST_USER, new String[]{"minor", "Yen", ""});
+        command.execute(TEST_USER, new String[]{"minorplural", "Yen", ""});
+        command.execute(TEST_USER, new String[]{"sign", "Yen", ""});
+
+        // Check that yen still has the correct values after the tests
+        Currency yen = Common.getInstance().getCurrencyManager().getCurrency("Yen");
+        assertEquals("Yen", yen.getName());
+        assertEquals("Yen", yen.getPlural());
+        assertEquals("Sen", yen.getMinor());
+        assertEquals("Sen", yen.getMinorPlural());
+        assertEquals("¥", yen.getSign());
+
+
+        // Test for success
+        command.execute(TEST_USER, new String[]{"nameplural", "Yen", "Pounds"});
+        assertEquals("Pounds", Common.getInstance().getCurrencyManager().getCurrency("Yen").getPlural());
+        command.execute(TEST_USER, new String[]{"minor", "Yen", "Penny"});
+        assertEquals("Penny", Common.getInstance().getCurrencyManager().getCurrency("Yen").getMinor());
+        command.execute(TEST_USER, new String[]{"minorplural", "Yen", "Pence"});
+        assertEquals("Pence", Common.getInstance().getCurrencyManager().getCurrency("Yen").getMinorPlural());
+        command.execute(TEST_USER, new String[]{"sign", "Yen", "£"});
+        assertEquals("£", Common.getInstance().getCurrencyManager().getCurrency("Yen").getSign());
+        command.execute(TEST_USER, new String[]{"name", "Yen", "Pound"});
+        assertEquals("Pound", Common.getInstance().getCurrencyManager().getCurrency("Pound").getName());
+    }
+
+    @Test
+    public void testInfoCommand() {
+        CurrencyInfoCommand command = new CurrencyInfoCommand("info");
+
+        // Add a new currency
+        Common.getInstance().getCurrencyManager().addCurrency("Yen", "Yen", "Sen", "Sen", "¥", false);
+        command.execute(TEST_USER, new String[]{"Yen"});
+
+        // Try with unknown currency
+        command.execute(TEST_USER, new String[]{"unknown"});
+
+        // Try without a currency
+        command.execute(TEST_USER, new String[]{});
+    }
+
+    @Test
+    public void testRatesCommand() {
+        CurrencyRatesCommand command = new CurrencyRatesCommand("rates");
+        // Add a new currency and execute the command
+        Common.getInstance().getCurrencyManager().addCurrency("Yen", "Yen", "Sen", "Sen", "¥", false);
+        command.execute(TEST_USER, new String[]{});
+    }
+
+    @Test
+    public void testListCommand() {
+        CurrencyListCommand command = new CurrencyListCommand("list");
+        // Add a new currency and execute the command
+        Common.getInstance().getCurrencyManager().addCurrency("Yen", "Yen", "Sen", "Sen", "¥", false);
+        command.execute(TEST_USER, new String[]{});
     }
 
     private PlayerCommandSender createTestUser(String name) {
