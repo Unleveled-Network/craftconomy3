@@ -251,11 +251,13 @@ public class TestMoneyCommands {
         // Test with page number
         command.execute(TEST_USER, new String[]{defaultCurrencyName, "1"});
         // Test with invalid page number
+        command.execute(TEST_USER, new String[]{defaultCurrencyName, "0"});
         command.execute(TEST_USER, new String[]{defaultCurrencyName, "abc"});
 
         // Test with page number and world name
-        command.execute(TEST_USER, new String[]{defaultCurrencyName, "1", WorldGroupsManager.DEFAULT_GROUP_NAME});
+        command.execute(TEST_USER, new String[]{defaultCurrencyName, "1", "UnitTestWorld"});
         // Test with page number and invalid world name
+        command.execute(TEST_USER, new String[]{defaultCurrencyName, "1", WorldGroupsManager.DEFAULT_GROUP_NAME});
         command.execute(TEST_USER, new String[]{defaultCurrencyName, "abc", "unknownworldgroup"});
     }
 
