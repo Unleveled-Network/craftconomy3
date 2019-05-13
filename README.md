@@ -4,6 +4,7 @@
 [![GitHub prs](https://img.shields.io/github/issues-pr/pavog/craftconomy3.svg)](https://github.com/pavog/craftconomy3/pulls)
 [![GitHub prs](https://img.shields.io/github/release/pavog/craftconomy3.svg)](https://github.com/pavog/craftconomy3/releases/latest)
 [![GitHub license](https://img.shields.io/github/license/pavog/craftconomy3.svg)](https://github.com/pavog/craftconomy3/blob/master/LICENSE)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f8c801fa055d4fd0ab9e32b3f4a4132c)](https://app.codacy.com/project/pavog/craftconomy3/dashboard)
 
 # Craftconomy3
 A Economy plugin for Bukkit &amp; Canary Recode!
