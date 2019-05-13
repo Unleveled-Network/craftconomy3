@@ -1,20 +1,20 @@
 /**
  * This file is part of Craftconomy3.
- *
+ * <p>
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
  * Copyright (c) 2018, Pavog <http://github.com/pavog/>
- *
+ * <p>
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Lesser General Public License
  * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -24,10 +24,7 @@ import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.DisplayFormat;
 import com.greatmancode.craftconomy3.TestCommandSender;
 import com.greatmancode.craftconomy3.TestInitializator;
-import com.greatmancode.craftconomy3.commands.config.ConfigBankPriceCommand;
-import com.greatmancode.craftconomy3.commands.config.ConfigClearLogCommand;
-import com.greatmancode.craftconomy3.commands.config.ConfigFormatCommand;
-import com.greatmancode.craftconomy3.commands.config.ConfigHoldingsCommand;
+import com.greatmancode.craftconomy3.commands.config.*;
 import com.greatmancode.tools.commands.PlayerCommandSender;
 import org.junit.After;
 import org.junit.Before;
@@ -59,16 +56,22 @@ public class TestConfigCommands {
     @Test
     public void testClearLogCommand() {
         ConfigClearLogCommand command = new ConfigClearLogCommand("clearlog");
-        command.execute(TEST_USER, new String[] {"1"});
+        command.execute(TEST_USER, new String[]{"1"});
 
         // Test with invalid argument
-        command.execute(TEST_USER, new String[] {"a"});
+        command.execute(TEST_USER, new String[]{"a"});
+    }
+
+    @Test
+    public void testReloadCommand() {
+        ConfigReloadCommand command = new ConfigReloadCommand("reload");
+        command.execute(TEST_USER, new String[]{});
     }
 
     @Test
     public void testBankPriceCommand() {
         ConfigBankPriceCommand command = new ConfigBankPriceCommand("price");
-        command.execute(TEST_USER, new String[] {"200"});
+        command.execute(TEST_USER, new String[]{"200"});
         assertEquals(200, Common.getInstance().getBankPrice(), 0);
         command.execute(TEST_USER, new String[]{"-10"});
         assertEquals(200, Common.getInstance().getBankPrice(), 0);
@@ -81,7 +84,7 @@ public class TestConfigCommands {
     @Test
     public void testFormatCommand() {
         ConfigFormatCommand command = new ConfigFormatCommand("format");
-        command.execute(TEST_USER, new String[] {"long"});
+        command.execute(TEST_USER, new String[]{"long"});
         assertEquals(DisplayFormat.LONG, Common.getInstance().getDisplayFormat());
         command.execute(TEST_USER, new String[]{"sign"});
         assertEquals(DisplayFormat.SIGN, Common.getInstance().getDisplayFormat());
@@ -119,9 +122,9 @@ public class TestConfigCommands {
         Common.getInstance().getAccountManager().getAccount(TEST_ACCOUNT, false);
         assertEquals(0, Common.getInstance().getAccountManager().getAccount(TEST_ACCOUNT, false).getBalance("default", Common.getInstance().getCurrencyManager().getDefaultCurrency().getName()), 0);
     }
-    
-    private PlayerCommandSender createTestUser(String name){
+
+    private PlayerCommandSender createTestUser(String name) {
         UUID test = UUID.randomUUID();
-        return new PlayerCommandSender<>(name,test ,new TestCommandSender(test,name));
+        return new PlayerCommandSender<>(name, test, new TestCommandSender(test, name));
     }
 }
