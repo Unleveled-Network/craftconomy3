@@ -116,7 +116,7 @@ public class UnitTestPlayerCaller extends PlayerCaller {
     @Override
     @Deprecated
     public boolean isOp(String playerName) {
-        return playerName.equals("UnitTestPlayer");
+        return "UnitTestPlayer".equals(playerName);
     }
 
     @Override

@@ -32,21 +32,6 @@ import java.util.List;
 class TopCommandThread implements Runnable {
     public static final int NUMBER_ELEMENTS = 10;
 
-    class TopCommandThreadEnd implements Runnable {
-        private final CommandSender sender;
-        private final String ret;
-
-        public TopCommandThreadEnd(CommandSender sender, String ret) {
-            this.sender = sender;
-            this.ret = ret;
-        }
-
-        @Override
-        public void run() {
-            Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender, ret, "top");
-        }
-    }
-
     private final CommandSender sender;
     private final int page;
     private final String worldGroup;
@@ -69,6 +54,21 @@ class TopCommandThread implements Runnable {
         }
 
         Common.getInstance().getServerCaller().getSchedulerCaller().delay(new TopCommandThreadEnd(sender, ret), 0, false);
+    }
+
+    class TopCommandThreadEnd implements Runnable {
+        private final CommandSender sender;
+        private final String ret;
+
+        public TopCommandThreadEnd(CommandSender sender, String ret) {
+            this.sender = sender;
+            this.ret = ret;
+        }
+
+        @Override
+        public void run() {
+            Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender, ret, "top");
+        }
     }
 }
 

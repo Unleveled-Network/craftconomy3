@@ -32,7 +32,6 @@ import java.util.*;
 public class PayShortCommand extends SubCommand {
     private Map<String, Command> commandList = new HashMap<>();
     private CommandHandler commandHandler;
-    private SubCommand parent;
     @Getter
     private String name;
     private int level;
@@ -41,8 +40,7 @@ public class PayShortCommand extends SubCommand {
       super(name, commandHandler, parent, level);
       this.name = name;
       this.commandHandler = commandHandler;
-      this.parent = parent;
-      this.level = level;
+        this.level = level;
     }
 
     @Override

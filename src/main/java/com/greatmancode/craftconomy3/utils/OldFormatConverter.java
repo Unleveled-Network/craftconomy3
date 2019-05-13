@@ -258,17 +258,17 @@ public class OldFormatConverter {
         Common.getInstance().sendConsoleMessage(Level.INFO, "Creating the new tables");
         String dbType = Common.getInstance().getMainConfig().getString("System.Database.Type","h2");
 
-        if (dbType.equals("sqlite")) {
+        if ("sqlite".equals(dbType)) {
             Common.getInstance().sendConsoleMessage(Level.INFO, "You are using SQLite! This is now deprecated. Selecting H2 instead.");
             Common.getInstance().getMainConfig().setValue("System.Database.Type", "h2");
             dbType = "h2";
         }
         StorageEngine engine = null;
         HikariConfig config = new HikariConfig();
-        if (dbType.equalsIgnoreCase("mysql")) {
+        if ("mysql".equalsIgnoreCase(dbType)) {
             engine = new MySQLEngine();
 
-        } else if (dbType.equalsIgnoreCase("h2")) {
+        } else if ("h2".equalsIgnoreCase(dbType)) {
             engine = new H2Engine();
         } else {
             throw new UnsupportedOperationException("Unknown database!");

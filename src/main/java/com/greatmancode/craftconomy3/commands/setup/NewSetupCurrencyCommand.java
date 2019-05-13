@@ -1,20 +1,20 @@
 /**
  * This file is part of Craftconomy3.
- *
+ * <p>
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
  * Copyright (c) 2018, Pavog <http://github.com/pavog/>
- *
+ * <p>
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Lesser General Public License
  * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -30,10 +30,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NewSetupCurrencyCommand extends AbstractCommand {
+
+    private Map<String, String> map = new HashMap<>();
+
     public NewSetupCurrencyCommand(String name) {
         super(name);
     }
-    
+
     private enum INTERNALSTEP {
         NAME,
         NAMEPLURAL,
@@ -41,8 +44,6 @@ public class NewSetupCurrencyCommand extends AbstractCommand {
         MINORPLURAL,
         SIGN
     }
-
-    private Map<String, String> map = new HashMap<>();
 
     @Override
     public void execute(CommandSender sender, String[] args) {

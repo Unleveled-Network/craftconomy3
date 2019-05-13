@@ -117,10 +117,12 @@ public class Account {
      * @return A list of Balance
      */
     public List<Balance> getAllWorldBalance(String world) {
-        if (!Common.getInstance().getWorldGroupManager().worldGroupExist(world)) {
-            world = Common.getInstance().getWorldGroupManager().getWorldGroupName(world);
+        String worldGroupName = world;
+
+        if (!Common.getInstance().getWorldGroupManager().worldGroupExist(worldGroupName)) {
+            worldGroupName = Common.getInstance().getWorldGroupManager().getWorldGroupName(world);
         }
-        return Common.getInstance().getStorageHandler().getStorageEngine().getAllWorldBalance(this, world);
+        return Common.getInstance().getStorageHandler().getStorageEngine().getAllWorldBalance(this, worldGroupName);
     }
 
     /**
@@ -132,13 +134,15 @@ public class Account {
      */
     public double getBalance(String world, String currencyName) {
         double balance = Double.MIN_NORMAL;
-        if (!Common.getInstance().getWorldGroupManager().worldGroupExist(world)) {
-            world = Common.getInstance().getWorldGroupManager().getWorldGroupName(world);
+        String worldGroupName = world;
+
+        if (!Common.getInstance().getWorldGroupManager().worldGroupExist(worldGroupName)) {
+            worldGroupName = Common.getInstance().getWorldGroupManager().getWorldGroupName(world);
         }
         Currency currency = Common.getInstance().getCurrencyManager().getCurrency(currencyName);
         if (currency != null) {
             if (!hasInfiniteMoney()) {
-                balance = Common.getInstance().getStorageHandler().getStorageEngine().getBalance(this, currency, world);
+                balance = Common.getInstance().getStorageHandler().getStorageEngine().getBalance(this, currency, worldGroupName);
             } else {
                 balance = Double.MAX_VALUE;
             }
@@ -215,14 +219,16 @@ public class Account {
      */
     public double withdraw(double amount, String world, String currencyName, Cause cause, String causeReason) {
         double result = getBalance(world,currencyName) - format(amount);
-        if (!Common.getInstance().getWorldGroupManager().worldGroupExist(world)) {
-            world = Common.getInstance().getWorldGroupManager().getWorldGroupName(world);
+        String worldGroupName = world;
+
+        if (!Common.getInstance().getWorldGroupManager().worldGroupExist(worldGroupName)) {
+            worldGroupName = Common.getInstance().getWorldGroupManager().getWorldGroupName(world);
         }
         Currency currency = Common.getInstance().getCurrencyManager().getCurrency(currencyName);
         if (currency != null) {
             if (!hasInfiniteMoney()) {
-                result = Common.getInstance().getStorageHandler().getStorageEngine().setBalance(this, result, currency, world);
-                Common.getInstance().writeLog(LogInfo.WITHDRAW, cause, causeReason, this, amount, currency, world);
+                result = Common.getInstance().getStorageHandler().getStorageEngine().setBalance(this, result, currency, worldGroupName);
+                Common.getInstance().writeLog(LogInfo.WITHDRAW, cause, causeReason, this, amount, currency, worldGroupName);
                 Common.getInstance().getServerCaller().throwEvent(new EconomyChangeEvent(this.getAccountName(), result));
             } else {
                 result = Double.MAX_VALUE;
@@ -279,18 +285,19 @@ public class Account {
      * Checks if we have enough money in a certain balance
      *
      * @param amount       The amount of money to check
-     * @param worldName    The World / World group we want to check
+     * @param world    The World / World group we want to check
      * @param currencyName The currency we want to check
      * @return True if there's enough money. Else false
      */
-    public boolean hasEnough(double amount, String worldName, String currencyName) {
+    public boolean hasEnough(double amount, String world, String currencyName) {
         boolean result = false;
+        String worldGroupName = world;
         amount = format(amount);
-        if (!Common.getInstance().getWorldGroupManager().worldGroupExist(worldName)) {
-            worldName = Common.getInstance().getWorldGroupManager().getWorldGroupName(worldName);
+        if (!Common.getInstance().getWorldGroupManager().worldGroupExist(worldGroupName)) {
+            worldGroupName = Common.getInstance().getWorldGroupManager().getWorldGroupName(world);
         }
         Currency currency = Common.getInstance().getCurrencyManager().getCurrency(currencyName);
-        if (currency != null && (getBalance(worldName, currencyName) >= amount || hasInfiniteMoney())) {
+        if (currency != null && (getBalance(worldGroupName, currencyName) >= amount || hasInfiniteMoney())) {
             result = true;
         }
         return result;
@@ -348,8 +355,8 @@ public class Account {
         }
 
         long factor = (long) Math.pow(10, 2);
-        value = value * factor;
-        double tmp = Math.floor(value);
+        double result = value * factor;
+        double tmp = Math.floor(result);
         return tmp / factor;
     }
 

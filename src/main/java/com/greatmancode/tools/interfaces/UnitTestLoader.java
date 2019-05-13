@@ -32,12 +32,13 @@ public class UnitTestLoader implements Loader {
 
     @Override
     public void onEnable() {
-
+        // Nothing
+        // We don't need to load any config
     }
 
     @Override
     public void onDisable() {
-
+        // Nothing
     }
 
     @Override

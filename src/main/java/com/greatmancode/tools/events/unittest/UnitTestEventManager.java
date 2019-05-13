@@ -24,6 +24,6 @@ import com.greatmancode.tools.interfaces.caller.ServerCaller;
 public class UnitTestEventManager implements ServerEventManager {
     @Override
     public void eventRegistered(String event, ServerCaller serverCaller) {
-
+        // TODO Auto-generated method stub
     }
 }

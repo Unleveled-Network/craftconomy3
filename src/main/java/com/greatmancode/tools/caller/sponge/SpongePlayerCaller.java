@@ -73,7 +73,7 @@ public class SpongePlayerCaller extends PlayerCaller {
 
     @Override
     public void sendMessage(String playerName, String message) {
-        if (playerName.equals("console")) {
+        if ("console".equals(playerName)) {
             caller.getLogger().info(message);
             return;
         }

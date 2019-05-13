@@ -11,10 +11,17 @@ public class MockedOfflinePlayer implements OfflinePlayer {
 
     private UUID uuid;
     private String name;
+    private boolean isWhitelisted;
+    private boolean isBanned;
+    private boolean isOp;
 
     public MockedOfflinePlayer(UUID uuid, String name) {
         this.uuid = uuid;
         this.name = name;
+
+        this.isWhitelisted = true;
+        this.isBanned = false;
+        this.isOp = false;
     }
 
     @Override
@@ -34,17 +41,17 @@ public class MockedOfflinePlayer implements OfflinePlayer {
 
     @Override
     public boolean isBanned() {
-        return false;
+        return this.isBanned;
     }
 
     @Override
     public boolean isWhitelisted() {
-        return false;
+        return this.isWhitelisted;
     }
 
     @Override
     public void setWhitelisted(boolean value) {
-
+        this.isWhitelisted = value;
     }
 
     @Override
@@ -79,11 +86,11 @@ public class MockedOfflinePlayer implements OfflinePlayer {
 
     @Override
     public boolean isOp() {
-        return false;
+        return this.isOp;
     }
 
     @Override
     public void setOp(boolean value) {
-
+        this.isOp = value;
     }
 }
