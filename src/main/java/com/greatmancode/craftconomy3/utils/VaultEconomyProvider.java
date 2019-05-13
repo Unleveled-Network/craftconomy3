@@ -67,7 +67,7 @@ public class VaultEconomyProvider extends VaultEconomy {
      */
     @Override
     public EconomyResponse createBank(String name, Player player) {
-        if (Common.getInstance().getAccountManager().exist(player.getName(), true)) {
+        if (Common.getInstance().getAccountManager().exist(name, true)) {
             return new EconomyResponse(0, 0, EconomyResponse.ResponseType.FAILURE, "Bankaccount already exists");
         }
 
@@ -92,7 +92,7 @@ public class VaultEconomyProvider extends VaultEconomy {
         */
 
         // Get the bank account and set the permissions
-        Account playersBankAccount = Common.getInstance().getAccountManager().getAccount(player.getName(), true);
+        Account playersBankAccount = Common.getInstance().getAccountManager().getAccount(name, true);
         playersBankAccount.getAccountACL().set(player.getName(), true, true, true, true, true);
 
         return new EconomyResponse(0, 0, EconomyResponse.ResponseType.SUCCESS, null);
