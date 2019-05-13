@@ -1,20 +1,20 @@
 /**
  * This file is part of Craftconomy3.
- *
+ * <p>
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
  * Copyright (c) 2018, Pavog <http://github.com/pavog/>
- *
+ * <p>
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Lesser General Public License
  * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -102,7 +102,7 @@ public abstract class SQLStorageEngine extends StorageEngine {
                         statement.setString(2, player.getUuid().toString());
                     } else {
                         UUID uuid = Common.getInstance().getServerCaller().getPlayerCaller().getUUID(name);
-                        String value = (uuid == null)? "": uuid.toString();
+                        String value = (uuid == null) ? "" : uuid.toString();
                         // warning offline player generated
                         statement.setString(2, value);
                     }
@@ -122,11 +122,11 @@ public abstract class SQLStorageEngine extends StorageEngine {
             statement.close();
             Player player = Common.getInstance().getServerCaller().getPlayerCaller().getOnlinePlayer(name);
             UUID uuid = null;
-            if(player !=null)uuid = player.getUuid();
+            if (player != null) uuid = player.getUuid();
             if (create && !bankAccount && createDefault) {
                 statement = connection.prepareStatement(balanceTable.insertEntry);
                 statement.setDouble(1, Common.getInstance().getDefaultHoldings());
-                if(uuid != null){
+                if (uuid != null) {
                     statement.setString(2, Account.getWorldGroupOfPlayerCurrentlyIn(uuid));
                 } else {
                     statement.setString(2, null);
@@ -278,6 +278,29 @@ public abstract class SQLStorageEngine extends StorageEngine {
                 Tools.closeJDBCConnection(connection);
             }
         }
+    }
+
+    @Override
+    public double getTotalBalance(Account account) {
+        double balance = 0.0;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = (commitConnection != null) ? commitConnection : db.getConnection();
+            statement = connection.prepareStatement(balanceTable.selectTotalBalanceOfAccount);
+            statement.setString(1, account.getAccountName());
+
+            ResultSet set = statement.executeQuery();
+            balance = set.getDouble("total");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Tools.closeJDBCStatement(statement);
+            if (commitConnection == null) {
+                Tools.closeJDBCConnection(connection);
+            }
+        }
+        return balance;
     }
 
     @Override
@@ -734,7 +757,7 @@ public abstract class SQLStorageEngine extends StorageEngine {
         Connection connection = null;
         PreparedStatement statement = null;
         String newSender = sender;
-        if (!Common.getInstance().getMainConfig().getBoolean("System.Case-sentitive",false)) {
+        if (!Common.getInstance().getMainConfig().getBoolean("System.Case-sentitive", false)) {
             newSender = sender.toLowerCase();
         }
 

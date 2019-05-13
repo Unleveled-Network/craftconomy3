@@ -123,6 +123,14 @@ public abstract class StorageEngine {
      * Retrieve all the balance of an account
      *
      * @param account The account to retrieve the balance from
+     * @return A double of the total balance
+     */
+    public abstract double getTotalBalance(Account account);
+
+    /**
+     * Retrieve all the balance of an account
+     *
+     * @param account The account to retrieve the balance from
      * @return A list of { @link Balance }
      */
     public abstract List<Balance> getAllBalance(Account account);

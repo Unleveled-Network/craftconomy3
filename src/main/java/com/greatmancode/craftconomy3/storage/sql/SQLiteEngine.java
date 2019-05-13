@@ -127,6 +127,11 @@ public class SQLiteEngine extends StorageEngine {
     }
 
     @Override
+    public double getTotalBalance(Account account) {
+        return 0.0;
+    }
+
+    @Override
     public List<Balance> getAllBalance(Account account) {
         return null;
     }

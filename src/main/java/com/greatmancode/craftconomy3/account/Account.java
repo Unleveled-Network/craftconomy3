@@ -92,6 +92,16 @@ public class Account {
     }
 
     /**
+     * Retrieve the total balance of the account.
+     * This ignores the worldgroups and the different currencies.
+     *
+     * @return A double of the total balance
+     */
+    public double getTotalBalance() {
+        return Common.getInstance().getStorageHandler().getStorageEngine().getTotalBalance(this);
+    }
+
+    /**
      * Get the whole account balance
      *
      * @return A list of all account balance

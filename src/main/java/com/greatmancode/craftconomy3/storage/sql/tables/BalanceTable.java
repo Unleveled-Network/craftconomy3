@@ -54,6 +54,10 @@ public class BalanceTable extends DatabaseTable {
             "    REFERENCES " + getPrefix() + CurrencyTable.TABLE_NAME + "(name) ON UPDATE CASCADE ON DELETE CASCADE" +
             ")";
 
+    public final String selectTotalBalanceOfAccount =
+            "SELECT SUM( " + BALANCE_FIELD + " ) AS total FROM " + getPrefix() + TABLE_NAME + " " +
+            "WHERE " + getPrefix() + TABLE_NAME + ".username_id = (" + AccountTable.sqlAccountIDbyName(getPrefix()) + ")";
+
     public final String selectAllEntryAccount =
             "SELECT * FROM " + getPrefix() + TABLE_NAME + " " +
             "WHERE " + getPrefix() + TABLE_NAME + ".username_id = (" + AccountTable.sqlAccountIDbyName(getPrefix()) + ")";
