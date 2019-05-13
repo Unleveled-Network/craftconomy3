@@ -400,13 +400,17 @@ public class TestBankCommands {
         command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "1111", currency.getName(), "UnitTestWorld"});
         assertEquals(1111, bankAccount.getBalance("UnitTestWorld", currency.getName()), 0);
 
+        // Account does not exist
+        command.execute(TEST_USER, new String[]{"unknown", "123", currency.getName(), "UnitTestWorld"});
+        assertNotEquals(123, bankAccount.getBalance("UnitTestWorld", currency.getName()), 0);
+
         // Test world does not exist
         command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "123", currency.getName(), "UnitTestWorld123"});
         assertNotEquals(123, bankAccount.getBalance("UnitTestWorld123", currency.getName()), 0);
 
         // Test currency does not exist
         command.execute(TEST_USER, new String[]{BANK_ACCOUNT, "321", "unknownCurrency", "UnitTestWorld"});
-        assertNotEquals(321, bankAccount.getBalance("UnitTestWorld123", "unknownCurrency"), 0);
+        assertNotEquals(321, bankAccount.getBalance("UnitTestWorld", "unknownCurrency"), 0);
     }
 
     @Test
