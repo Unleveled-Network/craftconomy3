@@ -28,6 +28,7 @@ import com.greatmancode.craftconomy3.account.Account;
 import com.greatmancode.craftconomy3.commands.money.*;
 import com.greatmancode.craftconomy3.currency.Currency;
 import com.greatmancode.craftconomy3.groups.WorldGroupsManager;
+import com.greatmancode.tools.caller.unittest.UnitTestPlayerCaller;
 import com.greatmancode.tools.commands.PlayerCommandSender;
 import org.junit.After;
 import org.junit.Before;
@@ -364,10 +365,21 @@ public class TestMoneyCommands {
         // Test with invalid page
         command.execute(TEST_USER, new String[]{"abc"});
 
+        // Test with page number less than one
+        command.execute(TEST_USER, new String[]{"0"});
 
-        // Test with page and user name
+
+        // Test with page and user name (without permission)
         Common.getInstance().getAccountManager().getAccount(TEST_USER2.getName(), false);
         command.execute(TEST_USER, new String[]{"1", TEST_USER2.getName()});
+
+        // Test with page and user name (with permission)
+        if (Common.getInstance().getServerCaller().getPlayerCaller() instanceof UnitTestPlayerCaller) {
+            UnitTestPlayerCaller unitTestPlayerCaller = (UnitTestPlayerCaller) Common.getInstance().getServerCaller().getPlayerCaller();
+            unitTestPlayerCaller.addPermission(TEST_USER.getUuid(), "craftconomy.money.log.others");
+
+            command.execute(TEST_USER, new String[]{"1", TEST_USER2.getName()});
+        }
 
         // Test with page and unknown user
         command.execute(TEST_USER, new String[]{"1", "unknown"});
