@@ -37,6 +37,15 @@ public class WorldGroupsManager {
     }
 
     /**
+     * Returns the list of all world groups.
+     *
+     * @return A map with all world groups
+     */
+    public Map<String, WorldGroup> getWorldGroupList() {
+        return list;
+    }
+
+    /**
      * Add a world to a group
      *
      * @param groupName the group name
