@@ -236,11 +236,15 @@ public class TestMoneyCommands {
 
     @Test
     public void testTopCommand() {
-        // Create test accounts
-        Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
-        Common.getInstance().getAccountManager().getAccount(TEST_USER2.getName(), false);
-
         String defaultCurrencyName = Common.getInstance().getCurrencyManager().getDefaultCurrency().getName();
+
+        // Create test accounts and set the balance
+        Account testAccount1 = Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
+        Account testAccount2 = Common.getInstance().getAccountManager().getAccount(TEST_USER2.getName(), false);
+
+        testAccount1.set(1000, "UnitTestWorld", defaultCurrencyName, Cause.UNKNOWN, "Unittest");
+        testAccount2.set(5000, "UnitTestWorld", defaultCurrencyName, Cause.UNKNOWN, "Unittest");
+
 
         TopCommand command = new TopCommand("top");
         // Test without currency
