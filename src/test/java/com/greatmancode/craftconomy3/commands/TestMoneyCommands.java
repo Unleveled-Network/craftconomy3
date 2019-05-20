@@ -30,6 +30,7 @@ import com.greatmancode.craftconomy3.currency.Currency;
 import com.greatmancode.craftconomy3.groups.WorldGroup;
 import com.greatmancode.craftconomy3.groups.WorldGroupsManager;
 import com.greatmancode.tools.caller.unittest.UnitTestPlayerCaller;
+import com.greatmancode.tools.commands.ConsoleCommandSender;
 import com.greatmancode.tools.commands.PlayerCommandSender;
 import org.junit.After;
 import org.junit.Before;
@@ -150,6 +151,11 @@ public class TestMoneyCommands {
 
         // Test: Take money from other account / other player
         command.execute(TEST_USER, new String[]{TEST_USER2.getName(), "200"});
+        assertEquals(initialValue - 200, testAccount1.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+        assertEquals(initialValue - 200, testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 0);
+
+        // Test: Take money from other account / other player that does not exist
+        command.execute(TEST_USER, new String[]{"unknown", "200"});
         assertEquals(initialValue - 200, testAccount1.getBalance("UnitTestWorld", defaultCurrencyName), 0);
         assertEquals(initialValue - 200, testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 0);
 
@@ -432,6 +438,11 @@ public class TestMoneyCommands {
 
         // Test with page and unknown user
         command.execute(TEST_USER, new String[]{"1", "unknown"});
+
+
+        // Test with commandsender without UUID
+        ConsoleCommandSender consoleCommandSender = new ConsoleCommandSender<>("testuser100", new TestCommandSender(null, "testuser100"));
+        command.execute(consoleCommandSender, new String[]{});
     }
 
 
