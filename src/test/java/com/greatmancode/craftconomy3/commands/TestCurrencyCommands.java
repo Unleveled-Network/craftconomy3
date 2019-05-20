@@ -183,12 +183,13 @@ public class TestCurrencyCommands {
         CurrencyRatesCommand command = new CurrencyRatesCommand("rates");
 
         // Add a new currency and execute the command
-        Currency yen = Common.getInstance().getCurrencyManager().addCurrency("Yen", "Yen", "Sen", "Sen", "¥", false);
+        Currency yen = Common.getInstance().getCurrencyManager().addCurrency("Yen", "Yen", "Sen", "Sen", "¥", true);
         command.execute(TEST_USER, new String[]{});
 
         // Add another currency and set the exchange rate
         Currency euro = Common.getInstance().getCurrencyManager().addCurrency("Euro", "Euro", "Cent", "Cent", "€", true);
         euro.setExchangeRate(yen, 122);
+        yen.setExchangeRate(euro, 0.78);
 
         command.execute(TEST_USER, new String[]{});
     }
