@@ -59,6 +59,9 @@ public class TestGroupCommands {
         // Test with default world and worldgroup
         command.execute(TEST_USER, new String[]{WorldGroupsManager.DEFAULT_GROUP_NAME, UnitTestServerCaller.worldName});
 
+        // Test without creating the worldgroup before assigning a world to it
+        command.execute(TEST_USER, new String[]{"worldgroup1", UnitTestServerCaller.worldName});
+
         // Test with other worldgroup
         // Create new world group
         final String newWorldGroupName = "worldgroup2";
@@ -66,6 +69,9 @@ public class TestGroupCommands {
 
         command.execute(TEST_USER, new String[]{newWorldGroupName, UnitTestServerCaller.worldName2});
         assertEquals(newWorldGroupName, Common.getInstance().getWorldGroupManager().getWorldGroupName(UnitTestServerCaller.worldName2));
+
+        // Test with same world and worldgroup again
+        command.execute(TEST_USER, new String[]{newWorldGroupName, UnitTestServerCaller.worldName2});
 
         // Test with invalid / unknown worldgroup
         command.execute(TEST_USER, new String[]{"unknown", UnitTestServerCaller.worldName2});
