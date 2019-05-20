@@ -1,20 +1,20 @@
 /**
  * This file is part of Craftconomy3.
- *
+ * <p>
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
  * Copyright (c) 2018, Pavog <http://github.com/pavog/>
- *
+ * <p>
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
+ * <p>
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- *
+ * <p>
  * You should have received a copy of the GNU Lesser General Public License
  * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -41,7 +41,7 @@ class LogCommandThread implements Runnable {
 
         @Override
         public void run() {
-            if(sender.getUuid() != null)
+            if (sender.getUuid() != null)
                 Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getUuid(), ret);
             else
                 Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getName(), ret);
@@ -76,7 +76,7 @@ public class LogCommand extends AbstractCommand {
     public LogCommand(String name) {
         super(name);
     }
-    
+
     @Override
     public void execute(CommandSender sender, String[] args) {
         int page = 1;
@@ -95,12 +95,12 @@ public class LogCommand extends AbstractCommand {
         if (args.length == 2 && Common.getInstance().getServerCaller().getPlayerCaller().checkPermission(sender.getUuid(), "craftconomy.money.log.others")) {
             if (Common.getInstance().getAccountManager().exist(args[1], false)) {
                 user = Common.getInstance().getAccountManager().getAccount(args[1], false);
+            } else {
+                sendMessage(sender, Common.getInstance().getLanguageManager().getString("account_null"));
+                return;
             }
         }
-        if(user == null){
-            sendMessage(sender, Common.getInstance().getLanguageManager().getString("account_null"));
-            return;
-        }
+
         Common.getInstance().getServerCaller().getSchedulerCaller().delay(new LogCommandThread(sender, page, user),
                 0, false);
     }
