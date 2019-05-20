@@ -26,6 +26,7 @@ import com.greatmancode.craftconomy3.TestCommandSender;
 import com.greatmancode.craftconomy3.TestInitializator;
 import com.greatmancode.craftconomy3.account.Account;
 import com.greatmancode.craftconomy3.commands.money.*;
+import com.greatmancode.craftconomy3.currency.Currency;
 import com.greatmancode.craftconomy3.groups.WorldGroupsManager;
 import com.greatmancode.tools.commands.PlayerCommandSender;
 import org.junit.After;
@@ -303,6 +304,75 @@ public class TestMoneyCommands {
         assertEquals(initialValue - 400, testAccount1.getBalance("UnitTestWorld", defaultCurrencyName), 0);
         assertEquals(initialValue + 400, testAccount2.getBalance("UnitTestWorld", defaultCurrencyName), 0);
     }
+
+    @Test
+    public void testExchangeCommand() {
+        ExchangeCommand command = new ExchangeCommand("exchange");
+
+        // Setup test currencies
+        Currency pound = Common.getInstance().getCurrencyManager().addCurrency("Pound", "Pounds", "Penny", "Pence", "£", true);
+        Currency euro = Common.getInstance().getCurrencyManager().addCurrency("Euro", "Euro", "Cent", "Cent", "€", true);
+
+        // Setup test account
+        Account testAccount = Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
+        testAccount.set(100.0D, "UnitTestWorld", pound.getName(), Cause.UNKNOWN, "Unittest");
+
+        // Setup exchange rate but only for Euro -> Pound
+        euro.setExchangeRate(pound, 1.5D);
+
+
+        // Test
+        command.execute(TEST_USER, new String[]{pound.getName(), euro.getName(), "10"});
+        assertEquals(90.0D, testAccount.getBalance("UnitTestWorld", pound.getName()), 0);
+        assertEquals(15.0D, testAccount.getBalance("UnitTestWorld", euro.getName()), 0);
+
+
+        // Test: Exchange rate not set
+        command.execute(TEST_USER, new String[]{euro.getName(), pound.getName(), "10"});
+        assertEquals(90.0D, testAccount.getBalance("UnitTestWorld", pound.getName()), 0);
+        assertEquals(15.0D, testAccount.getBalance("UnitTestWorld", euro.getName()), 0);
+
+
+        // Test: Does not have enough money
+        command.execute(TEST_USER, new String[]{pound.getName(), euro.getName(), "1000"});
+        assertEquals(90.0D, testAccount.getBalance("UnitTestWorld", pound.getName()), 0);
+        assertEquals(15.0D, testAccount.getBalance("UnitTestWorld", euro.getName()), 0);
+
+
+        // Test: Invalid amount
+        command.execute(TEST_USER, new String[]{pound.getName(), euro.getName(), "abc"});
+        assertEquals(90.0D, testAccount.getBalance("UnitTestWorld", pound.getName()), 0);
+        assertEquals(15.0D, testAccount.getBalance("UnitTestWorld", euro.getName()), 0);
+
+
+        // Test: Invalid currency name
+        command.execute(TEST_USER, new String[]{pound.getName(), "unknown", "10"});
+        assertEquals(90.0D, testAccount.getBalance("UnitTestWorld", pound.getName()), 0);
+        assertEquals(15.0D, testAccount.getBalance("UnitTestWorld", euro.getName()), 0);
+    }
+
+    @Test
+    public void testLogCommand() {
+        LogCommand command = new LogCommand("log");
+
+        // Test
+        command.execute(TEST_USER, new String[]{});
+
+        // Test with page
+        command.execute(TEST_USER, new String[]{"1"});
+
+        // Test with invalid page
+        command.execute(TEST_USER, new String[]{"abc"});
+
+
+        // Test with page and user name
+        Common.getInstance().getAccountManager().getAccount(TEST_USER2.getName(), false);
+        command.execute(TEST_USER, new String[]{"1", TEST_USER2.getName()});
+
+        // Test with page and unknown user
+        command.execute(TEST_USER, new String[]{"1", "unknown"});
+    }
+
 
     private PlayerCommandSender createTestUser(String name) {
         UUID uuid = UUID.randomUUID();
