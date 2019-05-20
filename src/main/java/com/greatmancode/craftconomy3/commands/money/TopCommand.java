@@ -107,8 +107,9 @@ public class TopCommand extends AbstractCommand {
 
         // Check if we have a world or use the world the player is currently in
         String worldGroupName = Account.getWorldGroupOfPlayerCurrentlyIn(sender.getUuid());
-        // If the player is not in a worldgroup we use the default world group name
-        if (worldGroupName == null) {
+        // If the player is not in a worldgroup and the world / worldgroup is not set
+        // we use the default world group name
+        if (worldGroupName == null && args.length <= 2) {
             worldGroupName = WorldGroupsManager.DEFAULT_GROUP_NAME;
         }
 
