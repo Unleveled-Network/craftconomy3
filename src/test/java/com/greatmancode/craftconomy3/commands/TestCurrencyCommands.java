@@ -25,14 +25,16 @@ import com.greatmancode.craftconomy3.TestCommandSender;
 import com.greatmancode.craftconomy3.TestInitializator;
 import com.greatmancode.craftconomy3.commands.currency.*;
 import com.greatmancode.craftconomy3.currency.Currency;
+import com.greatmancode.craftconomy3.utils.NoExchangeRate;
 import com.greatmancode.tools.commands.PlayerCommandSender;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import java.util.UUID;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestCurrencyCommands {
 
@@ -191,6 +193,56 @@ public class TestCurrencyCommands {
         // Add a new currency and execute the command
         Common.getInstance().getCurrencyManager().addCurrency("Yen", "Yen", "Sen", "Sen", "¥", false);
         command.execute(TEST_USER, new String[]{});
+    }
+
+    @Test
+    public void testExchangeCommand() {
+        CurrencyExchangeCommand command = new CurrencyExchangeCommand("exchange");
+
+        // Add test currenies
+        Currency currency1 = Common.getInstance().getCurrencyManager().addCurrency("Pound", "Pounds", "Penny", "Pence", "£", true);
+        Currency currency2 = Common.getInstance().getCurrencyManager().addCurrency("Euro", "Euro", "Cent", "Cent", "€", true);
+
+        double exchangeRateCurrency1ToCurrency2 = 1.2D;
+
+        // Set and test exchange rate
+        command.execute(TEST_USER, new String[]{currency1.getName(), currency2.getName(), exchangeRateCurrency1ToCurrency2 + ""});
+
+        Currency refreshedCurrency1 = Common.getInstance().getCurrencyManager().getCurrency(currency1.getName());
+        Currency refreshedCurrency2 = Common.getInstance().getCurrencyManager().getCurrency(currency2.getName());
+
+        // Assert that this does not throw an exception
+        double exchangeRate;
+        try {
+            //exchangeRate = refreshedCurrency1.getExchangeRate(refreshedCurrency2);
+            exchangeRate = refreshedCurrency2.getExchangeRate(refreshedCurrency1);
+        } catch (NoExchangeRate noExchangeRate) {
+            throw new Error("Expected that getExchangeRate() does not throw an exception, but it did!", noExchangeRate);
+        }
+        assertEquals(exchangeRateCurrency1ToCurrency2, exchangeRate, 0);
+
+
+        // Test with unset exchange rate
+        final Currency finalRefreshedCurrency1 = refreshedCurrency1;
+        final Currency finalRefreshedCurrency2 = refreshedCurrency2;
+        assertThrows(NoExchangeRate.class, () -> finalRefreshedCurrency1.getExchangeRate(finalRefreshedCurrency2));
+
+
+        // Test with unknown currency
+        command.execute(TEST_USER, new String[]{"unknown", currency1.getName(), exchangeRateCurrency1ToCurrency2 + ""});
+        refreshedCurrency1 = Common.getInstance().getCurrencyManager().getCurrency(currency1.getName());
+        final Currency finalRefreshedCurrency11 = refreshedCurrency1;
+        assertThrows(NullPointerException.class, () -> finalRefreshedCurrency11.getExchangeRate(Common.getInstance().getCurrencyManager().getCurrency("unknown")));
+
+
+        // Test with invalid exchange rate format
+        command.execute(TEST_USER, new String[]{currency2.getName(), currency1.getName(), "invalid"});
+        refreshedCurrency1 = Common.getInstance().getCurrencyManager().getCurrency(currency1.getName());
+        refreshedCurrency2 = Common.getInstance().getCurrencyManager().getCurrency(currency2.getName());
+        // This should still fail
+        final Currency finalRefreshedCurrency111 = refreshedCurrency1;
+        final Currency finalRefreshedCurrency222 = refreshedCurrency2;
+        assertThrows(NoExchangeRate.class, () -> finalRefreshedCurrency111.getExchangeRate(finalRefreshedCurrency222));
     }
 
     private PlayerCommandSender createTestUser(String name) {
