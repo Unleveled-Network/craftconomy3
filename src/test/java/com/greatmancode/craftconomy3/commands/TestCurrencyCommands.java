@@ -30,7 +30,6 @@ import com.greatmancode.tools.commands.PlayerCommandSender;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 
 import java.util.UUID;
 
@@ -182,8 +181,15 @@ public class TestCurrencyCommands {
     @Test
     public void testRatesCommand() {
         CurrencyRatesCommand command = new CurrencyRatesCommand("rates");
+
         // Add a new currency and execute the command
-        Common.getInstance().getCurrencyManager().addCurrency("Yen", "Yen", "Sen", "Sen", "¥", false);
+        Currency yen = Common.getInstance().getCurrencyManager().addCurrency("Yen", "Yen", "Sen", "Sen", "¥", false);
+        command.execute(TEST_USER, new String[]{});
+
+        // Add another currency and set the exchange rate
+        Currency euro = Common.getInstance().getCurrencyManager().addCurrency("Euro", "Euro", "Cent", "Cent", "€", true);
+        euro.setExchangeRate(yen, 122);
+
         command.execute(TEST_USER, new String[]{});
     }
 
@@ -196,7 +202,7 @@ public class TestCurrencyCommands {
     }
 
     @Test
-    public void testExchangeCommand() {
+    public void testExchangeCommand() throws NoExchangeRate {
         CurrencyExchangeCommand command = new CurrencyExchangeCommand("exchange");
 
         // Add test currenies
@@ -212,13 +218,7 @@ public class TestCurrencyCommands {
         Currency refreshedCurrency2 = Common.getInstance().getCurrencyManager().getCurrency(currency2.getName());
 
         // Assert that this does not throw an exception
-        double exchangeRate;
-        try {
-            //exchangeRate = refreshedCurrency1.getExchangeRate(refreshedCurrency2);
-            exchangeRate = refreshedCurrency2.getExchangeRate(refreshedCurrency1);
-        } catch (NoExchangeRate noExchangeRate) {
-            throw new Error("Expected that getExchangeRate() does not throw an exception, but it did!", noExchangeRate);
-        }
+        double exchangeRate = refreshedCurrency2.getExchangeRate(refreshedCurrency1);
         assertEquals(exchangeRateCurrency1ToCurrency2, exchangeRate, 0);
 
 
