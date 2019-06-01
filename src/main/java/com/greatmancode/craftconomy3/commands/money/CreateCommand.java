@@ -35,7 +35,7 @@ public class CreateCommand extends AbstractCommand {
             Common.getInstance().getAccountManager().getAccount(args[0], false);
             sendMessage(sender, Common.getInstance().getLanguageManager().getString("money_create_success"));
         } else {
-            sendMessage(sender, Common.getInstance().getLanguageManager().getString("account_already_exist"));
+            sendMessage(sender, Common.getInstance().getLanguageManager().getString("account_already_exists"));
         }
     }
 
