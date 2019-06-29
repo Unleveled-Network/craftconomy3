@@ -7,6 +7,10 @@ import org.bukkit.entity.Player;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * This is a mocking for the offline player of bukkits offline player.
+ * It uses some bukkit imports since this is only used for tests with Vault and Vault is only available for Bukkit.
+ */
 public class MockedOfflinePlayer implements OfflinePlayer {
 
     private UUID uuid;
