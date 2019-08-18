@@ -7,7 +7,6 @@ env:
     - SPIGOT_VERSION=1_14
     - SPIGOT_VERSION=1_13
     - SPIGOT_VERSION=1_12
-    - SPIGOT_VERSION=1_11
 before_install:
   - mysql -e 'create database craftconomy;'
 install:
