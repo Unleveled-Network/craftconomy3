@@ -20,16 +20,11 @@
  */
 package com.greatmancode.craftconomy3.tools.commands;
 
-import lombok.Data;
-
 import java.util.UUID;
 
-@Data
 public class BlockCommandSender<T> implements CommandSender {
-
     private final String name = "block";
     private final UUID uuid = null;
-
     private T sender;
 
     @Override
@@ -40,5 +35,21 @@ public class BlockCommandSender<T> implements CommandSender {
     @Override
     public Object getServerSender() {
         return this.sender;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public UUID getUuid() {
+        return this.uuid;
+    }
+
+    public T getSender() {
+        return this.sender;
+    }
+
+    public void setSender(final T sender) {
+        this.sender = sender;
     }
 }

@@ -24,7 +24,6 @@ import com.greatmancode.craftconomy3.tools.ServerType;
 import com.greatmancode.craftconomy3.tools.caller.sponge.SpongeServerCaller;
 import com.greatmancode.craftconomy3.tools.commands.interfaces.CommandReceiver;
 import com.greatmancode.craftconomy3.tools.events.EventManager;
-import lombok.Getter;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.event.Listener;
@@ -44,15 +43,11 @@ import java.util.logging.Logger;
         description = "An utility plugin", url = "https://github.com/Aztorius/GreatmancodeTools",
         authors = {"greatman", "aztorius"})
 public class SpongeLoader implements Loader {
-
     @Inject
     private Logger logger;
-
-    @Getter
     private Game game;
     private EventManager eventManager;
     private Common common;
-
 
     @Listener
     public void preInitialisationEvent(GameStartedServerEvent event) {
@@ -74,9 +69,7 @@ public class SpongeLoader implements Loader {
         try {
             String mainClass = br.readLine();
             mainClass = mainClass.split("main-class:")[1].trim();
-
             Class<?> clazz = Class.forName(mainClass);
-
             if (Common.class.isAssignableFrom(clazz)) {
                 common = (Common) clazz.newInstance();
                 common.onEnable(serverCaller, serverCaller.getLogger());
@@ -94,7 +87,6 @@ public class SpongeLoader implements Loader {
 
     @Override
     public void onDisable() {
-
     }
 
     @Override
@@ -119,11 +111,14 @@ public class SpongeLoader implements Loader {
 
     @Override
     public void setCommandReceiver(CommandReceiver receiver) {
-
     }
 
     @Override
     public Logger getLogger() {
         return this.logger;
+    }
+
+    public Game getGame() {
+        return this.game;
     }
 }

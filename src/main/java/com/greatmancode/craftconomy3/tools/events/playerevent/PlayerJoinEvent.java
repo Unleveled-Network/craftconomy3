@@ -22,16 +22,15 @@ package com.greatmancode.craftconomy3.tools.events.playerevent;
 
 import com.greatmancode.craftconomy3.tools.entities.Player;
 import com.greatmancode.craftconomy3.tools.events.Event;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-@Data
-@EqualsAndHashCode(callSuper = false)
 public class PlayerJoinEvent extends Event {
-    private final Player p;
+    private final Player player;
 
+    public PlayerJoinEvent(Player player) {
+        this.player = player;
+    }
 
-    public PlayerJoinEvent(Player p) {
-        this.p = p;
+    public Player getPlayer() {
+        return this.player;
     }
 }

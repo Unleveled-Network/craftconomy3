@@ -23,8 +23,6 @@ package com.greatmancode.craftconomy3.tools.utils;
 import be.maximvdw.placeholderapi.PlaceholderAPI;
 import com.greatmancode.craftconomy3.tools.interfaces.BukkitLoader;
 import com.greatmancode.craftconomy3.tools.interfaces.Loader;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
@@ -33,7 +31,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FeatherBoard {
-
     public static void registerPlaceHolder(Loader loader, String name, final FeatherBoardReplaceEvent event) {
         if (loader instanceof BukkitLoader) {
             if (Bukkit.getPluginManager().isPluginEnabled("MVdWPlaceholderAPI")) {
@@ -56,22 +53,40 @@ public class FeatherBoard {
                     cache.put(username, new UserData(new Date(), result));
                     return getResult(username, isOnline);
                 }
-
             } else {
                 String result = getResult(username, isOnline);
                 cache.put(username, new UserData(new Date(), result));
                 return getResult(username, isOnline);
             }
-
         }
 
         public abstract String getResult(String username, boolean isOnline);
     }
 
-    @Data
-    @AllArgsConstructor
+
     private static class UserData {
         private Date date;
         private String value;
+
+        public UserData(final Date date, final String value) {
+            this.date = date;
+            this.value = value;
+        }
+
+        public Date getDate() {
+            return this.date;
+        }
+
+        public String getValue() {
+            return this.value;
+        }
+
+        public void setDate(final Date date) {
+            this.date = date;
+        }
+
+        public void setValue(final String value) {
+            this.value = value;
+        }
     }
 }

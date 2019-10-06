@@ -23,15 +23,10 @@ package com.greatmancode.craftconomy3.tools.entities;
 import com.greatmancode.craftconomy3.tools.commands.CommandSender;
 import com.greatmancode.craftconomy3.tools.commands.PlayerCommandSender;
 import com.greatmancode.craftconomy3.tools.interfaces.caller.PlayerCaller;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.util.UUID;
 
-@Data
-@EqualsAndHashCode(callSuper = true)
 public class Player extends PlayerCommandSender<CommandSender> {
-
     private final String displayName;
     private final String worldName;
 
@@ -51,4 +46,11 @@ public class Player extends PlayerCommandSender<CommandSender> {
         return caller.getPlayer(uuid);
     }
 
+    public String getDisplayName() {
+        return this.displayName;
+    }
+
+    public String getWorldName() {
+        return this.worldName;
+    }
 }

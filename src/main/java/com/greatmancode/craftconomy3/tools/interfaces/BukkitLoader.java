@@ -25,8 +25,6 @@ import com.greatmancode.craftconomy3.tools.caller.bukkit.BukkitServerCaller;
 import com.greatmancode.craftconomy3.tools.commands.interfaces.CommandReceiver;
 import com.greatmancode.craftconomy3.tools.configuration.bukkit.BukkitConfig;
 import com.greatmancode.craftconomy3.tools.events.EventManager;
-import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.InputStreamReader;
@@ -35,8 +33,6 @@ import java.util.logging.Level;
 public class BukkitLoader extends JavaPlugin implements Loader {
     private Common common;
     private EventManager eventManager;
-    @Getter
-    @Setter
     private CommandReceiver commandReceiver;
 
     @Override
@@ -82,5 +78,13 @@ public class BukkitLoader extends JavaPlugin implements Loader {
     @Override
     public Common getCommon() {
         return common;
+    }
+
+    public CommandReceiver getCommandReceiver() {
+        return this.commandReceiver;
+    }
+
+    public void setCommandReceiver(final CommandReceiver commandReceiver) {
+        this.commandReceiver = commandReceiver;
     }
 }

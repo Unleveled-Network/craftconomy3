@@ -20,27 +20,33 @@
  */
 package com.greatmancode.craftconomy3.tools.commands;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.UUID;
 
 /**
  * Created for the AddstarMC Program.
+ * <p>
  * Created by Narimm on 19/02/2018.
  */
-
-@Data
-@AllArgsConstructor
 public class PlayerCommandSender<T> implements CommandSender<T> {
-
     @NonNull
     private final String name;
     @NonNull
     private final UUID uuid;
-
     private T sender;
+
+    public PlayerCommandSender(@NonNull final String name, @NonNull final UUID uuid, final T sender) {
+        if (name == null) {
+            throw new java.lang.NullPointerException("name is marked non-null but is null");
+        }
+        if (uuid == null) {
+            throw new java.lang.NullPointerException("uuid is marked non-null but is null");
+        }
+        this.name = name;
+        this.uuid = uuid;
+        this.sender = sender;
+    }
 
     @Override
     public String toString() {
@@ -50,5 +56,23 @@ public class PlayerCommandSender<T> implements CommandSender<T> {
     @Override
     public T getServerSender() {
         return sender;
+    }
+
+    @NonNull
+    public String getName() {
+        return this.name;
+    }
+
+    @NonNull
+    public UUID getUuid() {
+        return this.uuid;
+    }
+
+    public T getSender() {
+        return this.sender;
+    }
+
+    public void setSender(final T sender) {
+        this.sender = sender;
     }
 }

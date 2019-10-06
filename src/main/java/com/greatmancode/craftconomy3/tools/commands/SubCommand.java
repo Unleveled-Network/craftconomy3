@@ -22,7 +22,6 @@ package com.greatmancode.craftconomy3.tools.commands;
 
 import com.greatmancode.craftconomy3.tools.commands.interfaces.Command;
 import com.greatmancode.craftconomy3.tools.commands.interfaces.CommandExecutor;
-import lombok.Getter;
 
 import java.util.*;
 
@@ -30,7 +29,6 @@ public class SubCommand implements Command {
     protected Map<String, Command> commandList = new HashMap<>();
     protected CommandHandler commandHandler;
     private SubCommand parent;
-    @Getter
     protected String name;
     protected int level;
 
@@ -103,15 +101,12 @@ public class SubCommand implements Command {
             } else {
                 commandHandler.getServerCaller().getPlayerCaller().sendMessage(sender, " You have no Permission for this command", getName());
             }
-
         } else if (command instanceof SubCommand) {
             SubCommand subCommand = (SubCommand) command;
-
             String subSubCommand = "";
             if (args.length != 0) {
                 subSubCommand = args[0];
             }
-
             if (subCommand.commandExist(subSubCommand)) {
                 String[] newArgs;
                 if (args.length == 0) {
@@ -124,7 +119,6 @@ public class SubCommand implements Command {
                 ((SubCommand) command).execute(subSubCommand, sender, newArgs);
             }
         }
-
     }
 
     public Set<String> getSubCommandKeys() {
@@ -133,5 +127,9 @@ public class SubCommand implements Command {
 
     public String getSubCommandList() {
         return Arrays.toString(commandList.keySet().toArray());
+    }
+
+    public String getName() {
+        return this.name;
     }
 }

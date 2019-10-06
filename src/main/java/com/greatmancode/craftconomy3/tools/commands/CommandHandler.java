@@ -24,24 +24,15 @@ import com.greatmancode.craftconomy3.tools.caller.bukkit.BukkitServerCaller;
 import com.greatmancode.craftconomy3.tools.commands.bukkit.BukkitCommandReceiver;
 import com.greatmancode.craftconomy3.tools.commands.interfaces.CommandReceiver;
 import com.greatmancode.craftconomy3.tools.interfaces.caller.ServerCaller;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommandHandler {
-    @Getter
     private ServerCaller serverCaller;
-    @Getter
     private CommandReceiver commandReceiver;
-
     private Map<String, SubCommand> commandList = new HashMap<>();
-    @Setter
-    @Getter
     private int currentLevel = 0;
-    @Getter
-    @Setter
     private String wrongLevelMsg = "Wrong level!";
 
     public CommandHandler(ServerCaller serverCaller) {
@@ -60,5 +51,29 @@ public class CommandHandler {
 
     public SubCommand getCommand(String name) {
         return commandList.get(name);
+    }
+
+    public ServerCaller getServerCaller() {
+        return this.serverCaller;
+    }
+
+    public CommandReceiver getCommandReceiver() {
+        return this.commandReceiver;
+    }
+
+    public void setCurrentLevel(final int currentLevel) {
+        this.currentLevel = currentLevel;
+    }
+
+    public int getCurrentLevel() {
+        return this.currentLevel;
+    }
+
+    public String getWrongLevelMsg() {
+        return this.wrongLevelMsg;
+    }
+
+    public void setWrongLevelMsg(final String wrongLevelMsg) {
+        this.wrongLevelMsg = wrongLevelMsg;
     }
 }

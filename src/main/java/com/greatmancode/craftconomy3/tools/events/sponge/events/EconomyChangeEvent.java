@@ -20,15 +20,10 @@
  */
 package com.greatmancode.craftconomy3.tools.events.sponge.events;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.spongepowered.api.event.cause.Cause;
 import org.spongepowered.api.event.impl.AbstractEvent;
 
-@Data
-@EqualsAndHashCode(callSuper = false)
 public class EconomyChangeEvent extends AbstractEvent {
-
     private String account;
     private double amount;
 
@@ -40,5 +35,21 @@ public class EconomyChangeEvent extends AbstractEvent {
     @Override
     public Cause getCause() {
         return null;
+    }
+
+    public String getAccount() {
+        return this.account;
+    }
+
+    public double getAmount() {
+        return this.amount;
+    }
+
+    public void setAccount(final String account) {
+        this.account = account;
+    }
+
+    public void setAmount(final double amount) {
+        this.amount = amount;
     }
 }

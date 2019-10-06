@@ -22,7 +22,6 @@ package com.greatmancode.craftconomy3.converter;
 
 import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.tools.commands.CommandSender;
-import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -174,10 +173,10 @@ public abstract class Converter {
         Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getUuid(), userList2.size() + " {{DARK_GREEN}}accounts converted! Enjoy!");
     }
 
+
     /**
      * Represents a economy user
      */
-    @Getter
     public class User {
         /**
          * the user name
@@ -187,7 +186,6 @@ public abstract class Converter {
          * the account balance
          */
         private double balance;
-
         private String uuid;
 
         public User(String user, double balance) {
@@ -199,6 +197,21 @@ public abstract class Converter {
             this.user = user;
             this.uuid = uuid;
             this.balance = balance;
+        }
+
+        @java.lang.SuppressWarnings("all")
+        public String getUser() {
+            return this.user;
+        }
+
+        @java.lang.SuppressWarnings("all")
+        public double getBalance() {
+            return this.balance;
+        }
+
+        @java.lang.SuppressWarnings("all")
+        public String getUuid() {
+            return this.uuid;
         }
     }
 }

@@ -20,14 +20,11 @@
  */
 package com.greatmancode.craftconomy3.tools.commands;
 
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.UUID;
 
-@Data
-@RequiredArgsConstructor
 public class ConsoleCommandSender<T> implements CommandSender<T> {
 
     @NonNull
@@ -35,6 +32,11 @@ public class ConsoleCommandSender<T> implements CommandSender<T> {
     private final UUID uuid = null;
     @NonNull
     private T sender;
+
+    public ConsoleCommandSender(@NonNull final String name, @NonNull final T sender) {
+        this.name = name;
+        this.sender = sender;
+    }
 
     @Override
     public String toString() {
@@ -44,5 +46,23 @@ public class ConsoleCommandSender<T> implements CommandSender<T> {
     @Override
     public T getServerSender() {
         return sender;
+    }
+
+    @NonNull
+    public String getName() {
+        return this.name;
+    }
+
+    public UUID getUuid() {
+        return this.uuid;
+    }
+
+    @NonNull
+    public T getSender() {
+        return this.sender;
+    }
+
+    public void setSender(@NonNull final T sender) {
+        this.sender = sender;
     }
 }

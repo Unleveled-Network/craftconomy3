@@ -21,11 +21,8 @@
 package com.greatmancode.craftconomy3.tools.commands.interfaces;
 
 import com.greatmancode.craftconomy3.tools.commands.CommandSender;
-import lombok.Getter;
 
 public abstract class CommandExecutor implements Command {
-
-    @Getter
     private final String name;
 
     protected CommandExecutor(String name) {
@@ -74,4 +71,8 @@ public abstract class CommandExecutor implements Command {
      * @return The permission node of this command.
      */
     public abstract String getPermissionNode();
+
+    public String getName() {
+        return this.name;
+    }
 }

@@ -21,16 +21,12 @@
 package com.greatmancode.craftconomy3.tools.events.playerevent;
 
 import com.greatmancode.craftconomy3.tools.events.Event;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.util.UUID;
 
 /**
  * Created by greatman on 16-01-03.
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
 public class PreJoinEvent extends Event {
     private final String name;
     private final UUID uuid;
@@ -38,5 +34,13 @@ public class PreJoinEvent extends Event {
     public PreJoinEvent(String name, UUID uniqueId) {
         this.name = name;
         this.uuid = uniqueId;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public UUID getUuid() {
+        return this.uuid;
     }
 }

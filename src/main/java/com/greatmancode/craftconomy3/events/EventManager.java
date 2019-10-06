@@ -43,10 +43,10 @@ public class EventManager implements Listener {
     public void playerJoinEvent(PlayerJoinEvent event) {
         if (!Common.getInstance().getMainConfig().getBoolean("System.Setup", true)) {
             if (Common.getInstance().getMainConfig().getBoolean("System.CreateOnLogin", false)) {
-                Account acc = Common.getInstance().getAccountManager().getAccount(event.getP().getName(), false);
-                if (acc != null) Common.getInstance().getLogger().log(Level.FINER, "Account retrieved for " + event.getP().getDisplayName());
+                Account acc = Common.getInstance().getAccountManager().getAccount(event.getPlayer().getName(), false);
+                if (acc != null) Common.getInstance().getLogger().log(Level.FINER, "Account retrieved for " + event.getPlayer().getDisplayName());
                 else
-                    Common.getInstance().getLogger().log(Level.FINER, "Account retrieval failed for " + event.getP().getDisplayName());
+                    Common.getInstance().getLogger().log(Level.FINER, "Account retrieval failed for " + event.getPlayer().getDisplayName());
 
             }
         }
