@@ -38,7 +38,6 @@ import com.greatmancode.craftconomy3.events.EventManager;
 import com.greatmancode.craftconomy3.groups.WorldGroupsManager;
 import com.greatmancode.craftconomy3.storage.StorageHandler;
 import com.greatmancode.craftconomy3.utils.OldFormatConverter;
-import com.greatmancode.craftconomy3.utils.VaultEconomyProvider;
 import com.greatmancode.craftconomy3.tools.caller.bukkit.BukkitServerCaller;
 import com.greatmancode.craftconomy3.tools.caller.unittest.UnitTestServerCaller;
 import com.greatmancode.craftconomy3.tools.commands.CommandHandler;
@@ -143,7 +142,6 @@ public class Common implements com.greatmancode.craftconomy3.tools.interfaces.Co
             }
 
             getServerCaller().registerPermission("craftconomy.money.log.others");
-            addVaultSupport();
             addFeatherboardSupport();
             initialized = true;
         }
@@ -944,14 +942,6 @@ public class Common implements com.greatmancode.craftconomy3.tools.interfaces.Co
                     return "";
                 }
             });
-        }
-    }
-
-    private void addVaultSupport() {
-        if (getServerCaller() instanceof BukkitServerCaller && getServerCaller().isPluginEnabled("Vault")) {
-            BukkitServerCaller bukkitServerCaller = (BukkitServerCaller) getServerCaller();
-            VaultEconomyProvider vaultEconomyProvider = new VaultEconomyProvider();
-            bukkitServerCaller.setVaultEconomyHook(vaultEconomyProvider, ServicePriority.Highest);
         }
     }
 
