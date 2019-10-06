@@ -33,7 +33,6 @@ import java.util.Map;
  * @author greatman
  */
 public abstract class Config {
-    private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;
     protected final ServerCaller serverCaller;
     protected final File file;
     protected final InputStreamReader re;

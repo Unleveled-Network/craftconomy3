@@ -30,24 +30,6 @@ import java.sql.Timestamp;
 
 class LogCommandThread implements Runnable {
 
-    class LogCommandThreadEnd implements Runnable {
-        private final CommandSender sender;
-        private final String ret;
-
-        public LogCommandThreadEnd(CommandSender sender, String ret) {
-            this.sender = sender;
-            this.ret = ret;
-        }
-
-        @Override
-        public void run() {
-            if (sender.getUuid() != null)
-                Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getUuid(), ret);
-            else
-                Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getName(), ret);
-        }
-    }
-
     private final CommandSender sender;
     private final int page;
     private final Account user;
@@ -69,6 +51,24 @@ class LogCommandThread implements Runnable {
             ret += "\n";
         }
         Common.getInstance().getServerCaller().getSchedulerCaller().delay(new LogCommandThreadEnd(sender, ret), 0, true);
+    }
+
+    static class LogCommandThreadEnd implements Runnable {
+        private final CommandSender sender;
+        private final String ret;
+
+        LogCommandThreadEnd(CommandSender sender, String ret) {
+            this.sender = sender;
+            this.ret = ret;
+        }
+
+        @Override
+        public void run() {
+            if (sender.getUuid() != null)
+                Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getUuid(), ret);
+            else
+                Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender.getName(), ret);
+        }
     }
 }
 

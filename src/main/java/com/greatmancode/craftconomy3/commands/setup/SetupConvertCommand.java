@@ -32,9 +32,10 @@ import java.util.List;
 import java.util.Map.Entry;
 
 public class SetupConvertCommand extends AbstractCommand {
-    public SetupConvertCommand(String name) {
-        super(name);
-    }
+
+    private static final ConverterList IMPORTER_LIST = new ConverterList();
+    private static Converter selectedConverter = null;
+    private INTERNALSTEP step = INTERNALSTEP.START;
 
     private enum INTERNALSTEP {
         START,
@@ -44,9 +45,9 @@ public class SetupConvertCommand extends AbstractCommand {
         CONVERT
     }
 
-    private static final ConverterList IMPORTER_LIST = new ConverterList();
-    private static Converter selectedConverter = null;
-    private INTERNALSTEP step = INTERNALSTEP.START;
+    public SetupConvertCommand(String name) {
+        super(name);
+    }
 
     @Override
     public void execute(CommandSender sender, String[] args) {

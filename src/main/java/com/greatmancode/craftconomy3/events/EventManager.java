@@ -53,7 +53,7 @@ public class EventManager implements Listener {
     }
 
     @EventHandler
-    public void PreJoinEvent(PreJoinEvent event) {
+    public void preJoinEvent(PreJoinEvent event) {
         if (!Common.getInstance().getMainConfig().getBoolean("System.Setup", true)) {
             //We search if the UUID is in the database
             Account account = Common.getInstance().getStorageHandler().getStorageEngine().getAccount(event.getUuid());

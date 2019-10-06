@@ -28,9 +28,8 @@ import com.greatmancode.craftconomy3.tools.commands.CommandSender;
 import com.greatmancode.craftconomy3.tools.utils.Tools;
 
 public class SetupBasicCommand extends AbstractCommand {
-    public SetupBasicCommand(String name) {
-        super(name);
-    }
+
+    private INTERNALSTEP step = INTERNALSTEP.START;
 
     private enum INTERNALSTEP {
         DEFAULT_MONEY,
@@ -39,7 +38,9 @@ public class SetupBasicCommand extends AbstractCommand {
         START
     }
 
-    private INTERNALSTEP step = INTERNALSTEP.START;
+    public SetupBasicCommand(String name) {
+        super(name);
+    }
 
     @Override
     public void execute(CommandSender sender, String[] args) {

@@ -35,7 +35,6 @@ import java.util.Map;
  */
 public abstract class Converter {
     public static final int ALERT_EACH_X_ACCOUNT = 10;
-    private StringBuilder stringBuilder = new StringBuilder();
     /**
      * Contains the type of Database (flatfile, sqlite, etc.) supported by the originating plugin
      */
