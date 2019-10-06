@@ -55,7 +55,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SpongeServerCaller extends ServerCaller {
-    private String name, version;
+    private String name;
+    private String version;
 
     public SpongeServerCaller(SpongeLoader spongeLoader, String name, String version) {
         super(spongeLoader);

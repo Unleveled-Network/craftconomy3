@@ -65,7 +65,8 @@ public class CurrencyRatesCommand extends AbstractCommand {
 
     public static class CurrencyRateEntry {
         private double amount;
-        private Currency from, to;
+        private Currency from;
+        private Currency to;
 
         public CurrencyRateEntry(Currency from, Currency to, double amount) {
             this.amount = amount;

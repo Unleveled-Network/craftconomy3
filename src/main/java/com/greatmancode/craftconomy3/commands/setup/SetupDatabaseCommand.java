@@ -29,14 +29,13 @@ import com.greatmancode.craftconomy3.tools.utils.Tools;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NewSetupDatabaseCommand extends AbstractCommand {
+public class SetupDatabaseCommand extends AbstractCommand {
 
     private static final Map<String, String> VALUES = new HashMap<>();
-    private static final String ERROR_MESSAGE = "{{DARK_RED}}A error occured. The error is: {{WHITE}}%s";
     private static final String CONFIG_NODE = "System.Database.Type";
     private INTERNALSTEP step = INTERNALSTEP.START;
 
-    public NewSetupDatabaseCommand(String name) {
+    public SetupDatabaseCommand(String name) {
         super(name);
     }
 

@@ -23,10 +23,10 @@ package com.greatmancode.craftconomy3.commands;
 import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.TestCommandSender;
 import com.greatmancode.craftconomy3.TestInitializator;
-import com.greatmancode.craftconomy3.commands.setup.NewSetupBasicCommand;
-import com.greatmancode.craftconomy3.commands.setup.NewSetupConvertCommand;
-import com.greatmancode.craftconomy3.commands.setup.NewSetupCurrencyCommand;
-import com.greatmancode.craftconomy3.commands.setup.NewSetupDatabaseCommand;
+import com.greatmancode.craftconomy3.commands.setup.SetupBasicCommand;
+import com.greatmancode.craftconomy3.commands.setup.SetupConvertCommand;
+import com.greatmancode.craftconomy3.commands.setup.SetupCurrencyCommand;
+import com.greatmancode.craftconomy3.commands.setup.SetupDatabaseCommand;
 import com.greatmancode.craftconomy3.tools.commands.PlayerCommandSender;
 import org.junit.After;
 import org.junit.Before;
@@ -55,21 +55,21 @@ public class TestSetupCommands {
     @Test
     public void testSetupBasicCommand() {
         Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
-        NewSetupBasicCommand command = new NewSetupBasicCommand(null);
+        SetupBasicCommand command = new SetupBasicCommand(null);
         command.execute(TEST_USER, new String[]{});
     }
 
     @Test
     public void testSetupConvertCommand() {
         Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
-        NewSetupConvertCommand command = new NewSetupConvertCommand(null);
+        SetupConvertCommand command = new SetupConvertCommand(null);
         command.execute(TEST_USER, new String[]{});
     }
 
     @Test
     public void testSetupCurrencyCommand() {
         Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
-        NewSetupCurrencyCommand command = new NewSetupCurrencyCommand(null);
+        SetupCurrencyCommand command = new SetupCurrencyCommand(null);
         command.execute(TEST_USER, new String[]{"name", "test"});
         command.execute(TEST_USER, new String[]{"nameplural", "tests"});
         command.execute(TEST_USER, new String[]{"minor", "teston"});
@@ -82,7 +82,7 @@ public class TestSetupCommands {
     @Test
     public void testSetupDatabaseCommand() {
         Common.getInstance().getAccountManager().getAccount(TEST_USER.getName(), false);
-        NewSetupDatabaseCommand command = new NewSetupDatabaseCommand(null);
+        SetupDatabaseCommand command = new SetupDatabaseCommand(null);
         command.execute(TEST_USER, new String[]{});
     }
 

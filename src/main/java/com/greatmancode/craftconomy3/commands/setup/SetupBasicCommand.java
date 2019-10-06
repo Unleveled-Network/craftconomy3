@@ -27,8 +27,8 @@ import com.greatmancode.craftconomy3.commands.AbstractCommand;
 import com.greatmancode.craftconomy3.tools.commands.CommandSender;
 import com.greatmancode.craftconomy3.tools.utils.Tools;
 
-public class NewSetupBasicCommand extends AbstractCommand {
-    public NewSetupBasicCommand(String name) {
+public class SetupBasicCommand extends AbstractCommand {
+    public SetupBasicCommand(String name) {
         super(name);
     }
 

@@ -29,7 +29,13 @@ import com.greatmancode.craftconomy3.utils.NoExchangeRate;
  * @author greatman
  */
 public class Currency {
-    private String name, plural, minor, minorPlural, sign;
+
+    private String name;
+    private String plural;
+    private String minor;
+    private String minorPlural;
+    private String sign;
+
     private boolean status, bankCurrency;
 
     /**

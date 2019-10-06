@@ -37,7 +37,9 @@ import java.util.UUID;
 public class Account {
     private int id;
     private AccountACL acl;
-    private boolean bankAccount, infiniteMoney, ignoreACL;
+    private boolean bankAccount;
+    private boolean infiniteMoney;
+    private boolean ignoreACL;
     private String name;
 
     /**

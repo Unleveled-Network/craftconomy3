@@ -29,11 +29,11 @@ import com.greatmancode.craftconomy3.tools.commands.CommandSender;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NewSetupCurrencyCommand extends AbstractCommand {
+public class SetupCurrencyCommand extends AbstractCommand {
 
     private Map<String, String> map = new HashMap<>();
 
-    public NewSetupCurrencyCommand(String name) {
+    public SetupCurrencyCommand(String name) {
         super(name);
     }
 

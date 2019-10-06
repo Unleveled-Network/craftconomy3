@@ -219,7 +219,9 @@ public class H2ToMySQLConverter {
     private class Account {
         public String name;
         public UUID uuid;
-        public boolean infiniteMoney, ignoreACL, bank;
+        public boolean infiniteMoney;
+        public boolean ignoreACL;
+        public boolean bank;
         public int id;
         public List<Balance> balanceList = new ArrayList<>();
         public List<Access> accessList = new ArrayList<>();
@@ -228,30 +230,42 @@ public class H2ToMySQLConverter {
 
     private class Balance {
         public double balance;
-        public String worldName, currency_id;
+        public String worldName;
+        public String currency_id;
     }
 
     private class Access {
-        public boolean owner, balance, deposit, acl, withdraw;
+        public boolean owner;
+        public boolean balance;
+        public boolean deposit;
+        public boolean acl;
+        public boolean withdraw;
         public String playerName;
     }
 
     private class Config {
-        public String name, value;
+        public String name;
+        public String value;
     }
 
     private class Exchange {
-        public String currency_id_from, currency_id_to;
+        public String currency_id_from;
+        public String currency_id_to;
         public double amount;
     }
 
     private class Log {
-        public String type, cause, causeReason, worldName, currency_id;
+        public String type;
+        public String cause;
+        public String causeReason;
+        public String worldName;
+        public String currency_id;
         public Timestamp timestamp;
         public double amount;
     }
 
     private class WorldGroup {
-        public String worldList, groupName;
+        public String worldList;
+        public String groupName;
     }
 }

@@ -613,11 +613,11 @@ public class Common implements com.greatmancode.craftconomy3.tools.interfaces.Co
         commandManager.registerMainCommand("bank", bank);
 
         SubCommand ccsetup = new SubCommand("ccsetup", commandManager, null, 0);
-        ccsetup.addCommand(new NewSetupMainCommand(""));
-        ccsetup.addCommand(new NewSetupDatabaseCommand("database"));
-        ccsetup.addCommand(new NewSetupCurrencyCommand("currency"));
-        ccsetup.addCommand(new NewSetupBasicCommand("basic"));
-        ccsetup.addCommand(new NewSetupConvertCommand("convert"));
+        ccsetup.addCommand(new SetupMainCommand(""));
+        ccsetup.addCommand(new SetupDatabaseCommand("database"));
+        ccsetup.addCommand(new SetupCurrencyCommand("currency"));
+        ccsetup.addCommand(new SetupBasicCommand("basic"));
+        ccsetup.addCommand(new SetupConvertCommand("convert"));
         commandManager.registerMainCommand("ccsetup", ccsetup);
 
         SubCommand currency = new SubCommand("currency", commandManager, null, 1);

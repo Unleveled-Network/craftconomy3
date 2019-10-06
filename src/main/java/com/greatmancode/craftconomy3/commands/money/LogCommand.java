@@ -132,7 +132,10 @@ public class LogCommand extends AbstractCommand {
 
     public static class LogEntry {
         public Timestamp timestamp;
-        public String type, worldName, cause, causeReason;
+        public String type;
+        public String worldName;
+        public String cause;
+        public String causeReason;
         public Currency currency;
         public double amount;
 
