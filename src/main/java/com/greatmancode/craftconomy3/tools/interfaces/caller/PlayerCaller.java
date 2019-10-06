@@ -1,20 +1,22 @@
-/**
- * This file is part of GreatmancodeTools.
+/*
+ * This file is part of Craftconomy3.
  *
- * Copyright (c) 2013-2016, Greatman <http://github.com/greatman/>
+ * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
+ * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
+ * Copyright (c) 2018-2019, Pavog <http://github.com/pavog/>
  *
- * GreatmancodeTools is free software: you can redistribute it and/or modify
+ * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * GreatmancodeTools is distributed in the hope that it will be useful,
+ * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with GreatmancodeTools.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Craftconomy3. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.greatmancode.craftconomy3.tools.interfaces.caller;
 
@@ -49,15 +51,16 @@ public abstract class PlayerCaller {
      * Check the permissions of a player
      *
      * @param uuid The player UUID name to check
-     * @param perm       The permission node to check
+     * @param perm The permission node to check
      * @return True if the player have the permission. Else false (Always true for the Console)
      */
     public abstract boolean checkPermission(UUID uuid, String perm);
-    
+
     /**
      * Sends a message to a player
-     * @param playerName The player name to send the message
-     * @param message    The message to send
+     *
+     * @param playerName  The player name to send the message
+     * @param message     The message to send
      * @param commandName the command that started the mes
      */
     public abstract void sendMessage(String playerName, String message, String commandName);
@@ -73,7 +76,8 @@ public abstract class PlayerCaller {
 
     /**
      * Sends a message to a sender
-     * @param sender the sender
+     *
+     * @param sender  the sender
      * @param message the message
      * @param command the initial command
      */
@@ -81,21 +85,22 @@ public abstract class PlayerCaller {
 
     /**
      * Sends a message to a player
+     *
      * @param commandName the command that started the mes
-     * @param uuid The player name to send the message
-     * @param message    The message to send
+     * @param uuid        The player name to send the message
+     * @param message     The message to send
      */
     public abstract void sendMessage(UUID uuid, String message, String commandName);
-    
+
     /**
      * Sends a message to a player
      *
-     * @param uuid The player uuid to send the message
-     * @param message    The message to send
+     * @param uuid    The player uuid to send the message
+     * @param message The message to send
      */
-    
+
     public abstract void sendMessage(UUID uuid, String message);
-    
+
     /**
      * Retrieve the world name that a player is currently in
      *
@@ -104,7 +109,7 @@ public abstract class PlayerCaller {
      */
     @Deprecated
     public abstract String getPlayerWorld(String playerName);
-    
+
     /**
      * Retrieve the world name that a player is currently in
      *
@@ -122,8 +127,8 @@ public abstract class PlayerCaller {
      */
     @Deprecated
     public abstract boolean isOnline(String playerName);
-    
-    
+
+
     /**
      * Checks if a player is online
      *
@@ -139,7 +144,7 @@ public abstract class PlayerCaller {
      */
     @Deprecated
     public abstract List<String> getOnlinePlayers();
-    
+
     /**
      * Retrieve a list of online players
      *
@@ -155,6 +160,7 @@ public abstract class PlayerCaller {
      */
     @Deprecated
     public abstract boolean isOp(String playerName);
+
     /**
      * Check if the user is a Operator.
      *
@@ -163,14 +169,16 @@ public abstract class PlayerCaller {
      */
 
     public abstract boolean isOP(UUID uuid);
+
     /**
      * Retrieve the UUID of a player.
+     *
      * @param playerName The player name
      * @return The UUID of the player
      */
 
     public abstract UUID getUUID(String playerName);
-    
+
     /**
      * Return the player name for a specific uuid
      *
@@ -178,25 +186,23 @@ public abstract class PlayerCaller {
      * @return The players name
      */
     public abstract String getPlayerName(UUID uuid);
-    
+
     /**
-     *
      * @param uuid the uuid to check
      * @return @{code Player} Player object
      */
     public abstract Player getPlayer(UUID uuid);
-    
+
     /**
-     *
      * @param name name of online player to check
      * @return The player
      */
     public abstract Player getOnlinePlayer(String name);
-    
+
     /**
      * @param uuid uuid of online player to check
      * @return The player
      */
     public abstract Player getOnlinePlayer(UUID uuid);
-    
+
 }

@@ -1,9 +1,9 @@
-/**
+/*
  * This file is part of Craftconomy3.
  *
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
- * Copyright (c) 2018, Pavog <http://github.com/pavog/>
+ * Copyright (c) 2018-2019, Pavog <http://github.com/pavog/>
  *
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -12,11 +12,11 @@
  *
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Craftconomy3. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.greatmancode.craftconomy3.converter;
 
@@ -24,7 +24,10 @@ import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.tools.commands.CommandSender;
 import lombok.Getter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Represents a Converter
@@ -162,7 +165,7 @@ public abstract class Converter {
     /**
      * Add the given accounts to the system
      *
-     * @param sender The sender so we can send messages back to him
+     * @param sender    The sender so we can send messages back to him
      * @param userList2 Account list
      */
     protected void addAccountToString(CommandSender sender, List<User> userList2) {

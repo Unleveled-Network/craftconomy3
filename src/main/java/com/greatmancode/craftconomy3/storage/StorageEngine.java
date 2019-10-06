@@ -1,9 +1,9 @@
-/**
+/*
  * This file is part of Craftconomy3.
  *
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
- * Copyright (c) 2018, Pavog <http://github.com/pavog/>
+ * Copyright (c) 2018-2019, Pavog <http://github.com/pavog/>
  *
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -12,11 +12,11 @@
  *
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Craftconomy3. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.greatmancode.craftconomy3.storage;
 
@@ -65,8 +65,9 @@ public abstract class StorageEngine {
 
     /**
      * Retrieve an account from the storage. If it doesn't exist, it must be created
-     * @param name The account name
-     * @param isBank If the account is a bank account or not
+     *
+     * @param name          The account name
+     * @param isBank        If the account is a bank account or not
      * @param createDefault If it adds the default balance in or not
      * @return An Account
      */
@@ -83,6 +84,7 @@ public abstract class StorageEngine {
 
     /**
      * Retrieve all account names
+     *
      * @param bank If we want to retrieve the bank accounts or not
      * @return A List of all accounts
      */
@@ -225,7 +227,7 @@ public abstract class StorageEngine {
     /**
      * Save a currency in the backend
      *
-     * @param oldName The name of the currency if overriding a existing currency
+     * @param oldName  The name of the currency if overriding a existing currency
      * @param currency The currency to save
      */
     public abstract void saveCurrency(String oldName, Currency currency);
@@ -255,18 +257,21 @@ public abstract class StorageEngine {
 
     /**
      * Get all the world groups in the system
+     *
      * @return A map of the world groups.
      */
     public abstract Map<String, WorldGroup> getWorldGroups();
 
     /**
      * Remove a world group from the system
+     *
      * @param group The name of the world group
      */
     public abstract void removeWorldGroup(String group);
 
     /**
      * Retrieve the list of bank account this player have access to
+     *
      * @param playerName The player name
      * @return A String array of the accounts.
      */
@@ -274,6 +279,7 @@ public abstract class StorageEngine {
 
     /**
      * Get the logs of an account
+     *
      * @param user The account to retrieve the log from
      * @param page The page number of the entry.
      * @return A list of actions from an account
@@ -282,28 +288,32 @@ public abstract class StorageEngine {
 
     /**
      * Retrieve a list of the top accounts
-     * @param page The page number
+     *
+     * @param page     The page number
      * @param currency The currency
-     * @param world The world group.
+     * @param world    The world group.
      * @return A list of the top accounts
      */
     public abstract List<TopCommand.TopEntry> getTopEntry(int page, Currency currency, String world);
 
     /**
      * Get the exchange rates of every currencies
+     *
      * @return A list of the exchange rates
      */
     public abstract List<CurrencyRatesCommand.CurrencyRateEntry> getCurrencyExchanges();
 
     /**
      * Clear the logs before the timestamp given
+     *
      * @param timestamp The lowest date a log entry can have
      */
     public abstract void cleanLog(Timestamp timestamp);
 
     /**
      * Delete a account from the backend
-     * @param name The name of the account
+     *
+     * @param name        The name of the account
      * @param bankAccount If the account is a bank account or not
      * @return True if the account is deleted, else false.
      */
@@ -311,7 +321,8 @@ public abstract class StorageEngine {
 
     /**
      * Checks if a account exist
-     * @param name The name of the account
+     *
+     * @param name        The name of the account
      * @param bankAccount If the account is a bank account or not
      * @return True if the account exists, else false.
      */
@@ -319,19 +330,22 @@ public abstract class StorageEngine {
 
     /**
      * Save a world group
-     * @param name The name of the world group.
+     *
+     * @param name      The name of the world group.
      * @param worldList The worlds being in this world group seperated by , .
      */
     public abstract void saveWorldGroup(String name, String worldList);
 
     /**
      * Get the names of all the currencies in the system.
+     *
      * @return A list of all the currencies
      */
     public abstract List<String> getAllCurrencyNames();
 
     /**
      * Set the default currency of the system
+     *
      * @param currency The currency to set as default
      */
     public abstract void setDefaultCurrency(Currency currency);
@@ -339,12 +353,14 @@ public abstract class StorageEngine {
 
     /**
      * Set the default bank creation currency.
+     *
      * @param currency The currency
      */
     public abstract void setDefaultBankCurrency(Currency currency);
 
     /**
      * Retrieve a currency
+     *
      * @param name The name of the currency
      * @return The currency if it exists else null
      */
@@ -352,12 +368,14 @@ public abstract class StorageEngine {
 
     /**
      * Retrieve all currencies
+     *
      * @return A map of the currencies.
      */
-    public abstract Map<String,Currency> getAllCurrencies();
+    public abstract Map<String, Currency> getAllCurrencies();
 
     /**
      * Get the raw value of the world list of a world group.
+     *
      * @param name The name of the world group.
      * @return The list of worlds in a string seperated by commas (,)
      */
@@ -365,6 +383,7 @@ public abstract class StorageEngine {
 
     /**
      * Save the converted accounts into the backend
+     *
      * @param userList The user list being converted
      */
     public abstract void saveImporterUsers(List<Converter.User> userList);

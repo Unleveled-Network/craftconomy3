@@ -1,9 +1,9 @@
-/**
+/*
  * This file is part of Craftconomy3.
  *
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
- * Copyright (c) 2018, Pavog <http://github.com/pavog/>
+ * Copyright (c) 2018-2019, Pavog <http://github.com/pavog/>
  *
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -12,11 +12,11 @@
  *
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Craftconomy3. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.greatmancode.craftconomy3.commands.bank;
 
@@ -32,7 +32,7 @@ public class BankGiveCommand extends AbstractCommand {
     public BankGiveCommand(String name) {
         super(name);
     }
-    
+
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (Common.getInstance().getAccountManager().exist(args[0], true)) {
@@ -41,12 +41,12 @@ public class BankGiveCommand extends AbstractCommand {
                 double amount = Double.parseDouble(args[1]);
                 Currency currency = Common.getInstance().getCurrencyManager().getDefaultCurrency();
                 if (args.length > 2) {
-                    currency = checkCurrencyExists(sender,args[2]);
-                    if(currency == null)return;
+                    currency = checkCurrencyExists(sender, args[2]);
+                    if (currency == null) return;
                 }
                 String worldName = Account.getWorldGroupOfPlayerCurrentlyIn(sender.getUuid());
                 if (args.length > 3) {
-                    if(!checkWorldExists(sender,args[3]))return;
+                    if (!checkWorldExists(sender, args[3])) return;
                     worldName = Common.getInstance().getWorldGroupManager().getWorldGroupName(args[3]);
                 }
 

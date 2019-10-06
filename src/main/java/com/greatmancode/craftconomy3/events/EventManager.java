@@ -1,9 +1,9 @@
-/**
+/*
  * This file is part of Craftconomy3.
  *
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
- * Copyright (c) 2018, Pavog <http://github.com/pavog/>
+ * Copyright (c) 2018-2019, Pavog <http://github.com/pavog/>
  *
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -12,11 +12,11 @@
  *
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Craftconomy3. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.greatmancode.craftconomy3.events;
 
@@ -41,12 +41,12 @@ public class EventManager implements Listener {
      */
     @EventHandler
     public void playerJoinEvent(PlayerJoinEvent event) {
-        if (!Common.getInstance().getMainConfig().getBoolean("System.Setup",true)) {
-            if (Common.getInstance().getMainConfig().getBoolean("System.CreateOnLogin",false)) {
+        if (!Common.getInstance().getMainConfig().getBoolean("System.Setup", true)) {
+            if (Common.getInstance().getMainConfig().getBoolean("System.CreateOnLogin", false)) {
                 Account acc = Common.getInstance().getAccountManager().getAccount(event.getP().getName(), false);
-                if(acc != null)Common.getInstance().getLogger().log(Level.FINER,"Account retrieved for "+ event.getP().getDisplayName());
+                if (acc != null) Common.getInstance().getLogger().log(Level.FINER, "Account retrieved for " + event.getP().getDisplayName());
                 else
-                    Common.getInstance().getLogger().log(Level.FINER,"Account retrieval failed for "+ event.getP().getDisplayName());
+                    Common.getInstance().getLogger().log(Level.FINER, "Account retrieval failed for " + event.getP().getDisplayName());
 
             }
         }
@@ -54,13 +54,13 @@ public class EventManager implements Listener {
 
     @EventHandler
     public void PreJoinEvent(PreJoinEvent event) {
-        if (!Common.getInstance().getMainConfig().getBoolean("System.Setup",true)) {
+        if (!Common.getInstance().getMainConfig().getBoolean("System.Setup", true)) {
             //We search if the UUID is in the database
             Account account = Common.getInstance().getStorageHandler().getStorageEngine().getAccount(event.getUuid());
             if (account != null && !event.getName().equals(account.getAccountName())) {
                 Common.getInstance().getAccountManager().clearCache(account.getAccountName());
                 Common.getInstance().getStorageHandler().getStorageEngine().updateUsername(event.getName().toLowerCase(), event.getUuid());
-            } else if (account == null){
+            } else if (account == null) {
                 //We set deh UUID
                 Common.getInstance().getStorageHandler().getStorageEngine().updateUUID(event.getName(), event.getUuid());
             }

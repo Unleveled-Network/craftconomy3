@@ -1,9 +1,9 @@
-/**
+/*
  * This file is part of Craftconomy3.
  *
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
- * Copyright (c) 2018, Pavog <http://github.com/pavog/>
+ * Copyright (c) 2018-2019, Pavog <http://github.com/pavog/>
  *
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -12,11 +12,11 @@
  *
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Craftconomy3. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.greatmancode.craftconomy3.account;
 
@@ -43,11 +43,11 @@ public class Account {
     /**
      * Load a account. Creates one if it doesn't exist.
      *
-     * @param id The unique id used in the database as primary key
-     * @param name The account name
-     * @param bankAccount If the account is a bank account
+     * @param id            The unique id used in the database as primary key
+     * @param name          The account name
+     * @param bankAccount   If the account is a bank account
      * @param infiniteMoney If the account have no money limit
-     * @param ignoreACL If the account ignore it's ACL values (Bank only)
+     * @param ignoreACL     If the account ignore it's ACL values (Bank only)
      */
     public Account(int id, String name, boolean bankAccount, boolean infiniteMoney, boolean ignoreACL) {
         this.id = id;
@@ -175,7 +175,7 @@ public class Account {
      * @return The new balance. If the account has infinite money. Double.MAX_VALUE is returned.
      */
     public double deposit(double amount, String world, String currencyName, Cause cause, String causeReason) {
-        double result = getBalance(world,currencyName) + format(amount);
+        double result = getBalance(world, currencyName) + format(amount);
         if (!Common.getInstance().getWorldGroupManager().worldGroupExist(world)) {
             world = Common.getInstance().getWorldGroupManager().getWorldGroupName(world);
         }
@@ -218,7 +218,7 @@ public class Account {
      * @return The new balance. If the account has infinite money. Double.MAX_VALUE is returned.
      */
     public double withdraw(double amount, String world, String currencyName, Cause cause, String causeReason) {
-        double result = getBalance(world,currencyName) - format(amount);
+        double result = getBalance(world, currencyName) - format(amount);
         String worldGroupName = world;
 
         if (!Common.getInstance().getWorldGroupManager().worldGroupExist(worldGroupName)) {
@@ -285,7 +285,7 @@ public class Account {
      * Checks if we have enough money in a certain balance
      *
      * @param amount       The amount of money to check
-     * @param world    The World / World group we want to check
+     * @param world        The World / World group we want to check
      * @param currencyName The currency we want to check
      * @return True if there's enough money. Else false
      */
@@ -306,7 +306,7 @@ public class Account {
     /**
      * Returns the world that the player is currently in
      *
-     * @param  playerUUID The player uuid.
+     * @param playerUUID The player uuid.
      * @return The world name that the player is currently in or any if he is not online/Multiworld system not enabled
      */
     private static String getWorldPlayerCurrentlyIn(UUID playerUUID) {
@@ -316,7 +316,7 @@ public class Account {
     /**
      * Retrieve the world group of the player
      *
-     * @param  playerUUID The player uuid
+     * @param playerUUID The player uuid
      * @return The worldGroup of the player.
      */
     public static String getWorldGroupOfPlayerCurrentlyIn(UUID playerUUID) {

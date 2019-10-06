@@ -1,9 +1,9 @@
-/**
+/*
  * This file is part of Craftconomy3.
  *
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
- * Copyright (c) 2018, Pavog <http://github.com/pavog/>
+ * Copyright (c) 2018-2019, Pavog <http://github.com/pavog/>
  *
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -12,11 +12,11 @@
  *
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Craftconomy3. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.greatmancode.craftconomy3.commands.bank;
 
@@ -29,14 +29,14 @@ public class BankPermCommand extends AbstractCommand {
     public BankPermCommand(String name) {
         super(name);
     }
-    
+
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (Common.getInstance().getAccountManager().exist(args[0], true)) {
             Account account = Common.getInstance().getAccountManager().getAccount(args[0], true);
             if (account.getAccountACL().canAcl(sender.getName()) || account.getAccountACL().isOwner(sender.getName()) ||
                     Common
-                    .getInstance().getServerCaller().getPlayerCaller().checkPermission(sender.getUuid(), "craftconomy.bank.perm.others")) {
+                            .getInstance().getServerCaller().getPlayerCaller().checkPermission(sender.getUuid(), "craftconomy.bank.perm.others")) {
 
                 if ("deposit".equalsIgnoreCase(args[1])) {
                     account.getAccountACL().setDeposit(args[2], Boolean.parseBoolean(args[3]));

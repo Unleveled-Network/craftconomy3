@@ -1,20 +1,22 @@
-/**
- * This file is part of GreatmancodeTools.
+/*
+ * This file is part of Craftconomy3.
  *
- * Copyright (c) 2013-2016, Greatman <http://github.com/greatman/>
+ * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
+ * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
+ * Copyright (c) 2018-2019, Pavog <http://github.com/pavog/>
  *
- * GreatmancodeTools is free software: you can redistribute it and/or modify
+ * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * GreatmancodeTools is distributed in the hope that it will be useful,
+ * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with GreatmancodeTools.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Craftconomy3. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.greatmancode.craftconomy3.tools.interfaces;
 
@@ -23,6 +25,7 @@ import com.greatmancode.craftconomy3.tools.commands.interfaces.CommandReceiver;
 import com.greatmancode.craftconomy3.tools.events.EventManager;
 
 import java.util.logging.Logger;
+
 /**
  * A loader is called when the plugin is launched on the server.
  *
@@ -41,8 +44,9 @@ public interface Loader {
     ServerType getServerType();
 
     EventManager getEventManager();
-    
+
     Logger getLogger();
+
     /**
      * Retrieve the common class. Usually you would cast it to the plugin version.
      *

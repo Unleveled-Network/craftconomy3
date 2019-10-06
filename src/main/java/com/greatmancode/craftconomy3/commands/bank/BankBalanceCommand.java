@@ -1,9 +1,9 @@
-/**
+/*
  * This file is part of Craftconomy3.
  *
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
- * Copyright (c) 2018, Pavog <http://github.com/pavog/>
+ * Copyright (c) 2018-2019, Pavog <http://github.com/pavog/>
  *
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -12,11 +12,11 @@
  *
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Craftconomy3. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.greatmancode.craftconomy3.commands.bank;
 
@@ -38,29 +38,29 @@ public class BankBalanceCommand extends AbstractCommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         UUID senderUUID = null;
-        if(sender instanceof PlayerCommandSender) {
-            senderUUID= sender.getUuid();
+        if (sender instanceof PlayerCommandSender) {
+            senderUUID = sender.getUuid();
         }
-            if (Common.getInstance().getAccountManager().exist(args[0], true)) {
-                Account account = Common.getInstance().getAccountManager().getAccount(args[0], true);
-                if (account.getAccountACL().canShow(sender.getName()) || Common.getInstance().getServerCaller()
-                        .getPlayerCaller().checkPermission(senderUUID, "craftconomy.bank.balance.others")) {
-                    Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender, Common.getInstance()
-                            .getLanguageManager().getString("bank_statement"),getName());
-                    if (account.getAllBalance().isEmpty()) {
-                        Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender, Common
-                                .getInstance().getLanguageManager().parse("bank_account_empty", account.getAccountName()),getName());
-                    } else {
-                        for (Balance bl : account.getAllBalance()) {
-                            Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender, Common.getInstance().format(bl.getWorld(), bl.getCurrency(), bl.getBalance()),getName());
-                        }
-                    }
+        if (Common.getInstance().getAccountManager().exist(args[0], true)) {
+            Account account = Common.getInstance().getAccountManager().getAccount(args[0], true);
+            if (account.getAccountACL().canShow(sender.getName()) || Common.getInstance().getServerCaller()
+                    .getPlayerCaller().checkPermission(senderUUID, "craftconomy.bank.balance.others")) {
+                Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender, Common.getInstance()
+                        .getLanguageManager().getString("bank_statement"), getName());
+                if (account.getAllBalance().isEmpty()) {
+                    Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender, Common
+                            .getInstance().getLanguageManager().parse("bank_account_empty", account.getAccountName()), getName());
                 } else {
-                    Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(senderUUID, Common.getInstance().getLanguageManager().getString("cant_check_bank_statement"));
+                    for (Balance bl : account.getAllBalance()) {
+                        Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(sender, Common.getInstance().format(bl.getWorld(), bl.getCurrency(), bl.getBalance()), getName());
+                    }
                 }
             } else {
-                Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(senderUUID, Common.getInstance().getLanguageManager().getString("account_not_exist"));
+                Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(senderUUID, Common.getInstance().getLanguageManager().getString("cant_check_bank_statement"));
             }
+        } else {
+            Common.getInstance().getServerCaller().getPlayerCaller().sendMessage(senderUUID, Common.getInstance().getLanguageManager().getString("account_not_exist"));
+        }
     }
 
     @Override

@@ -1,9 +1,9 @@
-/**
+/*
  * This file is part of Craftconomy3.
  *
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
- * Copyright (c) 2018, Pavog <http://github.com/pavog/>
+ * Copyright (c) 2018-2019, Pavog <http://github.com/pavog/>
  *
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -12,11 +12,11 @@
  *
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Craftconomy3. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.greatmancode.craftconomy3.converter;
 
@@ -46,12 +46,13 @@ public class H2ToMySQLConverter {
     public void run() {
         Common.getInstance().sendConsoleMessage(Level.INFO, Common.getInstance().getLanguageManager().getString("starting_database_convert"));
         HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setMaximumPoolSize(Common.getInstance().getMainConfig().getInt("System.Database.Poolsize",20));
+        hikariConfig.setMaximumPoolSize(Common.getInstance().getMainConfig().getInt("System.Database.Poolsize", 20));
         hikariConfig.setDataSourceClassName("org.h2.jdbcx.JdbcDataSource");
         hikariConfig.addDataSourceProperty("user", "sa");
         hikariConfig.addDataSourceProperty("url", "jdbc:h2:file:" + new File(Common.getInstance().getServerCaller().getDataFolder().getPath(), "database").getAbsolutePath() + ";MV_STORE=FALSE");
-        hikariConfig.setConnectionTimeout(5000);db = new HikariDataSource(hikariConfig);
-        prefix = Common.getInstance().getMainConfig().getString("System.Database.Prefix","cc3_");
+        hikariConfig.setConnectionTimeout(5000);
+        db = new HikariDataSource(hikariConfig);
+        prefix = Common.getInstance().getMainConfig().getString("System.Database.Prefix", "cc3_");
         try {
             Connection connection = db.getConnection();
 
@@ -65,7 +66,7 @@ public class H2ToMySQLConverter {
                 account.ignoreACL = set.getBoolean("ignoreACL");
                 if (set.getString("uuid") != null) {
                     account.uuid = UUID.fromString(set.getString("uuid"));
-                } else if (!set.getBoolean("bank")){
+                } else if (!set.getBoolean("bank")) {
                     account.uuid = Common.getInstance().getServerCaller().getPlayerCaller().getUUID(account.name);
                 }
                 account.infiniteMoney = set.getBoolean("infiniteMoney");

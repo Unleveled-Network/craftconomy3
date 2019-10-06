@@ -1,9 +1,9 @@
-/**
+/*
  * This file is part of Craftconomy3.
  *
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
- * Copyright (c) 2018, Pavog <http://github.com/pavog/>
+ * Copyright (c) 2018-2019, Pavog <http://github.com/pavog/>
  *
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -12,11 +12,11 @@
  *
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Craftconomy3. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.greatmancode.craftconomy3.storage.sql.tables;
 
@@ -34,8 +34,8 @@ public class LogTable extends DatabaseTable {
             "  `amount` double DEFAULT NULL," +
             "  `currency_id` varchar(50)," +
             "  PRIMARY KEY (`id`)," +
-            "  CONSTRAINT `"+getPrefix()+"fk_log_account` FOREIGN KEY (`username_id`) REFERENCES `" + getPrefix() + AccountTable.TABLE_NAME + "` (`id`) ON DELETE CASCADE," +
-            "  CONSTRAINT `"+getPrefix()+"fk_log_currency` FOREIGN KEY (`currency_id`) REFERENCES `" + getPrefix() + CurrencyTable.TABLE_NAME + "` (`name`) ON DELETE CASCADE" +
+            "  CONSTRAINT `" + getPrefix() + "fk_log_account` FOREIGN KEY (`username_id`) REFERENCES `" + getPrefix() + AccountTable.TABLE_NAME + "` (`id`) ON DELETE CASCADE," +
+            "  CONSTRAINT `" + getPrefix() + "fk_log_currency` FOREIGN KEY (`currency_id`) REFERENCES `" + getPrefix() + CurrencyTable.TABLE_NAME + "` (`name`) ON DELETE CASCADE" +
             ") ENGINE=InnoDB CHARSET=utf8;";
 
     public final String createTableH2 = "CREATE TABLE IF NOT EXISTS `" + getPrefix() + TABLE_NAME + "` (" +
@@ -55,18 +55,18 @@ public class LogTable extends DatabaseTable {
 
     public final String insertEntry =
             "INSERT INTO " + getPrefix() + TABLE_NAME + " " +
-            "(username_id, type, cause, causeReason, worldName, amount, currency_id, timestamp) " +
-            "VALUES ((SELECT id from " + getPrefix() + AccountTable.TABLE_NAME + " " +
-            "WHERE name=? AND bank=?),?,?,?,?,?,?,?)";
+                    "(username_id, type, cause, causeReason, worldName, amount, currency_id, timestamp) " +
+                    "VALUES ((SELECT id from " + getPrefix() + AccountTable.TABLE_NAME + " " +
+                    "WHERE name=? AND bank=?),?,?,?,?,?,?,?)";
 
     public final String selectEntry =
             "SELECT * FROM " + getPrefix() + TABLE_NAME + " " +
-            "WHERE " + getPrefix() + TABLE_NAME + ".username_id = (" + AccountTable.sqlAccountIDbyName(getPrefix()) + ")";
+                    "WHERE " + getPrefix() + TABLE_NAME + ".username_id = (" + AccountTable.sqlAccountIDbyName(getPrefix()) + ")";
 
     public final String selectEntryLimit =
             "SELECT * FROM " + getPrefix() + TABLE_NAME + " " +
-            "WHERE " + getPrefix() + TABLE_NAME + ".username_id = (" + AccountTable.sqlAccountIDbyName(getPrefix()) + ") " +
-            "ORDER BY " + getPrefix() + TABLE_NAME + ".id DESC LIMIT ?,?";
+                    "WHERE " + getPrefix() + TABLE_NAME + ".username_id = (" + AccountTable.sqlAccountIDbyName(getPrefix()) + ") " +
+                    "ORDER BY " + getPrefix() + TABLE_NAME + ".id DESC LIMIT ?,?";
 
     public final String cleanEntry = "DELETE FROM " + getPrefix() + TABLE_NAME + " WHERE timestamp <= ?";
 

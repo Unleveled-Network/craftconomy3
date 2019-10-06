@@ -1,9 +1,9 @@
-/**
+/*
  * This file is part of Craftconomy3.
  *
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
- * Copyright (c) 2018, Pavog <http://github.com/pavog/>
+ * Copyright (c) 2018-2019, Pavog <http://github.com/pavog/>
  *
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -12,11 +12,11 @@
  *
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Craftconomy3. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.greatmancode.craftconomy3;
 
@@ -29,7 +29,7 @@ import com.greatmancode.craftconomy3.commands.group.GroupAddWorldCommand;
 import com.greatmancode.craftconomy3.commands.group.GroupCreateCommand;
 import com.greatmancode.craftconomy3.commands.group.GroupDelWorldCommand;
 import com.greatmancode.craftconomy3.commands.money.*;
-import com.greatmancode.craftconomy3.commands.pay.*;
+import com.greatmancode.craftconomy3.commands.pay.PayShortCommand;
 import com.greatmancode.craftconomy3.commands.setup.*;
 import com.greatmancode.craftconomy3.converter.H2ToMySQLConverter;
 import com.greatmancode.craftconomy3.currency.Currency;
@@ -37,7 +37,6 @@ import com.greatmancode.craftconomy3.currency.CurrencyManager;
 import com.greatmancode.craftconomy3.events.EventManager;
 import com.greatmancode.craftconomy3.groups.WorldGroupsManager;
 import com.greatmancode.craftconomy3.storage.StorageHandler;
-import com.greatmancode.craftconomy3.utils.OldFormatConverter;
 import com.greatmancode.craftconomy3.tools.caller.bukkit.BukkitServerCaller;
 import com.greatmancode.craftconomy3.tools.caller.unittest.UnitTestServerCaller;
 import com.greatmancode.craftconomy3.tools.commands.CommandHandler;
@@ -47,8 +46,8 @@ import com.greatmancode.craftconomy3.tools.configuration.ConfigurationManager;
 import com.greatmancode.craftconomy3.tools.interfaces.caller.ServerCaller;
 import com.greatmancode.craftconomy3.tools.language.LanguageManager;
 import com.greatmancode.craftconomy3.tools.utils.FeatherBoard;
-import com.greatmancode.craftconomy3.tools.utils.ServicePriority;
 import com.greatmancode.craftconomy3.tools.utils.Tools;
+import com.greatmancode.craftconomy3.utils.OldFormatConverter;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -107,7 +106,7 @@ public class Common implements com.greatmancode.craftconomy3.tools.interfaces.Co
             if (!getMainConfig().has("System.Database.Poolsize")) {
                 getMainConfig().setValue("System.Database.Poolsize", 10);
             }
-            if(!getMainConfig().has("System.Database.useMetrics")){
+            if (!getMainConfig().has("System.Database.useMetrics")) {
                 getMainConfig().setValue("System.Database.useMetrics", false);
             }
 
@@ -120,10 +119,10 @@ public class Common implements com.greatmancode.craftconomy3.tools.interfaces.Co
             Common.getInstance().getServerCaller().registerPermission("craftconomy.*");
             commandManager = new CommandHandler(serverCaller);
             registerCommands();
-            if (getMainConfig().getBoolean("System.Setup",true)) {
+            if (getMainConfig().getBoolean("System.Setup", true)) {
 
                 //We got quick setup. Let's do it!!!!
-                if (getMainConfig().getBoolean("System.QuickSetup.Enable",false)) {
+                if (getMainConfig().getBoolean("System.QuickSetup.Enable", false)) {
                     quickSetup();
                     reloadPlugin();
                 } else {
@@ -362,7 +361,7 @@ public class Common implements com.greatmancode.craftconomy3.tools.interfaces.Co
             storageHandler = new StorageHandler();
 
             //TODO: Re-support that
-            if (getMainConfig().getBoolean("System.Database.ConvertFromH2",false)) {
+            if (getMainConfig().getBoolean("System.Database.ConvertFromH2", false)) {
                 convertDatabase();
             }
 
@@ -374,7 +373,7 @@ public class Common implements com.greatmancode.craftconomy3.tools.interfaces.Co
     /**
      * Convert from SQLite to MySQL
      */
-    private void convertDatabase(){
+    private void convertDatabase() {
         sendConsoleMessage(Level.INFO, getLanguageManager().getString("starting_database_convert"));
         new H2ToMySQLConverter().run();
         sendConsoleMessage(Level.INFO, getLanguageManager().getString("convert_done"));
@@ -426,7 +425,7 @@ public class Common implements com.greatmancode.craftconomy3.tools.interfaces.Co
      * @param worldName   The world name associated with this transaction
      */
     public void writeLog(LogInfo info, Cause cause, String causeReason, Account account, double amount, Currency currency, String worldName) {
-        if (getMainConfig().getBoolean("System.Logging.Enabled",false)) {
+        if (getMainConfig().getBoolean("System.Logging.Enabled", false)) {
             getStorageHandler().getStorageEngine().saveLog(info, cause, causeReason, account, amount, currency, worldName);
         }
     }
@@ -559,17 +558,17 @@ public class Common implements com.greatmancode.craftconomy3.tools.interfaces.Co
     private void quickSetup() {
         initialiseDatabase();
         Common.getInstance().initializeCurrency();
-        String main = getMainConfig().getString("System.QuickSetup.Currency.Name","Dollar");
-        String mainplural = getMainConfig().getString("System.QuickSetup.Currency.NamePlural","Dollars");
-        String minor = getMainConfig().getString("System.QuickSetup.Currency.Minor","cent");
-        String minorPlural =getMainConfig().getString("System.QuickSetup.Currency.MinorPlural","cents");
-        String sign = getMainConfig().getString("System.QuickSetup.Currency.Sign","$");
-        Currency currency = Common.getInstance().getCurrencyManager().addCurrency(main,mainplural, minor,minorPlural,sign, true);
+        String main = getMainConfig().getString("System.QuickSetup.Currency.Name", "Dollar");
+        String mainplural = getMainConfig().getString("System.QuickSetup.Currency.NamePlural", "Dollars");
+        String minor = getMainConfig().getString("System.QuickSetup.Currency.Minor", "cent");
+        String minorPlural = getMainConfig().getString("System.QuickSetup.Currency.MinorPlural", "cents");
+        String sign = getMainConfig().getString("System.QuickSetup.Currency.Sign", "$");
+        Currency currency = Common.getInstance().getCurrencyManager().addCurrency(main, mainplural, minor, minorPlural, sign, true);
         Common.getInstance().getCurrencyManager().setDefault(currency);
         Common.getInstance().getCurrencyManager().setDefaultBankCurrency(currency);
-        getStorageHandler().getStorageEngine().setConfigEntry("longmode", DisplayFormat.valueOf(getMainConfig().getString("System.QuickSetup.DisplayMode","long").toUpperCase()).toString());
-        getStorageHandler().getStorageEngine().setConfigEntry("holdings", getMainConfig().getString("System.QuickSetup.StartBalance","100.0"));
-        getStorageHandler().getStorageEngine().setConfigEntry("bankprice", getMainConfig().getString("System.QuickSetup.PriceBank","200.0"));
+        getStorageHandler().getStorageEngine().setConfigEntry("longmode", DisplayFormat.valueOf(getMainConfig().getString("System.QuickSetup.DisplayMode", "long").toUpperCase()).toString());
+        getStorageHandler().getStorageEngine().setConfigEntry("holdings", getMainConfig().getString("System.QuickSetup.StartBalance", "100.0"));
+        getStorageHandler().getStorageEngine().setConfigEntry("bankprice", getMainConfig().getString("System.QuickSetup.PriceBank", "200.0"));
         initializeCurrency();
         loadDefaultSettings();
         Common.getInstance().startUp();
@@ -889,7 +888,7 @@ public class Common implements com.greatmancode.craftconomy3.tools.interfaces.Co
      * Run a database update.
      */
     private void updateDatabase() {
-        if (getMainConfig().getInt("Database.dbVersion",0) == 0) {
+        if (getMainConfig().getInt("Database.dbVersion", 0) == 0) {
             alertOldDbVersion(0, 1);
             //We first check if we have the DB version in the database. If we do, we have a old layout in our hands
             String value = getStorageHandler().getStorageEngine().getConfigEntry("dbVersion");
@@ -907,16 +906,16 @@ public class Common implements com.greatmancode.craftconomy3.tools.interfaces.Co
                 getMainConfig().setValue("Database.dbVersion", 1);
                 sendConsoleMessage(Level.INFO, "Updated to Revision 1!");
             }
-        } else if (getMainConfig().getInt("Database.dbVersion",0) == -1) {
-            alertOldDbVersion(-1,1);
+        } else if (getMainConfig().getInt("Database.dbVersion", 0) == -1) {
+            alertOldDbVersion(-1, 1);
             try {
-                    new OldFormatConverter().step2();
-                    getMainConfig().setValue("Database.dbVersion", 1);
-                    sendConsoleMessage(Level.INFO, "Updated to Revision 1!");
+                new OldFormatConverter().step2();
+                getMainConfig().setValue("Database.dbVersion", 1);
+                sendConsoleMessage(Level.INFO, "Updated to Revision 1!");
 
-                }  catch (IOException | ParseException e) {
-                    e.printStackTrace();
-                }
+            } catch (IOException | ParseException e) {
+                e.printStackTrace();
+            }
         }
     }
 

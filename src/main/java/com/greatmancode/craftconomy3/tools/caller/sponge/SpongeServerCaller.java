@@ -1,9 +1,9 @@
-/**
+/*
  * This file is part of Craftconomy3.
  *
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
- * Copyright (c) 2018, Pavog <http://github.com/pavog/>
+ * Copyright (c) 2018-2019, Pavog <http://github.com/pavog/>
  *
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -12,11 +12,11 @@
  *
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Craftconomy3. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.greatmancode.craftconomy3.tools.caller.sponge;
 
@@ -82,7 +82,7 @@ public class SpongeServerCaller extends ServerCaller {
         TextColor color = null;
         TextStyle.Base style = null;
         while (m.find()) {
-            
+
             String entry = m.group();
             if (entry.contains("{{")) {
                 color = null;
@@ -177,7 +177,7 @@ public class SpongeServerCaller extends ServerCaller {
 
     @Override
     public String getDefaultWorld() {
-        return ((SpongeLoader)loader).getGame().getServer().getWorlds().iterator().next().getName();
+        return ((SpongeLoader) loader).getGame().getServer().getWorlds().iterator().next().getName();
     }
 
     @Override
@@ -213,21 +213,21 @@ public class SpongeServerCaller extends ServerCaller {
                     Player playerSource = (Player) source;
                     sender = new PlayerCommandSender<>(playerSource.getDisplayName(), playerSource.getUuid(), playerSource);
                 }
-                if(sender != null) {
+                if (sender != null) {
                     subCommand.execute(subCommandValue, sender, newArgs);
-                }else{
+                } else {
                     return CommandResult.empty();
                 }
                 return CommandResult.success();
             }
-    
+
             @Override
             public List<String> getSuggestions(CommandSource source, String arguments, @Nullable Location<World> targetPosition) throws CommandException {
                 List<String> list = new ArrayList<>();
                 list.addAll(subCommand.getSubCommandKeys());
                 return list;
             }
-    
+
             public List<String> getSuggestions(CommandSource source, String arguments) throws CommandException {
                 List<String> list = new ArrayList<>();
                 list.addAll(subCommand.getSubCommandKeys());
@@ -238,12 +238,12 @@ public class SpongeServerCaller extends ServerCaller {
             public boolean testPermission(CommandSource source) {
                 return true;
             }
-    
+
             @Override
             public Optional<Text> getShortDescription(CommandSource source) {
                 return Optional.empty();
             }
-    
+
             @Override
             public Optional<Text> getHelp(CommandSource source) {
                 return Optional.empty();
@@ -254,12 +254,12 @@ public class SpongeServerCaller extends ServerCaller {
                 return Text.of();
             }
         };
-        ((SpongeLoader)loader).getGame().getCommandManager().register(loader, command, name);
+        ((SpongeLoader) loader).getGame().getCommandManager().register(loader, command, name);
     }
 
     @Override
     public String getServerVersion() {
-        return String.format("%s %s", "Sponge", ((SpongeLoader)loader).getGame().getPlatform().getMinecraftVersion().getName());
+        return String.format("%s %s", "Sponge", ((SpongeLoader) loader).getGame().getPlatform().getMinecraftVersion().getName());
     }
 
     @Override
@@ -279,12 +279,12 @@ public class SpongeServerCaller extends ServerCaller {
 
     @Override
     public void registerPermission(String permissionNode) {
-       //None
+        //None
     }
 
     @Override
     public boolean isOnlineMode() {
-        return ((SpongeLoader)loader).getGame().getServer().getOnlineMode();
+        return ((SpongeLoader) loader).getGame().getServer().getOnlineMode();
     }
 
     @Override
@@ -295,20 +295,20 @@ public class SpongeServerCaller extends ServerCaller {
     @Override
     public void throwEvent(Event event) {
         //Not used
-       // Game game = ((SpongeLoader) loader).getGame();
+        // Game game = ((SpongeLoader) loader).getGame();
         //game.getEventManager().post(event);
     }
 
     @Override
     public Common retrievePlugin(String name) {
 
-        Game game = ((SpongeLoader)loader).getGame();
+        Game game = ((SpongeLoader) loader).getGame();
         return (Common) game.getPluginManager().getPlugin(name).get().getInstance().get();
     }
 
     @Override
     public boolean isPluginEnabled(String name) {
-        Game game = ((SpongeLoader)loader).getGame();
+        Game game = ((SpongeLoader) loader).getGame();
         return game.getPluginManager().isLoaded(name);
     }
 

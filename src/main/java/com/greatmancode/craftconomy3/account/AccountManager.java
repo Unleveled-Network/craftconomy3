@@ -1,9 +1,9 @@
-/**
+/*
  * This file is part of Craftconomy3.
  *
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
- * Copyright (c) 2018, Pavog <http://github.com/pavog/>
+ * Copyright (c) 2018-2019, Pavog <http://github.com/pavog/>
  *
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -12,11 +12,11 @@
  *
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Craftconomy3. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.greatmancode.craftconomy3.account;
 
@@ -38,13 +38,13 @@ public class AccountManager {
     /**
      * Retrieve a account. Accounts prefixed with bank: are bank accounts.
      *
-     * @param name The name of the account to retrieve
+     * @param name        The name of the account to retrieve
      * @param bankAccount If the account is a bank account
      * @return A economy account
      */
     public Account getAccount(String name, boolean bankAccount) {
         String newName = name;
-        if (!Common.getInstance().getMainConfig().getBoolean("System.Case-sentitive",false)) {
+        if (!Common.getInstance().getMainConfig().getBoolean("System.Case-sentitive", false)) {
             newName = name.toLowerCase();
         }
         Account account;
@@ -75,13 +75,13 @@ public class AccountManager {
     /**
      * Check if a account exist in the database.
      *
-     * @param name The name to check
+     * @param name        The name to check
      * @param bankAccount If the account is a bank account
      * @return True if the account exists else false
      */
     public boolean exist(String name, boolean bankAccount) {
         String newName = name;
-        if (!Common.getInstance().getMainConfig().getBoolean("System.Case-sentitive",false)) {
+        if (!Common.getInstance().getMainConfig().getBoolean("System.Case-sentitive", false)) {
             newName = name.toLowerCase();
         }
         boolean result;
@@ -107,16 +107,17 @@ public class AccountManager {
             return exist(name, false);
         }
     }
+
     /**
      * Delete a account from the system
      *
-     * @param name The account name
+     * @param name        The account name
      * @param bankAccount If the account is a bank account
      * @return True if the account has been deleted. Else false.
      */
     public boolean delete(String name, boolean bankAccount) {
         String newName = name;
-        if (!Common.getInstance().getMainConfig().getBoolean("System.Case-sentitive",false)) {
+        if (!Common.getInstance().getMainConfig().getBoolean("System.Case-sentitive", false)) {
             newName = name.toLowerCase();
         }
         boolean result = false;
@@ -133,6 +134,7 @@ public class AccountManager {
 
     /**
      * Clear the account cache from this user. Useful due to the UUID feature in minecraft.
+     *
      * @param name The name of the player/account.
      */
     public void clearCache(String name) {
@@ -141,6 +143,7 @@ public class AccountManager {
 
     /**
      * Retrieve a list of all the accounts
+     *
      * @param bank If we want a bank list or not
      * @return A List of accounts
      */

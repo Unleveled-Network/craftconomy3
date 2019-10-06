@@ -1,9 +1,9 @@
-/**
+/*
  * This file is part of Craftconomy3.
  *
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
- * Copyright (c) 2018, Pavog <http://github.com/pavog/>
+ * Copyright (c) 2018-2019, Pavog <http://github.com/pavog/>
  *
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -12,11 +12,11 @@
  *
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Craftconomy3. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.greatmancode.craftconomy3.storage.sql.tables;
 
@@ -53,28 +53,28 @@ public class AccountTable extends DatabaseTable {
 
     public final String insertEntry =
             "INSERT INTO " + getPrefix() + TABLE_NAME + " " +
-              "(name,uuid) " +
-            "VALUES(?,?)";
+                    "(name,uuid) " +
+                    "VALUES(?,?)";
 
     public final String insertEntryBank =
             "INSERT INTO " + getPrefix() + TABLE_NAME + " " +
-               "(name,bank) " +
-            "VALUES(?,true)";
+                    "(name,bank) " +
+                    "VALUES(?,true)";
 
     public final String insertEntryAllInfo =
             "INSERT INTO " + getPrefix() + TABLE_NAME + " " +
-               "(name,uuid,infiniteMoney,ignoreACL,bank) " +
-            "VALUES(?,?,?,?,?)";
+                    "(name,uuid,infiniteMoney,ignoreACL,bank) " +
+                    "VALUES(?,?,?,?,?)";
 
     public final String updateInfinitemoneyEntry =
             "UPDATE " + getPrefix() + TABLE_NAME + " " +
-            "SET infiniteMoney=? " +
-            "WHERE name=? AND bank=?";
+                    "SET infiniteMoney=? " +
+                    "WHERE name=? AND bank=?";
 
     public final String updateIgnoreaclEntry =
             "UPDATE " + getPrefix() + TABLE_NAME + " " +
-            "SET infiniteMoney=? " +
-            "WHERE name=? AND bank=?";
+                    "SET infiniteMoney=? " +
+                    "WHERE name=? AND bank=?";
 
     public final String deleteEntry = "DELETE FROM " + getPrefix() + TABLE_NAME + " WHERE name=? AND bank=?";
 
@@ -82,9 +82,10 @@ public class AccountTable extends DatabaseTable {
 
     public final String updateUuidByName = "UPDATE " + getPrefix() + TABLE_NAME + " SET uuid=? WHERE name=?";
 
-    public static String sqlAccountIDbyName(String prefix){
+    public static String sqlAccountIDbyName(String prefix) {
         return "SELECT id FROM " + prefix + AccountTable.TABLE_NAME + " WHERE name =?";
     }
+
     public static String sqlAccountIDbyUUID(String prefix) {
         return "SELECT id FROM " + prefix + AccountTable.TABLE_NAME + " WHERE uuid =?";
     }

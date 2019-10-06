@@ -1,9 +1,9 @@
-/**
+/*
  * This file is part of Craftconomy3.
  *
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
- * Copyright (c) 2018, Pavog <http://github.com/pavog/>
+ * Copyright (c) 2018-2019, Pavog <http://github.com/pavog/>
  *
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -12,11 +12,11 @@
  *
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Craftconomy3. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.greatmancode.craftconomy3.storage.sql.tables;
 
@@ -29,10 +29,10 @@ public class ExchangeTable extends DatabaseTable {
             "  `to_currency` VARCHAR(50) NOT NULL," +
             "  `amount` double DEFAULT 1.0," +
             "  PRIMARY KEY (`from_currency`, to_currency)," +
-            "  CONSTRAINT `"+getPrefix()+"fk_exchange_currencyfrom`" +
+            "  CONSTRAINT `" + getPrefix() + "fk_exchange_currencyfrom`" +
             "    FOREIGN KEY (from_currency)" +
             "    REFERENCES " + getPrefix() + CurrencyTable.TABLE_NAME + " (name) ON UPDATE CASCADE ON DELETE CASCADE," +
-            "  CONSTRAINT `"+getPrefix()+"fk_exchange_currencyto`" +
+            "  CONSTRAINT `" + getPrefix() + "fk_exchange_currencyto`" +
             "    FOREIGN KEY (to_currency)" +
             "    REFERENCES " + getPrefix() + CurrencyTable.TABLE_NAME + " (name) ON UPDATE CASCADE ON DELETE CASCADE" +
             ") ENGINE=InnoDB CHARSET=utf8;";
@@ -50,14 +50,14 @@ public class ExchangeTable extends DatabaseTable {
 
     public final String selectEntry =
             "SELECT * FROM " + getPrefix() + TABLE_NAME + " " +
-            "WHERE from_currency=? AND to_currency=?";
+                    "WHERE from_currency=? AND to_currency=?";
 
-    public final String selectAll = "SELECT * FROM "+ getPrefix() + TABLE_NAME;
+    public final String selectAll = "SELECT * FROM " + getPrefix() + TABLE_NAME;
 
     public final String insertEntry =
             "INSERT INTO " + getPrefix() + TABLE_NAME + " " +
-              "(from_currency, to_currency, amount) " +
-            "VALUES(?,?,?)";
+                    "(from_currency, to_currency, amount) " +
+                    "VALUES(?,?,?)";
 
     public final String updateEntry = "UPDATE " + getPrefix() + TABLE_NAME + " SET amount=? " +
             "WHERE from_currency=? AND to_currency=?";

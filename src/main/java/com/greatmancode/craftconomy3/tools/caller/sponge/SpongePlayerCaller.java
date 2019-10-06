@@ -1,9 +1,9 @@
-/**
+/*
  * This file is part of Craftconomy3.
  *
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
- * Copyright (c) 2018, Pavog <http://github.com/pavog/>
+ * Copyright (c) 2018-2019, Pavog <http://github.com/pavog/>
  *
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -12,11 +12,11 @@
  *
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Craftconomy3. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.greatmancode.craftconomy3.tools.caller.sponge;
 
@@ -77,28 +77,30 @@ public class SpongePlayerCaller extends PlayerCaller {
             caller.getLogger().info(message);
             return;
         }
-        loader.getGame().getServer().getPlayer(playerName).get().sendMessage(((SpongeServerCaller)getCaller()).addColorSponge(message));
+        loader.getGame().getServer().getPlayer(playerName).get().sendMessage(((SpongeServerCaller) getCaller()).addColorSponge(message));
     }
 
     @Override
     public void sendMessage(UUID uuid, String message) {
-        loader.getGame().getServer().getPlayer(uuid).get().sendMessage(((SpongeServerCaller)getCaller()).addColorSponge(message));
+        loader.getGame().getServer().getPlayer(uuid).get().sendMessage(((SpongeServerCaller) getCaller()).addColorSponge(message));
     }
 
     /**
      * Sends a message to a player
-     * @param playerName The player name to send the message
-     * @param message    The message to send
+     *
+     * @param playerName  The player name to send the message
+     * @param message     The message to send
      * @param commandName the command that started the mes
      */
     @Override
     public void sendMessage(String playerName, String message, String commandName) {
-        loader.getGame().getServer().getPlayer(playerName).get().sendMessage(((SpongeServerCaller)getCaller()).addColorSponge(message));
+        loader.getGame().getServer().getPlayer(playerName).get().sendMessage(((SpongeServerCaller) getCaller()).addColorSponge(message));
     }
 
     /**
      * Sends a message to a sender
-     * @param sender the sender
+     *
+     * @param sender  the sender
      * @param message the message
      * @param command the initial command
      */
@@ -108,22 +110,23 @@ public class SpongePlayerCaller extends PlayerCaller {
         if (sender instanceof PlayerCommandSender) {
             PlayerCommandSender playerCommandSender = (PlayerCommandSender) sender;
             UUID uuid = playerCommandSender.getUuid();
-            loader.getGame().getServer().getPlayer(uuid).get().sendMessage(((SpongeServerCaller)getCaller()).addColorSponge(message));
+            loader.getGame().getServer().getPlayer(uuid).get().sendMessage(((SpongeServerCaller) getCaller()).addColorSponge(message));
         } else {
-            loader.getGame().getServer().getConsole().sendMessage(((SpongeServerCaller)getCaller()).addColorSponge(message));
+            loader.getGame().getServer().getConsole().sendMessage(((SpongeServerCaller) getCaller()).addColorSponge(message));
         }
 
     }
 
     /**
      * Sends a message to a player
+     *
      * @param commandName the command that started the mes
-     * @param uuid The player name to send the message
-     * @param message    The message to send
+     * @param uuid        The player name to send the message
+     * @param message     The message to send
      */
     @Override
     public void sendMessage(UUID uuid, String message, String commandName) {
-        loader.getGame().getServer().getPlayer(uuid).get().sendMessage(((SpongeServerCaller)getCaller()).addColorSponge(message));
+        loader.getGame().getServer().getPlayer(uuid).get().sendMessage(((SpongeServerCaller) getCaller()).addColorSponge(message));
     }
 
     @Override
@@ -186,7 +189,7 @@ public class SpongePlayerCaller extends PlayerCaller {
         Optional<Player> result = loader.getGame().getServer().getPlayer(uuid);
         return result.map(player -> new com.greatmancode.craftconomy3.tools.entities.Player(player.getName(), player.getDisplayNameData().displayName().toString(), player.getWorld().getName(), player.getUniqueId())).orElse(null);
     }
-    
+
     @Override
     public com.greatmancode.craftconomy3.tools.entities.Player getOnlinePlayer(String name) {
         Optional<Player> result = loader.getGame().getServer().getPlayer(name);
@@ -196,7 +199,7 @@ public class SpongePlayerCaller extends PlayerCaller {
         }
         return null;
     }
-    
+
     @Override
     public com.greatmancode.craftconomy3.tools.entities.Player getOnlinePlayer(UUID uuid) {
         Optional<Player> result = loader.getGame().getServer().getPlayer(uuid);

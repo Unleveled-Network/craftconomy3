@@ -1,9 +1,9 @@
-/**
+/*
  * This file is part of Craftconomy3.
  *
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
- * Copyright (c) 2018, Pavog <http://github.com/pavog/>
+ * Copyright (c) 2018-2019, Pavog <http://github.com/pavog/>
  *
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -12,11 +12,11 @@
  *
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Craftconomy3. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.greatmancode.craftconomy3.storage.sql.tables;
 
@@ -52,8 +52,8 @@ public class CurrencyTable extends DatabaseTable {
 
     public final String insertEntry =
             "INSERT INTO " + getPrefix() + TABLE_NAME + " " +
-              "(name,plural,minor,minorplural,sign,status,bankCurrency) " +
-            "VALUES (?,?,?,?,?,?,?)";
+                    "(name,plural,minor,minorplural,sign,status,bankCurrency) " +
+                    "VALUES (?,?,?,?,?,?,?)";
 
     public final String setAsDefault1 = "UPDATE " + getPrefix() + TABLE_NAME + " SET status=FALSE";
 
@@ -65,8 +65,8 @@ public class CurrencyTable extends DatabaseTable {
 
     public final String updateEntry =
             "UPDATE " + getPrefix() + TABLE_NAME + " " +
-            "SET name=?, plural=?, minor=?, minorplural=?, sign=?, status=?, bankCurrency=? " +
-            "WHERE name=?";
+                    "SET name=?, plural=?, minor=?, minorplural=?, sign=?, status=?, bankCurrency=? " +
+                    "WHERE name=?";
 
     public final String deleteEntry = "DELETE FROM " + getPrefix() + TABLE_NAME + " WHERE name=?";
 

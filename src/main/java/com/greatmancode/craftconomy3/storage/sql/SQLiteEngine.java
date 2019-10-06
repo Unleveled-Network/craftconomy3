@@ -1,9 +1,9 @@
-/**
+/*
  * This file is part of Craftconomy3.
  *
  * Copyright (c) 2011-2016, Greatman <http://github.com/greatman/>
  * Copyright (c) 2016-2017, Aztorius <http://github.com/Aztorius/>
- * Copyright (c) 2018, Pavog <http://github.com/pavog/>
+ * Copyright (c) 2018-2019, Pavog <http://github.com/pavog/>
  *
  * Craftconomy3 is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -12,11 +12,11 @@
  *
  * Craftconomy3 is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Craftconomy3.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Craftconomy3. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.greatmancode.craftconomy3.storage.sql;
 
@@ -49,11 +49,12 @@ public class SQLiteEngine extends StorageEngine {
     private final HikariDataSource db;
     private final String tablePrefix;
     private ConfigTable configTable = null;
+
     public SQLiteEngine() {
-        this.tablePrefix = Common.getInstance().getMainConfig().getString("System.Database.Prefix","cc3_");
+        this.tablePrefix = Common.getInstance().getMainConfig().getString("System.Database.Prefix", "cc3_");
         HikariConfig config = new HikariConfig();
         config.setDriverClassName("org.sqlite.JDBC");
-        config.setJdbcUrl("jdbc:sqlite:"+ Common.getInstance().getServerCaller().getDataFolder() + File.separator +  "database.db");
+        config.setJdbcUrl("jdbc:sqlite:" + Common.getInstance().getServerCaller().getDataFolder() + File.separator + "database.db");
         config.setConnectionTestQuery("SELECT 1");
         db = new HikariDataSource(config);
         configTable = new ConfigTable(tablePrefix);
