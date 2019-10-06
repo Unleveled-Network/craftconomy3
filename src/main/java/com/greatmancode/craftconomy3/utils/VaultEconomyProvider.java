@@ -4,8 +4,8 @@ import com.greatmancode.craftconomy3.Cause;
 import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.account.Account;
 import com.greatmancode.craftconomy3.currency.Currency;
-import com.greatmancode.tools.entities.Player;
-import com.greatmancode.tools.utils.VaultEconomy;
+import com.greatmancode.craftconomy3.tools.entities.Player;
+import com.greatmancode.craftconomy3.tools.utils.VaultEconomy;
 import net.milkbowl.vault.economy.EconomyResponse;
 
 import java.util.List;

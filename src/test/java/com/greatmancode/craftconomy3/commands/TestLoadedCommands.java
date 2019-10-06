@@ -22,7 +22,7 @@ package com.greatmancode.craftconomy3.commands;
 
 import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.TestInitializator;
-import com.greatmancode.tools.commands.interfaces.CommandExecutor;
+import com.greatmancode.craftconomy3.tools.commands.interfaces.CommandExecutor;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

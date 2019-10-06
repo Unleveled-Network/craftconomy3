@@ -36,8 +36,8 @@ import com.greatmancode.craftconomy3.storage.StorageEngine;
 import com.greatmancode.craftconomy3.storage.sql.tables.*;
 import com.greatmancode.craftconomy3.utils.BackendErrorException;
 import com.greatmancode.craftconomy3.utils.NoExchangeRate;
-import com.greatmancode.tools.entities.Player;
-import com.greatmancode.tools.utils.Tools;
+import com.greatmancode.craftconomy3.tools.entities.Player;
+import com.greatmancode.craftconomy3.tools.utils.Tools;
 import com.zaxxer.hikari.HikariDataSource;
 
 import java.sql.*;

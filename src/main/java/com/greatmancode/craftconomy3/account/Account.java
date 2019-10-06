@@ -24,7 +24,7 @@ import com.greatmancode.craftconomy3.Cause;
 import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.LogInfo;
 import com.greatmancode.craftconomy3.currency.Currency;
-import com.greatmancode.tools.events.event.EconomyChangeEvent;
+import com.greatmancode.craftconomy3.tools.events.event.EconomyChangeEvent;
 
 import java.util.List;
 import java.util.UUID;

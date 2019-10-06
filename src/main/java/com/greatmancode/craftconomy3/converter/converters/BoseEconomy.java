@@ -23,7 +23,7 @@ package com.greatmancode.craftconomy3.converter.converters;
 import com.greatmancode.craftconomy3.Cause;
 import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.converter.Converter;
-import com.greatmancode.tools.commands.CommandSender;
+import com.greatmancode.craftconomy3.tools.commands.CommandSender;
 
 import java.io.*;
 import java.util.ArrayList;

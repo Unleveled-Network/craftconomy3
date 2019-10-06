@@ -22,7 +22,7 @@ package com.greatmancode.craftconomy3.storage.sql;
 
 import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.storage.sql.tables.*;
-import com.greatmancode.tools.utils.Tools;
+import com.greatmancode.craftconomy3.tools.utils.Tools;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 

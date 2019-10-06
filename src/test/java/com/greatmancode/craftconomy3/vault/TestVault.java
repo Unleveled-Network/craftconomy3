@@ -26,7 +26,7 @@ import com.greatmancode.craftconomy3.TestCommandSender;
 import com.greatmancode.craftconomy3.TestInitializator;
 import com.greatmancode.craftconomy3.account.Account;
 import com.greatmancode.craftconomy3.utils.VaultEconomyProvider;
-import com.greatmancode.tools.commands.PlayerCommandSender;
+import com.greatmancode.craftconomy3.tools.commands.PlayerCommandSender;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.junit.After;

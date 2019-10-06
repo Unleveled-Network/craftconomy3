@@ -20,8 +20,8 @@
  */
 package com.greatmancode.craftconomy3;
 
-import com.greatmancode.tools.caller.unittest.UnitTestServerCaller;
-import com.greatmancode.tools.interfaces.UnitTestLoader;
+import com.greatmancode.craftconomy3.tools.caller.unittest.UnitTestServerCaller;
+import com.greatmancode.craftconomy3.tools.interfaces.UnitTestLoader;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 

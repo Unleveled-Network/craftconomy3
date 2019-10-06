@@ -25,7 +25,7 @@ import com.greatmancode.craftconomy3.DisplayFormat;
 import com.greatmancode.craftconomy3.TestCommandSender;
 import com.greatmancode.craftconomy3.TestInitializator;
 import com.greatmancode.craftconomy3.commands.config.*;
-import com.greatmancode.tools.commands.PlayerCommandSender;
+import com.greatmancode.craftconomy3.tools.commands.PlayerCommandSender;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

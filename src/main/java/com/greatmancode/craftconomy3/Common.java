@@ -39,17 +39,17 @@ import com.greatmancode.craftconomy3.groups.WorldGroupsManager;
 import com.greatmancode.craftconomy3.storage.StorageHandler;
 import com.greatmancode.craftconomy3.utils.OldFormatConverter;
 import com.greatmancode.craftconomy3.utils.VaultEconomyProvider;
-import com.greatmancode.tools.caller.bukkit.BukkitServerCaller;
-import com.greatmancode.tools.caller.unittest.UnitTestServerCaller;
-import com.greatmancode.tools.commands.CommandHandler;
-import com.greatmancode.tools.commands.SubCommand;
-import com.greatmancode.tools.configuration.Config;
-import com.greatmancode.tools.configuration.ConfigurationManager;
-import com.greatmancode.tools.interfaces.caller.ServerCaller;
-import com.greatmancode.tools.language.LanguageManager;
-import com.greatmancode.tools.utils.FeatherBoard;
-import com.greatmancode.tools.utils.ServicePriority;
-import com.greatmancode.tools.utils.Tools;
+import com.greatmancode.craftconomy3.tools.caller.bukkit.BukkitServerCaller;
+import com.greatmancode.craftconomy3.tools.caller.unittest.UnitTestServerCaller;
+import com.greatmancode.craftconomy3.tools.commands.CommandHandler;
+import com.greatmancode.craftconomy3.tools.commands.SubCommand;
+import com.greatmancode.craftconomy3.tools.configuration.Config;
+import com.greatmancode.craftconomy3.tools.configuration.ConfigurationManager;
+import com.greatmancode.craftconomy3.tools.interfaces.caller.ServerCaller;
+import com.greatmancode.craftconomy3.tools.language.LanguageManager;
+import com.greatmancode.craftconomy3.tools.utils.FeatherBoard;
+import com.greatmancode.craftconomy3.tools.utils.ServicePriority;
+import com.greatmancode.craftconomy3.tools.utils.Tools;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -65,7 +65,7 @@ import java.util.logging.Logger;
  *
  * @author greatman
  */
-public class Common implements com.greatmancode.tools.interfaces.Common {
+public class Common implements com.greatmancode.craftconomy3.tools.interfaces.Common {
     private Logger log = null;
     private static Common instance = null;
     // Managers
@@ -443,9 +443,9 @@ public class Common implements com.greatmancode.tools.interfaces.Common {
     }
 
     /**
-     * Retrieve the {@link com.greatmancode.tools.language.LanguageManager}
+     * Retrieve the {@link com.greatmancode.craftconomy3.tools.language.LanguageManager}
      *
-     * @return The {@link com.greatmancode.tools.language.LanguageManager}
+     * @return The {@link com.greatmancode.craftconomy3.tools.language.LanguageManager}
      */
     public LanguageManager getLanguageManager() {
         return languageManager;

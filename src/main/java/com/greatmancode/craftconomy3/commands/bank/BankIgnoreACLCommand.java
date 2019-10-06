@@ -23,7 +23,7 @@ package com.greatmancode.craftconomy3.commands.bank;
 import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.account.Account;
 import com.greatmancode.craftconomy3.commands.AbstractCommand;
-import com.greatmancode.tools.commands.CommandSender;
+import com.greatmancode.craftconomy3.tools.commands.CommandSender;
 
 public class BankIgnoreACLCommand extends AbstractCommand {
     public BankIgnoreACLCommand(String name) {

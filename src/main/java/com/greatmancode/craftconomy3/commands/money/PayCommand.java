@@ -25,9 +25,9 @@ import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.account.Account;
 import com.greatmancode.craftconomy3.commands.AbstractCommand;
 import com.greatmancode.craftconomy3.currency.Currency;
-import com.greatmancode.tools.commands.CommandSender;
-import com.greatmancode.tools.entities.Player;
-import com.greatmancode.tools.utils.Tools;
+import com.greatmancode.craftconomy3.tools.commands.CommandSender;
+import com.greatmancode.craftconomy3.tools.entities.Player;
+import com.greatmancode.craftconomy3.tools.utils.Tools;
 
 public class PayCommand extends AbstractCommand {
     public PayCommand(String name) {

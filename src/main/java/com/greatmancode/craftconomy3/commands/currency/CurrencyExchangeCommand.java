@@ -23,8 +23,8 @@ package com.greatmancode.craftconomy3.commands.currency;
 import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.commands.AbstractCommand;
 import com.greatmancode.craftconomy3.currency.Currency;
-import com.greatmancode.tools.commands.CommandSender;
-import com.greatmancode.tools.utils.Tools;
+import com.greatmancode.craftconomy3.tools.commands.CommandSender;
+import com.greatmancode.craftconomy3.tools.utils.Tools;
 
 public class CurrencyExchangeCommand extends AbstractCommand {
     public CurrencyExchangeCommand(String name) {

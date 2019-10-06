@@ -22,10 +22,10 @@ package com.greatmancode.craftconomy3.events;
 
 import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.account.Account;
-import com.greatmancode.tools.events.interfaces.EventHandler;
-import com.greatmancode.tools.events.interfaces.Listener;
-import com.greatmancode.tools.events.playerevent.PlayerJoinEvent;
-import com.greatmancode.tools.events.playerevent.PreJoinEvent;
+import com.greatmancode.craftconomy3.tools.events.interfaces.EventHandler;
+import com.greatmancode.craftconomy3.tools.events.interfaces.Listener;
+import com.greatmancode.craftconomy3.tools.events.playerevent.PlayerJoinEvent;
+import com.greatmancode.craftconomy3.tools.events.playerevent.PreJoinEvent;
 
 import java.util.logging.Level;
 

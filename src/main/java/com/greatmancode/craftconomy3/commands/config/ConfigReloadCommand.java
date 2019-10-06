@@ -22,7 +22,7 @@ package com.greatmancode.craftconomy3.commands.config;
 
 import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.commands.AbstractCommand;
-import com.greatmancode.tools.commands.CommandSender;
+import com.greatmancode.craftconomy3.tools.commands.CommandSender;
 
 public class ConfigReloadCommand extends AbstractCommand {
     public ConfigReloadCommand(String name) {

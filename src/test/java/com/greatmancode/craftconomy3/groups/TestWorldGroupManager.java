@@ -22,7 +22,7 @@ package com.greatmancode.craftconomy3.groups;
 
 import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.TestInitializator;
-import com.greatmancode.tools.caller.unittest.UnitTestServerCaller;
+import com.greatmancode.craftconomy3.tools.caller.unittest.UnitTestServerCaller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

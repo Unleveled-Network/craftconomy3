@@ -23,8 +23,8 @@ package com.greatmancode.craftconomy3.converter.converters;
 import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.converter.Converter;
 import com.greatmancode.craftconomy3.storage.sql.tables.iconomy.IConomyTable;
-import com.greatmancode.tools.commands.CommandSender;
-import com.greatmancode.tools.utils.Tools;
+import com.greatmancode.craftconomy3.tools.commands.CommandSender;
+import com.greatmancode.craftconomy3.tools.utils.Tools;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 

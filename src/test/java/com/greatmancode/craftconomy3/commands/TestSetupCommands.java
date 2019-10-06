@@ -27,7 +27,7 @@ import com.greatmancode.craftconomy3.commands.setup.NewSetupBasicCommand;
 import com.greatmancode.craftconomy3.commands.setup.NewSetupConvertCommand;
 import com.greatmancode.craftconomy3.commands.setup.NewSetupCurrencyCommand;
 import com.greatmancode.craftconomy3.commands.setup.NewSetupDatabaseCommand;
-import com.greatmancode.tools.commands.PlayerCommandSender;
+import com.greatmancode.craftconomy3.tools.commands.PlayerCommandSender;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

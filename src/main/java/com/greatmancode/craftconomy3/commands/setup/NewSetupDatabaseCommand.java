@@ -23,8 +23,8 @@ package com.greatmancode.craftconomy3.commands.setup;
 import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.NewSetupWizard;
 import com.greatmancode.craftconomy3.commands.AbstractCommand;
-import com.greatmancode.tools.commands.CommandSender;
-import com.greatmancode.tools.utils.Tools;
+import com.greatmancode.craftconomy3.tools.commands.CommandSender;
+import com.greatmancode.craftconomy3.tools.utils.Tools;
 
 import java.util.HashMap;
 import java.util.Map;

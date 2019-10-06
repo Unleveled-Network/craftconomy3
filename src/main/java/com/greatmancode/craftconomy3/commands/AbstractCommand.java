@@ -2,8 +2,8 @@ package com.greatmancode.craftconomy3.commands;
 
 import com.greatmancode.craftconomy3.Common;
 import com.greatmancode.craftconomy3.currency.Currency;
-import com.greatmancode.tools.commands.CommandSender;
-import com.greatmancode.tools.commands.interfaces.CommandExecutor;
+import com.greatmancode.craftconomy3.tools.commands.CommandSender;
+import com.greatmancode.craftconomy3.tools.commands.interfaces.CommandExecutor;
 
 /**
  * Created for use for the Add5tar MC Minecraft server

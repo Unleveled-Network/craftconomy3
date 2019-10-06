@@ -26,7 +26,7 @@ import com.greatmancode.craftconomy3.TestInitializator;
 import com.greatmancode.craftconomy3.commands.currency.*;
 import com.greatmancode.craftconomy3.currency.Currency;
 import com.greatmancode.craftconomy3.utils.NoExchangeRate;
-import com.greatmancode.tools.commands.PlayerCommandSender;
+import com.greatmancode.craftconomy3.tools.commands.PlayerCommandSender;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

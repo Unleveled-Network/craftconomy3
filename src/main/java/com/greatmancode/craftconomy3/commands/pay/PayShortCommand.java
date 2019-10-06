@@ -20,10 +20,10 @@
  */
 package com.greatmancode.craftconomy3.commands.pay;
 
-import com.greatmancode.tools.commands.CommandHandler;
-import com.greatmancode.tools.commands.CommandSender;
-import com.greatmancode.tools.commands.SubCommand;
-import com.greatmancode.tools.commands.interfaces.Command;
+import com.greatmancode.craftconomy3.tools.commands.CommandHandler;
+import com.greatmancode.craftconomy3.tools.commands.CommandSender;
+import com.greatmancode.craftconomy3.tools.commands.SubCommand;
+import com.greatmancode.craftconomy3.tools.commands.interfaces.Command;
 
 public class PayShortCommand extends SubCommand {
 
