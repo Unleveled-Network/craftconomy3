@@ -130,7 +130,7 @@ public abstract class SQLStorageEngine extends StorageEngine {
                 if (uuid != null) {
                     statement.setString(2, Account.getWorldGroupOfPlayerCurrentlyIn(uuid));
                 } else {
-                    statement.setString(2, null);
+                    statement.setString(2, "default");
                 }
                 statement.setString(3, name);
                 statement.setBoolean(4, bankAccount);
