@@ -667,7 +667,7 @@ public class Common implements com.greatmancode.craftconomy3.tools.interfaces.Co
         languageManager.addLanguageEntry("unable_close_db_link", "Unable to close the database connection! Reason is: %s");
         languageManager.addLanguageEntry("loading_database_manager", "Loading the Database Manager");
         languageManager.addLanguageEntry("database_manager_loaded", "Database Manager Loaded!");
-        languageManager.addLanguageEntry("loading_curency_manager", "Loading the Currency Manager");
+        languageManager.addLanguageEntry("loading_currency_manager", "Loading the Currency Manager");
         languageManager.addLanguageEntry("currency_manager_loaded", "Currency Manager Loaded!");
         languageManager.addLanguageEntry("loading_account_manager", "Loading the Account Manager");
         languageManager.addLanguageEntry("account_manager_loaded", "Account Manager Loaded!");
@@ -776,7 +776,7 @@ public class Common implements com.greatmancode.craftconomy3.tools.interfaces.Co
         languageManager.addLanguageEntry("payday_invalid_mode", "{{DARK_RED}}Invalid mode. only wage or tax is supported!");
         languageManager.addLanguageEntry("payday_create_success", "{{DARK_GREEN}}Payday added! Add the permission node {{WHITE}}%s {{DARK_GREEN}}to the players you want to add this payday!");
         languageManager.addLanguageEntry("payday_not_found", "{{DARK_RED}}PayDay not found!");
-        languageManager.addLanguageEntry("error_occured", "{{DARK_GREEN}}A error occured. Check the console for any errors!");
+        languageManager.addLanguageEntry("error_occurred", "{{DARK_GREEN}}A error occured. Check the console for any errors!");
         languageManager.addLanguageEntry("payday_removed", "{{DARK_GREEN}}Payday removed!");
         languageManager.addLanguageEntry("payday_info_title", "{{DARK_GREEN}} ======== {{WHITE}}%s information {{DARK_GREEN}}========");
         languageManager.addLanguageEntry("payday_info_type_wage", "{{DARK_GREEN}}Type: {{WHITE}}Wage");
