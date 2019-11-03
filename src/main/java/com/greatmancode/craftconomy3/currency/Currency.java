@@ -204,8 +204,8 @@ public class Currency {
     /**
      * Delete the currency from the database.
      */
-    void delete() {
-        Common.getInstance().getStorageHandler().getStorageEngine().deleteCurrency(this);
+    public void delete() {
+        Common.getInstance().getCurrencyManager().deleteCurrency(this);
     }
 
     /**

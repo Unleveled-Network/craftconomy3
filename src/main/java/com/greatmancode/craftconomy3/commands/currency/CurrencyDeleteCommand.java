@@ -32,7 +32,7 @@ public class CurrencyDeleteCommand extends AbstractCommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if (Common.getInstance().getCurrencyManager().getCurrency(args[0]) != null) {
-            Common.getInstance().getCurrencyManager().deleteCurrency(Common.getInstance().getCurrencyManager().getCurrency(args[0]));
+            Common.getInstance().getCurrencyManager().getCurrency(args[0]).delete();
             sendMessage(sender, Common.getInstance().getLanguageManager().getString("currency_deleted"));
         } else {
             sendMessage(sender, Common.getInstance().getLanguageManager().getString("currency_not_exists"));
