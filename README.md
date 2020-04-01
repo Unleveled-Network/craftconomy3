@@ -16,7 +16,7 @@ PLEASE NOTE THIS BUILD USES A CUSTOMISED AND INCLUDED VERSION OF Greatmans Tools
 
 ## Current Development Version : 3.5.2-SNAPSHOT
 
-  - Bukkit/Spigot 1.8, 1.9, 1.10, 1.11, 1.12, 1.13, 1.14 supported
+  - Bukkit/Spigot 1.8, 1.9, 1.10, 1.11, 1.12, 1.13, 1.14 supported (older versions might also work)
   - Experimental support for Sponge
 
 ## Download
