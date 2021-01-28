@@ -4,6 +4,8 @@ jdk: openjdk8
 services: mysql
 env:
   matrix:
+    - SPIGOT_VERSION=1_16
+    - SPIGOT_VERSION=1_15
     - SPIGOT_VERSION=1_14
     - SPIGOT_VERSION=1_13
     - SPIGOT_VERSION=1_12
