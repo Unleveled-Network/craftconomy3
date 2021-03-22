@@ -71,7 +71,7 @@ public class BalanceTable extends DatabaseTable {
             "SELECT balance, worldName, currency_id, username_id FROM " + getPrefix() + TABLE_NAME + " " +
                     "LEFT JOIN " + getPrefix() + CurrencyTable.TABLE_NAME + " " +
                     "ON " + getPrefix() + TABLE_NAME + ".currency_id = " + getPrefix() + CurrencyTable.TABLE_NAME + ".name " +
-                    "WHERE " + getPrefix() + TABLE_NAME + ".username_id = (" + AccountTable.sqlAccountIDbyName(getPrefix()) + ") " +
+                    "WHERE " + getPrefix() + TABLE_NAME + ".username_id = ? " +
                     "AND " + WORLD_NAME_FIELD + "=? AND " + getPrefix() + CurrencyTable.TABLE_NAME + ".name=?";
 
     public final String insertEntry =

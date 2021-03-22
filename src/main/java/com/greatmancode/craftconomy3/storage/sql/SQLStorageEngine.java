@@ -362,7 +362,7 @@ public abstract class SQLStorageEngine extends StorageEngine {
         try {
             connection = (commitConnection != null) ? commitConnection : db.getConnection();
             statement = connection.prepareStatement(balanceTable.selectWorldCurrencyEntryAccount);
-            statement.setString(1, account.getAccountName());
+            statement.setInt(1, account.getId());
             statement.setString(2, world);
             statement.setString(3, currency.getName());
             ResultSet set = statement.executeQuery();
@@ -390,7 +390,7 @@ public abstract class SQLStorageEngine extends StorageEngine {
         try {
             connection = (commitConnection != null) ? commitConnection : db.getConnection();
             statement = connection.prepareStatement(balanceTable.selectWorldCurrencyEntryAccount);
-            statement.setString(1, account.getAccountName());
+            statement.setInt(1, account.getId());
             statement.setString(2, world);
             statement.setString(3, currency.getName());
             ResultSet set = statement.executeQuery();
