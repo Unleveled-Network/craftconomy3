@@ -55,10 +55,7 @@ public class OldFormatConverter {
         HikariConfig config = new HikariConfig();
         if (dbType.equalsIgnoreCase("mysql")) {
             config.setMaximumPoolSize(10);
-            config.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
-            config.addDataSourceProperty("serverName", Common.getInstance().getMainConfig().getString("System.Database.Address", "localhost"));
-            config.addDataSourceProperty("port", Common.getInstance().getMainConfig().getString("System.Database.Port", "3306"));
-            config.addDataSourceProperty("databaseName", Common.getInstance().getMainConfig().getString("System.Database.Db", "Craftconomy"));
+            config.setJdbcUrl("jdbc:mysql://" + Common.getInstance().getMainConfig().getString("System.Database.Address", "localhost") + ":" + Common.getInstance().getMainConfig().getString("System.Database.Port", "3306") + "/" + Common.getInstance().getMainConfig().getString("System.Database.Db", "Craftconomy"));
             config.addDataSourceProperty("user", Common.getInstance().getMainConfig().getString("System.Database.Username", "root"));
             config.addDataSourceProperty("password", Common.getInstance().getMainConfig().getString("System.Database.Password", ""));
             config.addDataSourceProperty("autoDeserialize", true);

@@ -120,10 +120,7 @@ public class Iconomy6 extends Converter {
         try {
             HikariConfig config = new HikariConfig();
             config.setMaximumPoolSize(10);
-            config.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
-            config.addDataSourceProperty("serverName", getDbConnectInfo().get("address"));
-            config.addDataSourceProperty("port", getDbConnectInfo().get("port"));
-            config.addDataSourceProperty("databaseName", getDbConnectInfo().get("database"));
+            config.setJdbcUrl("jdbc:mysql://" + getDbConnectInfo().get("address") + ":" + getDbConnectInfo().get("port") + "/" + getDbConnectInfo().get("database"));
             config.addDataSourceProperty("user", getDbConnectInfo().get("username"));
             config.addDataSourceProperty("password", getDbConnectInfo().get("password"));
             config.addDataSourceProperty("autoDeserialize", true);
