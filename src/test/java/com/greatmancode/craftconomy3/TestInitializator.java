@@ -102,12 +102,13 @@ public class TestInitializator {
     }
 
     private void setupMySQL() {
+        String serverName = Common.getInstance().getMainConfig().getString("System.Database.Address", "");
+        String port = Common.getInstance().getMainConfig().getString("System.Database.Port", "0");
+        String databaseName = Common.getInstance().getMainConfig().getString("System.Database.Db", "");
+
         HikariConfig config = new HikariConfig();
         config.setMaximumPoolSize(10);
-        config.setDataSourceClassName("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
-        config.addDataSourceProperty("serverName", Common.getInstance().getMainConfig().getString("System.Database.Address", ""));
-        config.addDataSourceProperty("port", Common.getInstance().getMainConfig().getString("System.Database.Port", "0"));
-        config.addDataSourceProperty("databaseName", Common.getInstance().getMainConfig().getString("System.Database.Db", ""));
+        config.setJdbcUrl("jdbc:mysql://" + serverName + ":" + port + "/" + databaseName);
         config.addDataSourceProperty("user", Common.getInstance().getMainConfig().getString("System.Database.Username", ""));
         config.addDataSourceProperty("password", Common.getInstance().getMainConfig().getString("System.Database.Password", ""));
         config.addDataSourceProperty("autoDeserialize", true);
