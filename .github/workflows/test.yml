@@ -5,7 +5,7 @@ on:
   pull_request:
   push:
     branches:
-      - gh-actions
+      - master
 
 jobs:
   tests:
