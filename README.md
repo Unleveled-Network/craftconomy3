@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/pavog/craftconomy3.svg?branch=master)](https://travis-ci.org/pavog/craftconomy3)
-[![Coverage Status](https://coveralls.io/repos/github/pavog/craftconomy3/badge.svg?branch=master)](https://coveralls.io/github/pavog/craftconomy3?branch=master)
+[![Coverage Status](https://codecov.io/gh/pavog/craftconomy3/branch/master/graph/badge.svg?token=2nWNj8kwoU)](https://codecov.io/gh/pavog/craftconomy3)
 [![GitHub issues](https://img.shields.io/github/issues/pavog/craftconomy3.svg)](https://github.com/pavog/craftconomy3/issues)
 [![GitHub prs](https://img.shields.io/github/issues-pr/pavog/craftconomy3.svg)](https://github.com/pavog/craftconomy3/pulls)
 [![GitHub prs](https://img.shields.io/github/release/pavog/craftconomy3.svg)](https://github.com/pavog/craftconomy3/releases/latest)
