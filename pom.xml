@@ -6,7 +6,7 @@
 
     <groupId>com.greatmancode</groupId>
     <artifactId>craftconomy3</artifactId>
-    <version>3.5.4-SNAPSHOT</version>
+    <version>3.5.5-SNAPSHOT</version>
     <licenses>
         <license>
             <name>LGPL v3</name>
@@ -73,7 +73,7 @@
         <!-- For MVdWPlaceholderAPI -->
         <repository>
             <id>mvdw-repo</id>
-            <url>http://repo.mvdw-software.com/content/groups/public/</url>
+            <url>https://repo.mvdw-software.com/content/groups/public/</url>
         </repository>
         <!-- Other stuff -->
         <repository>
@@ -84,10 +84,57 @@
 
     <profiles>
         <profile>
-            <id>Spigot_1_16</id>
+            <id>Spigot-1.20.1</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.spigotmc</groupId>
+                    <artifactId>spigot-api</artifactId>
+                    <version>1.20.1-R0.1-SNAPSHOT</version>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>Spigot-1.19.4</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.spigotmc</groupId>
+                    <artifactId>spigot-api</artifactId>
+                    <version>1.19.4-R0.1-SNAPSHOT</version>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>Spigot-1.18.2</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.spigotmc</groupId>
+                    <artifactId>spigot-api</artifactId>
+                    <version>1.18.2-R0.1-SNAPSHOT</version>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>Spigot-1.17.1</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.spigotmc</groupId>
+                    <artifactId>spigot-api</artifactId>
+                    <version>1.17.1-R0.1-SNAPSHOT</version>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>Spigot-1.16.5</id>
             <dependencies>
                 <dependency>
                     <groupId>org.spigotmc</groupId>
@@ -98,7 +145,7 @@
             </dependencies>
         </profile>
         <profile>
-            <id>Spigot_1_15</id>
+            <id>Spigot-1.15.2</id>
             <dependencies>
                 <dependency>
                     <groupId>org.spigotmc</groupId>
@@ -109,7 +156,7 @@
             </dependencies>
         </profile>
         <profile>
-            <id>Spigot_1_14</id>
+            <id>Spigot-1.14.4</id>
             <dependencies>
                 <dependency>
                     <groupId>org.spigotmc</groupId>
@@ -120,7 +167,7 @@
             </dependencies>
         </profile>
         <profile>
-            <id>Spigot_1_13</id>
+            <id>Spigot-1.13.2</id>
             <dependencies>
                 <dependency>
                     <groupId>org.spigotmc</groupId>
@@ -131,40 +178,40 @@
             </dependencies>
         </profile>
         <profile>
-            <id>Spigot_1_12</id>
+            <id>Spigot-1.12.2</id>
             <dependencies>
                 <dependency>
                     <groupId>org.spigotmc</groupId>
                     <artifactId>spigot-api</artifactId>
-                    <version>1.12-R0.1-SNAPSHOT</version>
+                    <version>1.12.2-R0.1-SNAPSHOT</version>
                     <scope>provided</scope>
                 </dependency>
             </dependencies>
         </profile>
         <profile>
-            <id>Spigot_1_11</id>
+            <id>Spigot-1.11.2</id>
             <dependencies>
                 <dependency>
                     <groupId>org.spigotmc</groupId>
                     <artifactId>spigot-api</artifactId>
-                    <version>1.11-R0.1-SNAPSHOT</version>
+                    <version>1.11.2-R0.1-SNAPSHOT</version>
                     <scope>provided</scope>
                 </dependency>
             </dependencies>
         </profile>
         <profile>
-            <id>Spigot_1_10</id>
+            <id>Spigot-1.10.2</id>
             <dependencies>
                 <dependency>
                     <groupId>org.spigotmc</groupId>
                     <artifactId>spigot-api</artifactId>
-                    <version>1.10-R0.1-SNAPSHOT</version>
+                    <version>1.10.2-R0.1-SNAPSHOT</version>
                     <scope>provided</scope>
                 </dependency>
             </dependencies>
         </profile>
         <profile>
-            <id>Spigot_1_9</id>
+            <id>Spigot-1.9.4</id>
             <dependencies>
                 <dependency>
                     <groupId>org.spigotmc</groupId>
@@ -175,7 +222,7 @@
             </dependencies>
         </profile>
         <profile>
-            <id>Spigot_1_8</id>
+            <id>Spigot-1.8.8</id>
             <dependencies>
                 <dependency>
                     <groupId>org.spigotmc</groupId>
@@ -245,13 +292,13 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.9.0</version>
+            <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
-            <version>5.9.0</version>
+            <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>

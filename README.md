@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/pavog/craftconomy3.svg?branch=master)](https://travis-ci.org/pavog/craftconomy3)
-[![Coverage Status](https://coveralls.io/repos/github/pavog/craftconomy3/badge.svg?branch=master)](https://coveralls.io/github/pavog/craftconomy3?branch=master)
+[![Build Status](https://github.com/pavog/craftconomy3/actions/workflows/test.yml/badge.svg)](https://github.com/pavog/craftconomy3/actions)
+[![Coverage Status](https://codecov.io/gh/pavog/craftconomy3/branch/master/graph/badge.svg?token=2nWNj8kwoU)](https://codecov.io/gh/pavog/craftconomy3)
 [![GitHub issues](https://img.shields.io/github/issues/pavog/craftconomy3.svg)](https://github.com/pavog/craftconomy3/issues)
 [![GitHub prs](https://img.shields.io/github/issues-pr/pavog/craftconomy3.svg)](https://github.com/pavog/craftconomy3/pulls)
 [![GitHub prs](https://img.shields.io/github/release/pavog/craftconomy3.svg)](https://github.com/pavog/craftconomy3/releases/latest)
@@ -14,7 +14,7 @@ Feel free to contribute with pull requests to improve Craftconomy.
 
 PLEASE NOTE THIS BUILD USES A CUSTOMISED AND INCLUDED VERSION OF Greatmans Tools found [here](https://github.com/pavog/craftconomy3/tree/master/src/main/java/com/greatmancode/craftconomy3/tools)
 
-## Current Development Version : 3.5.4-SNAPSHOT
+## Current Development Version : 3.5.5-SNAPSHOT
 
   - Bukkit/Spigot 1.8, 1.9, 1.10, 1.11, 1.12, 1.13, 1.14 supported (older versions might also work)
   - Experimental support for Sponge
